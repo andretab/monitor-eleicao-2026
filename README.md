@@ -1,5 +1,19 @@
 # Monitor Eleição 2026
 
+**Link:** https://andretab.github.io/monitor-eleicao-2026/ (pesquisas) ·
+https://andretab.github.io/monitor-eleicao-2026/painel/apuracao.html (apuração ao vivo)
+
+## Tudo automático (GitHub Actions)
+
+| Robô | Quando | O que faz |
+|---|---|---|
+| `pesquisas.yml` | a cada 3 h | lê a Wikipédia, atualiza `dados/pesquisas.json` e o site |
+| `apuracao.yml` | dom 25/10, 16h45 (reserva 17h30) | lê o TSE a cada minuto e publica `estado.json` no ramo `ao-vivo` |
+
+A página de pesquisas recarrega a cada 15 min; a da apuração busca o `estado.json` a cada 75 s.
+Ensaio manual: aba Actions → apuracao → Run workflow (simular = sim). Depois do ensaio, apagar o ramo
+`ao-vivo` (`git push origin --delete ao-vivo`) para a página voltar a "Aguardando a apuração".
+
 Acompanhamento do 2º turno presidencial (25/10/2026): pesquisas até a véspera, corrigidas pelo erro
 de cada instituto no 1º turno, e, no dia, a apuração ao vivo com projeção por UF.
 
