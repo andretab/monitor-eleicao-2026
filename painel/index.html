@@ -7,7 +7,7 @@
 <title>Monitor Eleição 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=6">
+<link rel="stylesheet" href="estilo.css?v=10">
 </head>
 <body>
 <nav class="barra-topo"><div class="dentro">
@@ -50,7 +50,7 @@
   <div class="grade">
     <section class="cartao">
       <h2>Última pesquisa de cada instituto</h2>
-      <p class="sub">Vantagem em pontos nos votos válidos. O círculo mostra a vantagem corrigida pelo erro do instituto no 1º turno.</p>
+      <p class="sub" id="subInstitutos">Votos válidos. A linha tracejada é o empate (50%).</p>
       <div class="grafico" id="grafInstitutos"></div>
       <details class="tabela"><summary>Ver tabela por instituto</summary><div class="tabela-rola"><table id="institutos"></table></div></details>
     </section>
@@ -103,9 +103,10 @@
     <p class="aviso" id="fonte"></p>
   </section>
 </main>
+<footer class="rodape" id="rodape"></footer>
 
-<script src="graficos.js?v=6"></script>
-<script src="dados.js"></script>
+<script src="graficos.js?v=10"></script>
+<script>document.write('<script src="dados.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
 <script>
 (() => {
   const D = window.DADOS, P = D.pesquisas, BR = D.primeiro_turno.br;
@@ -223,17 +224,23 @@
 
   // ------------------------------------------------ última pesquisa de cada instituto
   function desenhaInstitutos() {
-    const lista = Object.values(ultimas).map(p => ({ p, bruta: -p.margem, corr: -(p.margem + correcao(p.instituto, "instituto")) }))
-      .sort((a, b) => b.bruta - a.bruta);
-    const max = Math.ceil(Math.max(...lista.flatMap(l => [Math.abs(l.bruta), Math.abs(l.corr)])) + 1);
-    G.barras(el("grafInstitutos"), {
-      divergente: true, max, rotuloNeg: "← Flávio", rotuloPos: "Lula →", colunaValor: 110, tituloColuna: "divulg. · corrig.",
-      itens: lista.map(l => ({
-        rotulo: l.p.instituto, valor: l.bruta, cor: l.bruta >= 0 ? "var(--lula)" : "var(--flavio)",
-        texto: `${l.bruta >= 0 ? "L" : "F"}${fmt(Math.abs(l.bruta))} · ${l.corr >= 0 ? "L" : "F"}${fmt(Math.abs(l.corr))}`,
-        marcador: { valor: l.corr, cor: "var(--texto)" },
-        dica: `<b>${esc(l.p.instituto)}</b> · ${dataBR(l.p.inicio)}–${dataBR(l.p.fim)}<br>Válidos: Lula ${fmt(l.p.v.lula)}% × Flávio ${fmt(l.p.v.flavio)}%<br>Corrigida: ${l.corr >= 0 ? "Lula" : "Flávio"} +${fmt(Math.abs(l.corr))}${erroDe[l.p.instituto] == null ? " (erro médio)" : ""}<br>Amostra ${l.p.amostra.toLocaleString("pt-BR")}`,
-      })),
+    // Uma barra Lula × Flávio por instituto, no mesmo modo (divulgado ou corrigido) do gráfico principal.
+    const lista = Object.values(ultimas).map(p => { const L = 50 - (p.margem + correcao(p.instituto, modo)) / 2; return { p, L, F: 100 - L }; })
+      .sort((a, b) => b.L - a.L);
+    el("subInstitutos").textContent = `Votos válidos, ${modo === "bruta" ? "como divulgado" : "corrigido pelo erro de cada instituto no 1º turno"}. A linha tracejada é o empate (50%).`;
+    G.empilhadas(el("grafInstitutos"), {
+      direita: true, meio: true, larguraDireita: 112, direitaCelular: false,
+      itens: lista.map(l => {
+        const v = Math.abs(l.L - l.F), quem = l.L > l.F ? "Lula" : l.F > l.L ? "Flávio" : "Empate";
+        return {
+          rotulo: l.p.instituto,
+          partes: [{ valor: l.L, cor: "var(--lula)", texto: fmt(l.L) + "%" }, { valor: l.F, cor: "var(--flavio)", texto: fmt(l.F) + "%" }],
+          direita: quem === "Empate" ? "empate" : `${quem} +${fmt(v)}`, corDireita: quem === "Lula" ? "var(--lula)" : quem === "Flávio" ? "var(--flavio)" : null,
+          dica: `<b>${esc(l.p.instituto)}</b> · campo ${dataBR(l.p.inicio)}–${dataBR(l.p.fim)}<br>Divulgado (válidos): Lula ${fmt(l.p.v.lula)}% × Flávio ${fmt(l.p.v.flavio)}%` +
+            (modo === "bruta" ? "" : `<br>Corrigido: Lula ${fmt(l.L)}% × Flávio ${fmt(l.F)}%${erroDe[l.p.instituto] == null ? " (erro médio)" : ""}`) +
+            `<br>Amostra ${l.p.amostra.toLocaleString("pt-BR")}`,
+        };
+      }),
     });
   }
 
@@ -309,6 +316,11 @@
         `<td class="num">${fmt(p.lula)} × ${fmt(p.flavio)}</td><td class="num">${fmt(p.v.lula)}</td><td class="num">${fmt(p.v.flavio)}</td>` +
         `<td class="num">${c >= 0 ? "F" : "L"} +${fmt(Math.abs(c))}${erroDe[p.instituto] == null ? "*" : ""}</td></tr>`; }).join("");
   el("fonte").innerHTML = `Fontes: <a href="${P.fonte}">compilação da Wikipédia</a> (atualizada a cada 3 h) e pesquisas achadas pelo analista (†); 1º turno: arquivos oficiais do TSE. * Instituto sem pesquisa de 1º turno na base: usa a correção média.`;
+
+  // Rodapé: quando o robô conferiu as pesquisas pela última vez e o ritmo de cada atualização.
+  const conf = P.conferido_em || P.atualizado_em;
+  const quando = conf.length > 10 ? `${dataBR(conf)} às ${conf.slice(11, 16)}` : dataBR(conf);
+  el("rodape").innerHTML = `Última atualização: <b class="num">${quando}</b> · pesquisas conferidas a cada 3 h · boletins às 9h e às 20h · esta página se recarrega sozinha a cada 15 min`;
 
   desenhaResumo();
   // O robô atualiza as pesquisas a cada 3 h; a página se recarrega a cada 15 min para pegar a versão nova.

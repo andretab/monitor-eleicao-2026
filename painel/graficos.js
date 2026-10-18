@@ -148,7 +148,9 @@
   // cfg: { itens:[{rotulo, partes:[{valor, cor, nome}], dica, direita}] }
   function empilhadas(el, cfg) {
     const W = Math.max(el.clientWidth, 280), estreito = W < 560;
-    const lin = 40, rot = estreito ? 92 : 120, dir = cfg.direita ? (estreito ? 70 : 96) : 8;
+    const larguraDir = cfg.larguraDireita || 96;
+    const comDireita = cfg.direita && !(estreito && cfg.direitaCelular === false); // no celular a coluna pode sair para a barra crescer
+    const lin = 40, rot = estreito ? 92 : 120, dir = comDireita ? (estreito ? Math.round(larguraDir * .85) : larguraDir) + 8 : 8;
     const H = cfg.itens.length * lin + 4;
     let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(cfg.rotulo || "barras empilhadas")}">`;
     cfg.itens.forEach((it, i) => {
@@ -159,12 +161,16 @@
       it.partes.forEach((p, k) => {
         const w = larg * p.valor / tot, gap = k < it.partes.length - 1 ? 2 : 0;
         if (w > 0) s += `<rect x="${x}" y="${y + 9}" width="${Math.max(w - gap, 0)}" height="22" rx="4" fill="${p.cor}"/>`;
-        if (w > 44 && p.texto) s += `<text x="${x + 8}" y="${y + lin / 2 + 4}" style="fill:#fff;font-weight:600">${esc(p.texto)}</text>`;
+        // O último segmento escreve o número na ponta direita, para cada nome ficar do seu lado da barra.
+        const ultimo = k === it.partes.length - 1 && k > 0;
+        if (w > 44 && p.texto) s += `<text x="${ultimo ? x + w - 8 : x + 8}" y="${y + lin / 2 + 4}" ${ultimo ? 'text-anchor="end"' : ""} style="fill:#fff;font-weight:600">${esc(p.texto)}</text>`;
         x += w;
       });
-      if (cfg.direita) s += `<text class="rotulo-dado" x="${W - 4}" y="${y + lin / 2 + 4}" text-anchor="end">${esc(it.direita || "")}</text>`;
+      if (comDireita) s += `<text class="rotulo-dado" x="${W - 4}" y="${y + lin / 2 + 4}" text-anchor="end" ${it.corDireita ? `style="fill:${it.corDireita}"` : ""}>${esc(it.direita || "")}</text>`;
       s += `</g>`;
     });
+    // meio: linha tracejada nos 50% (empate), por cima das barras.
+    if (cfg.meio) { const xm = rot + 8 + (W - rot - 8 - dir) / 2; s += `<line x1="${xm}" x2="${xm}" y1="2" y2="${H - 2}" stroke="var(--texto)" stroke-opacity=".55" stroke-dasharray="3 3"/>`; }
     s += `</svg>`;
     el.innerHTML = s;
     const d = dica(el);

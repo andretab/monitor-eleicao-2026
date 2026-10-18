@@ -120,8 +120,11 @@ def main() -> int:
     divulgadas = divulgadas + [{**e, "fonte": "extra"} for e in extras]
 
     novas = {(p["instituto"], p["fim"]) for p in divulgadas} - {(p["instituto"], p["fim"]) for p in atual["segundo_turno"]}
-    hoje = datetime.now(timezone(timedelta(hours=-3))).date().isoformat()
-    atual.update(segundo_turno=divulgadas, segundo_turno_a_divulgar=pendentes, atualizado_em=hoje)
+    agora = datetime.now(timezone(timedelta(hours=-3)))
+    # conferido_em muda a cada execução: o rodapé do site mostra quando o robô olhou pela última vez,
+    # mesmo que não haja pesquisa nova.
+    atual.update(segundo_turno=divulgadas, segundo_turno_a_divulgar=pendentes,
+                 atualizado_em=agora.date().isoformat(), conferido_em=agora.strftime("%Y-%m-%d %H:%M"))
     caminho.write_text(json.dumps(atual, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"{len(divulgadas)} divulgadas ({len(novas)} novas: {sorted(novas) or '-'}), {len(pendentes)} a divulgar")
     subprocess.run([sys.executable, str(RAIZ / "scripts" / "gerar_dados_js.py")], check=True)

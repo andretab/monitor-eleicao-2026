@@ -7,7 +7,7 @@
 <title>Balanço da Eleição</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=6">
+<link rel="stylesheet" href="estilo.css?v=10">
 </head>
 <body>
 <nav class="barra-topo"><div class="dentro">
@@ -77,9 +77,10 @@
     </div>
   </div>
 </main>
+<footer class="rodape" id="rodape"></footer>
 
-<script src="graficos.js?v=6"></script>
-<script src="dados.js"></script>
+<script src="graficos.js?v=10"></script>
+<script>document.write('<script src="dados.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
 <script>
 (() => {
   const D = window.DADOS, P = D.pesquisas, T1 = D.primeiro_turno;
@@ -106,6 +107,8 @@
     .sort((a, b) => b.fim.localeCompare(a.fim));
 
   function desenha(A) {
+    el("rodape").innerHTML = A ? `Última leitura do TSE: <b class="num">${A.hora_apuracao}</b> (atualizado ${A.gerado_em}) · o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min`
+      : "Na noite da apuração, o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min.";
     const vazio = !A || !(A.fracao_secoes > 0);
     el("vazio").style.display = vazio ? "block" : "none";
     el("conteudo").style.display = vazio ? "none" : "block";

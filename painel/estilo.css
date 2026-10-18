@@ -115,6 +115,10 @@ tr.destaque td { font-weight: 600; background: var(--destaque); }
 .boletim .quando { font-size: 12px; color: var(--texto-3); }
 details.anteriores summary { cursor: pointer; color: var(--texto-2); font-size: 13px; }
 
+/* Rodapé discreto com a última atualização */
+.rodape { max-width: 1120px; margin: 0 auto; padding: 4px 16px 32px; color: var(--texto-3); font-size: 12px; text-align: center; }
+.rodape b { font-weight: 600; color: var(--texto-2); }
+
 @media (max-width: 560px) {
   h1 { font-size: 23px; }
   .cartao, .cartao.principal { padding: 16px; }

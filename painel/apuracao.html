@@ -7,7 +7,7 @@
 <title>Apuração ao Vivo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=6">
+<link rel="stylesheet" href="estilo.css?v=10">
 <style>
   .progresso { height: 8px; background: var(--linha); border-radius: 4px; overflow: hidden; margin-top: 6px; width: 200px; margin-left: auto; }
   .progresso span { display: block; height: 100%; background: var(--texto); }
@@ -86,8 +86,9 @@
     <p class="aviso" id="metodo"></p>
   </div>
 </main>
+<footer class="rodape" id="rodape"></footer>
 
-<script src="graficos.js?v=6"></script>
+<script src="graficos.js?v=10"></script>
 <script>
 (() => {
   const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
@@ -99,6 +100,8 @@
   const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins", zz: "Exterior" };
 
   function desenha(A) {
+    el("rodape").innerHTML = A ? `Última leitura do TSE: <b class="num">${A.hora_apuracao}</b> (atualizado ${A.gerado_em}) · o robô lê o TSE a cada minuto · esta página busca dados novos a cada 75 s`
+      : "Na noite da apuração, o robô lê o TSE a cada minuto · esta página busca dados novos a cada 75 s.";
     const vazio = !A || !(A.fracao_secoes > 0); // antes das 17h o TSE publica tudo zerado
     el("vazio").style.display = vazio ? "block" : "none";
     el("conteudo").style.display = vazio ? "none" : "block";
