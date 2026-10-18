@@ -1,7 +1,7 @@
 # Monitor Eleição 2026
 
-**Link:** https://andretab.github.io/monitor-eleicao-2026/ (pesquisas) ·
-https://andretab.github.io/monitor-eleicao-2026/painel/apuracao.html (apuração ao vivo)
+**Link:** https://eleicao.andrefreitas.eng.br/ (pesquisas) ·
+https://eleicao.andrefreitas.eng.br/painel/apuracao.html (apuração ao vivo)
 
 ## Tudo automático (GitHub Actions)
 
