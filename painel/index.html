@@ -7,7 +7,7 @@
 <title>Monitor Eleição 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=10">
+<link rel="stylesheet" href="estilo.css?v=11">
 </head>
 <body>
 <nav class="barra-topo"><div class="dentro">
@@ -65,12 +65,10 @@
 
   <div class="grade">
     <section class="cartao">
-      <h2>A conta da virada</h2>
-      <p class="sub">Com o mesmo comparecimento do 1º turno, quanto dos <span class="num" id="outrosVotos"></span> votos dos demais candidatos vai para Lula?</p>
-      <label for="transf" class="sub" style="display:block;margin-bottom:4px">Arraste: <b class="num" id="transfValor"></b> para Lula</label>
-      <input type="range" id="transf" min="0" max="100" step="1" value="50">
-      <div id="dueloTransf" style="margin-top:8px"></div>
-      <p class="sub" id="empate" style="margin:10px 0 0"></p>
+      <h2>1º turno por estado</h2>
+      <p class="sub">Vantagem entre Lula e Flávio nos votos válidos de cada estado (TSE). Passe o mouse ou toque num estado.</p>
+      <div class="grafico" id="mapa1t"></div>
+      <div id="legMapa1t"></div>
     </section>
     <section class="cartao">
       <h2>1º turno por região</h2>
@@ -84,11 +82,20 @@
     </section>
   </div>
 
+  <section class="cartao" id="secBoletins" style="display:none">
+    <h2>Boletim do analista</h2>
+    <p class="sub">Escrito por um agente na nuvem às 9h e às 20h.</p>
+    <div id="boletins"></div>
+  </section>
+
   <div class="grade">
-    <section class="cartao" id="secBoletins" style="display:none">
-      <h2>Boletim do analista</h2>
-      <p class="sub">Escrito por um agente na nuvem às 9h e às 20h.</p>
-      <div id="boletins"></div>
+    <section class="cartao">
+      <h2>A conta da virada</h2>
+      <p class="sub">Com o mesmo comparecimento do 1º turno, quanto dos <span class="num" id="outrosVotos"></span> votos dos demais candidatos vai para Lula?</p>
+      <label for="transf" class="sub" style="display:block;margin-bottom:4px">Arraste: <b class="num" id="transfValor"></b> para Lula</label>
+      <input type="range" id="transf" min="0" max="100" step="1" value="50">
+      <div id="dueloTransf" style="margin-top:8px"></div>
+      <p class="sub" id="empate" style="margin:10px 0 0"></p>
     </section>
     <section class="cartao">
       <h2>Pesquisas registradas, a divulgar</h2>
@@ -105,7 +112,8 @@
 </main>
 <footer class="rodape" id="rodape"></footer>
 
-<script src="graficos.js?v=10"></script>
+<script src="graficos.js?v=11"></script>
+<script src="mapa-br.js?v=1"></script>
 <script>document.write('<script src="dados.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
 <script>
 (() => {
@@ -294,6 +302,18 @@
       dica: `<b>${nomes[k]}</b> · ${milhoes(g.validos)} válidos<br>Lula ${fmt(100 * g.lula / g.validos)}% · Flávio ${fmt(100 * g.flavio / g.validos)}% · demais ${fmt(100 * g.outros / g.validos)}%<br>Saldo: ${g.lula > g.flavio ? "Lula" : "Flávio"} +${milhoes(Math.abs(g.lula - g.flavio))}`,
     })),
   });
+
+  // ------------------------------------------------ mapa do 1º turno
+  const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins" };
+  const valores1t = {};
+  for (const [uf, r] of Object.entries(D.primeiro_turno)) {
+    if (!NOMES_UF[uf]) continue;
+    const l = 100 * r.lula / r.validos, f = 100 * r.flavio / r.validos, m = l - f;
+    valores1t[uf] = { cor: G.corMargem(m),
+      dica: `<b>${NOMES_UF[uf]}</b><br>Lula ${fmt(l)}% · Flávio ${fmt(f)}% · demais ${fmt(100 - l - f)}%<br>Vantagem: ${m >= 0 ? "Lula" : "Flávio"} +${fmt(Math.abs(m))} · ${milhoes(r.validos)} válidos` };
+  }
+  G.mapa(el("mapa1t"), { valores: valores1t, rotulo: "Resultado do 1º turno por estado" });
+  el("legMapa1t").innerHTML = G.legendaMapa();
 
   // ------------------------------------------------ boletins
   const bol = D.boletins || [];

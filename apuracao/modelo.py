@@ -19,6 +19,7 @@ pelo prior). Na prática a capital costuma chegar antes do interior, o que puxa 
 from __future__ import annotations
 
 import math
+import random
 from dataclasses import dataclass, field
 
 MINIMO_APURADO = 0.05  # abaixo disso a UF ainda não diz nada confiável sobre si mesma
@@ -199,3 +200,67 @@ def prever_virada(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str, 
     info["curva"] = curva[:: max(1, len(curva) // 60)]
     info["ritmo_medido"] = usa_ritmo
     return info
+
+
+def simular_viradas(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str, float], n: int = 300,
+                    passo: float = 3.0, limite_min: float = 480, semente: int = 0) -> dict:
+    """Sorteia `n` finais de noite e conta em quantos o placar troca de líder, e quando.
+
+    Em cada final sorteado variam:
+      - o voto que falta: um desvio nacional (do tamanho da incerteza da projeção) + um desvio por UF;
+      - o atraso de cada UF: o ritmo medido nos últimos minutos × um fator aleatório (lognormal), e um
+        fator comum a todas (a noite inteira mais rápida ou mais lenta).
+    Sem ritmo medido (começo da noite), parte do padrão conhecido: Norte e Nordeste totalizam por último.
+    "Virada" = o placar termina com líder diferente do de agora; o horário é a última troca de liderança.
+    """
+    rnd = random.Random(semente)
+    ufs = [x for x in p.ufs if x.votos_rest > 0 and x.uf in leituras]
+    lider_agora = 1 if p.lula > p.flavio else -1 if p.flavio > p.lula else 0
+    resto_total = sum(x.votos_rest for x in ufs)
+    if not ufs or resto_total == 0:
+        final = 1 if p.lula > p.flavio else -1
+        return {"n": 0, "prob_lula_vence": 1.0 if final > 0 else 0.0, "prob_troca": 0.0, "lider_placar": lider_agora,
+                "minutos": [], "fracoes": []}
+    restantes = {x.uf: leituras[x.uf].secoes_total - leituras[x.uf].secoes_totalizadas for x in ufs}
+    total_secoes = sum(l.secoes_total for l in leituras.values())
+    secoes_agora = sum(l.secoes_totalizadas for l in leituras.values())
+    medido = sum(ritmo.values()) > 0
+    if medido:
+        positivos = sorted(v for v in ritmo.values() if v > 0)
+        mediano = positivos[len(positivos) // 2] if positivos else 1.0
+        base = {x.uf: (ritmo.get(x.uf) or mediano * .5) for x in ufs}
+        incerteza_ritmo = .35
+    else:
+        # Padrão de atraso conhecido: o que falta no N/NE leva ~1,5× mais que no resto do país.
+        base = {x.uf: restantes[x.uf] / (120 * (1.5 if x.regiao in ("N", "NE") else .85)) for x in ufs}
+        incerteza_ritmo = .6
+    desvio_nacional = p.desvio_margem / (2 * resto_total)  # em fração do voto que falta
+
+    minutos, fracoes, lula_vence = [], [], 0
+    for _ in range(n):
+        choque = rnd.gauss(0, desvio_nacional)
+        fator_noite = math.exp(rnd.gauss(0, .2))
+        parcela = {x.uf: min(max(x.parcela_rest + choque + rnd.gauss(0, .015 * (1 - x.fracao)), 0), 1) for x in ufs}
+        vel = {x.uf: base[x.uf] * fator_noite * math.exp(rnd.gauss(0, incerteza_ritmo)) for x in ufs}
+        feito = {x.uf: 0.0 for x in ufs}
+        lider, ultima_troca, t = lider_agora, None, 0.0
+        while t < limite_min:
+            t += passo
+            for x in ufs:
+                if feito[x.uf] < 1:
+                    feito[x.uf] = min(1.0, feito[x.uf] + vel[x.uf] * passo / restantes[x.uf]) if restantes[x.uf] else 1.0
+            L = p.lula + sum(feito[x.uf] * x.votos_rest * parcela[x.uf] for x in ufs)
+            F = p.flavio + sum(feito[x.uf] * x.votos_rest * (1 - parcela[x.uf]) for x in ufs)
+            agora = 1 if L > F else -1
+            if agora != lider:
+                lider = agora
+                sec = secoes_agora + sum(feito[x.uf] * restantes[x.uf] for x in ufs)
+                ultima_troca = (t, sec / total_secoes)
+            if all(v >= 1 for v in feito.values()):
+                break
+        lula_vence += lider > 0
+        if lider != lider_agora and ultima_troca:
+            minutos.append(ultima_troca[0])
+            fracoes.append(ultima_troca[1])
+    return {"n": n, "prob_lula_vence": lula_vence / n, "prob_troca": len(minutos) / n, "lider_placar": lider_agora,
+            "minutos": sorted(minutos), "fracoes": sorted(fracoes), "ritmo_medido": medido}

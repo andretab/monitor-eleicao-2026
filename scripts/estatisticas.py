@@ -102,7 +102,7 @@ def apuracao(estado: dict, pesq: dict) -> dict:
         "modo": estado["modo"], "hora_tse": estado["hora_apuracao"], "fracao_secoes": round(estado["fracao_secoes"], 4),
         "placar_lula": round(L, 2), "projecao_lula": round(100 * estado["proj_lula"] / tot, 2),
         "chance_lula": round(estado["chance_lula"], 3), "swing_pp": round(100 * estado["swing"], 2),
-        "virada": estado["virada"], "trocas_de_lideranca": [{"hora": t["hora"], "fracao": round(t["fracao_secoes"], 3)} for t in trocas],
+        "virada": estado["virada"], "probabilidade_virada": estado.get("probabilidade_virada"), "trocas_de_lideranca": [{"hora": t["hora"], "fracao": round(t["fracao_secoes"], 3)} for t in trocas],
         "regioes": estado["regioes"],
     }
     if estado["fracao_secoes"] >= 1:

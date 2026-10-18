@@ -7,7 +7,7 @@
 <title>Balanço da Eleição</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=10">
+<link rel="stylesheet" href="estilo.css?v=11">
 </head>
 <body>
 <nav class="barra-topo"><div class="dentro">
@@ -35,6 +35,13 @@
       <p class="sub" id="resSub"></p>
       <div id="dueloFinal"></div>
       <div class="kpis" id="kpisRes" style="margin-top:16px"></div>
+    </section>
+
+    <section class="cartao principal">
+      <h2>2º turno por estado</h2>
+      <p class="sub">Vantagem entre Lula e Flávio nos votos válidos. Passe o mouse ou toque num estado para comparar com o 1º turno.</p>
+      <div class="grafico" id="mapa2t"></div>
+      <div id="legMapa2t"></div>
     </section>
 
     <section class="cartao principal">
@@ -79,7 +86,8 @@
 </main>
 <footer class="rodape" id="rodape"></footer>
 
-<script src="graficos.js?v=10"></script>
+<script src="graficos.js?v=11"></script>
+<script src="mapa-br.js?v=1"></script>
 <script>document.write('<script src="dados.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
 <script>
 (() => {
@@ -199,6 +207,12 @@
     // ------------------------------------------------ UFs e regiões
     const porUF = A.ufs.filter(u => u.uf !== "zz").map(u => { const b = T1[u.uf]; const a1 = 100 * b.lula / b.validos, a2 = pct(u.lula, u.flavio);
       return { ...u, a1, a2, d: a2 - a1, gL: u.lula - b.lula, gF: u.flavio - b.flavio }; }).sort((a, b) => b.d - a.d);
+    const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins" };
+    const valores = {};
+    for (const u of porUF) valores[u.uf] = { cor: G.corMargem(2 * u.a2 - 100),
+      dica: `<b>${NOMES_UF[u.uf]}</b>${u.fracao < 1 ? ` · ${fmt(100 * u.fracao, 0)}% apurado` : ""}<br>2º turno: Lula ${fmt(u.a2)}% × Flávio ${fmt(100 - u.a2)}%<br>Lula no 1º turno: ${fmt(u.a1)}% (${sinal(u.d)} p.p.)` };
+    G.mapa(el("mapa2t"), { valores, rotulo: "Resultado do 2º turno por estado" });
+    el("legMapa2t").innerHTML = G.legendaMapa();
     const maxD = Math.ceil(Math.max(...porUF.map(u => Math.abs(u.d))));
     G.barras(el("grafUFs"), {
       divergente: porUF.some(u => u.d < 0), max: maxD, alturaLinha: 22, larguraRotulo: 34,

@@ -22,7 +22,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from fontes import FonteSimulada, FonteTSE  # noqa: E402
-from modelo import prever_virada, projetar, ritmos  # noqa: E402
+from modelo import prever_virada, projetar, ritmos, simular_viradas  # noqa: E402
 
 RAIZ = Path(__file__).resolve().parent.parent
 BRASILIA = timezone(timedelta(hours=-3))
@@ -40,7 +40,27 @@ def minuto_agora() -> float:
     return (agora - agora.replace(hour=FECHAMENTO[0], minute=FECHAMENTO[1], second=0, microsecond=0)).total_seconds() / 60
 
 
-def montar_estado(proj, virada, saida_hist, modo, transferencia, minuto, sim_real=None) -> dict:
+def resumir_viradas(mc: dict, minuto: float) -> dict:
+    """Probabilidade de o placar virar e, se virar, de cada faixa de 15 minutos (hora de Brasília)."""
+    out = {k: mc[k] for k in ("n", "prob_lula_vence", "prob_troca", "lider_placar")}
+    out["ritmo_medido"] = mc.get("ritmo_medido", False)
+    ms, fr = mc["minutos"], mc["fracoes"]
+    if not ms:
+        return out
+    faixas = {}
+    for m in ms:
+        ini = int((minuto + m) // 15 * 15)
+        faixas[ini] = faixas.get(ini, 0) + 1
+    out["faixas"] = [{"de": hora_de(k), "ate": hora_de(k + 15), "prob": v / mc["n"]} for k, v in sorted(faixas.items())]
+    q = lambda xs, f: xs[min(len(xs) - 1, int(f * len(xs)))]
+    out["hora_p10"], out["hora_p50"], out["hora_p90"] = (hora_de(minuto + q(ms, f)) for f in (.1, .5, .9))
+    out["fracao_p10"], out["fracao_p50"], out["fracao_p90"] = (q(fr, f) for f in (.1, .5, .9))
+    mais = max(out["faixas"], key=lambda f: f["prob"])
+    out["faixa_mais_provavel"] = mais
+    return out
+
+
+def montar_estado(proj, virada, saida_hist, modo, transferencia, minuto, sim_real=None, prob_virada=None) -> dict:
     regioes = {}
     for p in proj.ufs:
         r = regioes.setdefault(p.regiao, {"regiao": NOMES_REGIAO[p.regiao], "lula": 0, "flavio": 0, "proj_lula": 0.0,
@@ -57,6 +77,7 @@ def montar_estado(proj, virada, saida_hist, modo, transferencia, minuto, sim_rea
         "proj_lula": proj.proj_lula, "proj_flavio": proj.proj_flavio,
         "desvio_margem": proj.desvio_margem, "chance_lula": proj.chance_lula, "swing": proj.swing,
         "virada": {k: v for k, v in virada.items() if k != "curva"},
+        "probabilidade_virada": prob_virada,
         "curva_futura": virada["curva"],
         "historico": saida_hist,
         "ufs": [asdict(p) for p in sorted(proj.ufs, key=lambda p: -(p.proj_lula + p.proj_flavio))],
@@ -74,7 +95,15 @@ def gravar(estado: dict) -> None:
     (RAIZ / "apuracao" / "estado.json").write_text(texto, encoding="utf-8")
     tmp = RAIZ / "painel" / "apuracao-dados.js.tmp"
     tmp.write_text("window.APURACAO = " + texto + ";\n", encoding="utf-8")
-    tmp.replace(RAIZ / "painel" / "apuracao-dados.js")  # troca atômica: o painel nunca lê arquivo pela metade
+    # Troca atômica: o painel nunca lê arquivo pela metade. No Windows a troca falha se o servidor local
+    # estiver lendo o arquivo naquele instante; tenta de novo e, em último caso, pula este ciclo.
+    for tentativa in range(5):
+        try:
+            tmp.replace(RAIZ / "painel" / "apuracao-dados.js")
+            return
+        except PermissionError:
+            time.sleep(0.2 * (tentativa + 1))
+    print("  painel local não atualizado neste ciclo (arquivo em uso)")
 
 
 def publicar(texto: str) -> None:
@@ -126,14 +155,17 @@ def main() -> None:
             historico.append(leituras)
             minutos.append(minuto)
             proj = projetar(leituras, base, a.transferencia)
-            virada = prever_virada(proj, leituras, ritmos(historico, minutos))
+            rit = ritmos(historico, minutos)
+            virada = prever_virada(proj, leituras, rit)
+            prob_virada = resumir_viradas(simular_viradas(proj, leituras, rit, semente=int(minuto)), minuto)
             saida_hist.append({"min": round(minuto, 1), "hora": hora_de(minuto), "fracao_secoes": proj.fracao_secoes,
                                "margem_placar": proj.lula - proj.flavio, "margem_proj": proj.proj_lula - proj.proj_flavio,
                                "chance_lula": proj.chance_lula,
+                               "prob_troca": prob_virada["prob_troca"],
                                "virada_prevista_fracao": virada.get("fracao_secoes"),
                                "virada_prevista_hora": hora_de(minuto + virada["minutos_ate"]) if "minutos_ate" in virada else None})
             estado = montar_estado(proj, virada, saida_hist, modo, a.transferencia, minuto,
-                                   fonte.resultado_real() if a.simular else None)
+                                   fonte.resultado_real() if a.simular else None, prob_virada)
             gravar(estado)
             if a.publicar:
                 publicar(json.dumps(estado, ensure_ascii=False))

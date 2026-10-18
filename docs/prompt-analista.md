@@ -22,7 +22,7 @@ Acrescente no INÍCIO da lista `boletins` em `dados/boletins.json` um objeto:
 
 Conteúdo por tipo (3 a 6 parágrafos curtos, cada um com números concretos):
 - `pesquisas`: o que mudou desde o boletim anterior (novas pesquisas, quem subiu ou caiu); média bruta e corrigida pelo erro de cada instituto no 1º turno e a chance estimada; tendência (p.p./dia, intervalo de confiança, se é distinguível de estabilidade); institutos que divergem da média; pesquisas registradas ainda não divulgadas; lembrete curto do erro dos institutos no 1º turno.
-- `apuracao`: % das seções, placar, projeção e chance; se o placar vai virar e quando a virada está prevista; de onde ainda vêm votos (regiões com mais votos faltando); comparação com a virada de 2022 (~67,8% das seções, referência de imprensa).
+- `apuracao`: % das seções, placar, projeção e chance; a chance de o placar virar e as faixas de horário mais prováveis (campo `probabilidade_virada`: `prob_troca`, `faixa_mais_provavel`, `hora_p10`–`hora_p90`); de onde ainda vêm votos (regiões com mais votos faltando); comparação com a virada de 2022 (~67,8% das seções, referência de imprensa).
 - `balanco`: vencedor e margem; quem acertou o 2º turno (ranking pelo erro na vantagem) e o ranking somando os dois turnos; como nossa média e nossa projeção se saíram; a virada (quando aconteceu, % das seções); onde Lula ou Flávio mais cresceram em relação ao 1º turno.
 
 Regras de tom: neutro e factual, sem torcida nem adjetivos sobre candidatos; projeção e chance são estimativas, nunca certezas; diga a incerteza; não cite pesquisa sem fonte; não faça previsão além do que os números do script sustentam.
