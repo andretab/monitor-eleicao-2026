@@ -107,9 +107,17 @@ def main() -> int:
     html = api(action="parse", prop="text", section=secao_segundo_turno())["parse"]["text"]
     divulgadas, pendentes = ler_tabela(html)
 
-    if len(divulgadas) < len(atual["segundo_turno"]) - 2:
-        print(f"ABORTADO: li {len(divulgadas)} pesquisas, mas já havia {len(atual['segundo_turno'])}. Arquivo mantido.")
+    da_wiki = [p for p in atual["segundo_turno"] if p.get("fonte") != "extra"]
+    if len(divulgadas) < len(da_wiki) - 2:
+        print(f"ABORTADO: li {len(divulgadas)} pesquisas, mas já havia {len(da_wiki)}. Arquivo mantido.")
         return 1
+
+    # Extras: pesquisas que o analista na nuvem achou antes da Wikipédia. Saem da lista quando a
+    # Wikipédia passa a trazê-las (mesmo instituto e mesma data final), para não contar duas vezes.
+    na_wiki = {(p["instituto"], p["fim"]) for p in divulgadas}
+    extras = [e for e in atual.get("segundo_turno_extras", []) if (e["instituto"], e["fim"]) not in na_wiki]
+    atual["segundo_turno_extras"] = extras
+    divulgadas = divulgadas + [{**e, "fonte": "extra"} for e in extras]
 
     novas = {(p["instituto"], p["fim"]) for p in divulgadas} - {(p["instituto"], p["fim"]) for p in atual["segundo_turno"]}
     hoje = datetime.now(timezone(timedelta(hours=-3))).date().isoformat()

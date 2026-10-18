@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Balanço da Eleição</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #f6f5f1; --cartao: #ffffff; --texto: #1c1d21; --texto-2: #5b5e66; --linha: #dedcd5;
+    --lula: #c8202f; --flavio: #1d4f9c; --neutro: #8a8d94; --destaque: #f2efe6; --alerta: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fundo: #131417; --cartao: #1c1d22; --texto: #ecebe7; --texto-2: #a3a5ab; --linha: #2e3036;
+      --lula: #ef5361; --flavio: #5b8fe0; --neutro: #7d8088; --destaque: #24262c; --alerta: #f59e0b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.5 Inter, system-ui, sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 26px; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 17px; margin: 0 0 4px; }
+  a { color: inherit; }
+  nav a { margin-right: 12px; }
+  .sub { color: var(--texto-2); font-size: 13px; margin: 0 0 14px; }
+  .num { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+  header { margin-bottom: 16px; }
+  .faixa { color: #fff; font-weight: 600; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; display: none; }
+  section { background: var(--cartao); border: 1px solid var(--linha); border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .kpis { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .kpi { background: var(--destaque); border-radius: 4px; padding: 10px 12px; }
+  .kpi .rot { font-size: 12px; color: var(--texto-2); }
+  .kpi .val { font-size: 22px; font-weight: 600; }
+  .kpi .det { font-size: 12px; color: var(--texto-2); }
+  .lula { color: var(--lula); } .flavio { color: var(--flavio); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--linha); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--texto-2); font-weight: 500; font-size: 12px; }
+  tr.destaque td { font-weight: 600; background: var(--destaque); }
+  .tabela-rola { overflow-x: auto; }
+  .aviso { font-size: 12px; color: var(--texto-2); border-left: 3px solid var(--linha); padding-left: 10px; margin-top: 12px; }
+  svg text { fill: var(--texto-2); font: 11px "JetBrains Mono", monospace; }
+  .eixo { stroke: var(--linha); }
+  #vazio { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="faixa" id="faixa"></div>
+  <header>
+    <h1>Balanço da eleição · 2º turno</h1>
+    <p class="sub"><nav style="display:inline"><a href="index.html">← Pesquisas</a><a href="apuracao.html">Apuração ao vivo</a></nav><span id="gerado"></span></p>
+  </header>
+
+  <section id="vazio"><h2>O balanço aparece com a apuração</h2><p class="sub">Esta página compara as pesquisas com o resultado real do TSE e mede a virada. Ela começa a se preencher domingo, 25/10, a partir das 17h, e fica completa quando o TSE chegar a 100%.</p></section>
+
+  <div id="conteudo">
+  <section>
+    <h2>Resultado</h2>
+    <p class="sub" id="resSub"></p>
+    <div class="kpis" id="kpisRes"></div>
+  </section>
+
+  <section>
+    <h2>A virada em números</h2>
+    <p class="sub">Medida no placar oficial e na nossa projeção, minuto a minuto</p>
+    <div class="kpis" id="kpisVirada"></div>
+    <div id="graficoErro" style="margin-top:16px"></div>
+    <p class="aviso">Gráfico: erro da nossa projeção (% de Lula projetado − % final) conforme as seções foram totalizadas. Quanto mais perto de zero e mais cedo, melhor.</p>
+  </section>
+
+  <div class="grade">
+    <section>
+      <h2>Quem acertou o 2º turno</h2>
+      <p class="sub">Última pesquisa de cada instituto, votos válidos, contra o TSE</p>
+      <div class="tabela-rola"><table id="acertos2t"></table></div>
+    </section>
+    <section>
+      <h2>Ranking nos dois turnos</h2>
+      <p class="sub">Erro médio absoluto na vantagem (p.p.), só institutos com pesquisa final nos dois turnos</p>
+      <div class="tabela-rola"><table id="ranking"></table></div>
+    </section>
+  </div>
+
+  <section>
+    <h2>Do 1º para o 2º turno, por região</h2>
+    <div class="tabela-rola"><table id="regioes"></table></div>
+  </section>
+
+  <section>
+    <h2>Do 1º para o 2º turno, por UF</h2>
+    <p class="sub">Ordenado por quanto Lula cresceu (p.p. dos válidos)</p>
+    <div class="tabela-rola"><table id="ufs"></table></div>
+  </section>
+  </div>
+</main>
+
+<script src="dados.js"></script>
+<script>
+(() => {
+  const D = window.DADOS, P = D.pesquisas, T1 = D.primeiro_turno;
+  const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
+  const sinal = (n, c = 1) => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n), c);
+  const mi = n => fmt(n / 1e6, 2) + " mi";
+  const el = id => document.getElementById(id);
+  const dataBR = s => s.slice(8, 10) + "/" + s.slice(5, 7);
+  const dias = (a, b) => (new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5;
+  const pct = (a, b) => (a + b) ? 100 * a / (a + b) : 0;
+  const nomeReg = { N: "Norte", NE: "Nordeste", CO: "Centro-Oeste", SE: "Sudeste", S: "Sul", EX: "Exterior" };
+  const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
+
+  // 1º turno real e erro de cada instituto (mesmo critério do painel de pesquisas).
+  const BR1 = T1.br, l1 = 100 * BR1.lula / BR1.validos, f1 = 100 * BR1.flavio / BR1.validos, m1 = f1 - l1;
+  const erro1 = {};
+  for (const p of P.primeiro_turno_ultima_por_instituto) {
+    const base = p.indecisos == null ? 100 : 100 - p.indecisos;
+    erro1[p.instituto] = (100 * p.flavio / base - 100 * p.lula / base) - m1;
+  }
+  const erroMedio1 = Object.values(erro1).reduce((a, v) => a + v, 0) / Object.values(erro1).length;
+  const p2 = P.segundo_turno.map(p => { const L = 100 * p.lula / (p.lula + p.flavio); return { ...p, L, margem: 100 - 2 * L }; })
+    .sort((a, b) => b.fim.localeCompare(a.fim));
+
+  function desenha(A) {
+    const vazio = !A || !(A.fracao_secoes > 0);
+    el("vazio").style.display = vazio ? "block" : "none";
+    el("conteudo").style.display = vazio ? "none" : "block";
+    if (vazio) return;
+    const final = A.fracao_secoes >= 1;
+    const faixa = el("faixa");
+    faixa.style.display = (A.modo === "simulacao" || !final) ? "block" : "none";
+    faixa.style.background = A.modo === "simulacao" ? "var(--alerta)" : "var(--neutro)";
+    faixa.textContent = A.modo === "simulacao" ? "SIMULAÇÃO: números de uma noite fictícia para teste." :
+      `PARCIAL: ${fmt(100 * A.fracao_secoes, 2)}% das seções. O balanço fecha quando o TSE chegar a 100%.`;
+    el("gerado").textContent = ` · TSE ${A.hora_apuracao} · atualizado ${A.gerado_em}`;
+
+    // Resultado
+    const L = pct(A.lula, A.flavio), F = 100 - L, mReal = F - L;
+    const venc = L > F ? "lula" : "flavio", nomeV = venc === "lula" ? "Lula" : "Flávio";
+    el("resSub").textContent = final ? `${nomeV} venceu por ${fmt(Math.abs(L - F), 2)} p.p. (${mi(Math.abs(A.lula - A.flavio))} de votos).` : "Resultado parcial.";
+    el("kpisRes").innerHTML =
+      kpi("Lula · 2º turno", fmt(L, 2) + "%", `${mi(A.lula)} · 1º turno ${fmt(l1, 2)}%`, "lula") +
+      kpi("Flávio · 2º turno", fmt(F, 2) + "%", `${mi(A.flavio)} · 1º turno ${fmt(f1, 2)}%`, "flavio") +
+      kpi("Votos ganhos por Lula", "+" + mi(A.lula - BR1.lula), "do 1º para o 2º turno") +
+      kpi("Votos ganhos por Flávio", "+" + mi(A.flavio - BR1.flavio), "do 1º para o 2º turno") +
+      kpi("Parcela dos 'outros' para Lula", fmt(100 * (A.lula - BR1.lula) / ((A.lula - BR1.lula) + (A.flavio - BR1.flavio)), 1) + "%",
+        `dos votos novos de Lula+Flávio · empate exigia ${fmt(100 * (BR1.flavio - BR1.lula + BR1.outros) / (2 * BR1.outros), 1)}%`);
+
+    // Virada
+    const h = A.historico.filter(x => x.fracao_secoes > 0.001);
+    const trocas = []; for (let i = 1; i < h.length; i++) if ((h[i].margem_placar > 0) !== (h[i - 1].margem_placar > 0)) trocas.push(h[i]);
+    const ult = trocas.at(-1);
+    const sinalV = venc === "lula" ? 1 : -1;
+    const piorMomento = h.reduce((a, x) => (x.margem_placar * sinalV < a.margem_placar * sinalV ? x : a), h[0]);
+    const desdeProj = (() => { let k = h.length; while (k > 0 && h[k - 1].margem_proj * sinalV > 0) k--; return h[k]; })();
+    const desde95 = (() => { let k = h.length; const ok = x => (venc === "lula" ? x.chance_lula : 1 - x.chance_lula) >= 0.95;
+      while (k > 0 && ok(h[k - 1])) k--; return h[k]; })();
+    const totalFinal = A.lula + A.flavio;
+    const errEm = f => { const x = h.find(y => y.fracao_secoes >= f); return x ? (50 + 50 * x.margem_proj / totalFinal) - L : null; };
+    const lider0 = h[0] && (h[0].margem_placar > 0 ? "Lula" : "Flávio");
+    el("kpisVirada").innerHTML =
+      kpi("Primeiro líder no placar", lider0 || "—", h[0] ? `${h[0].hora}, ${fmt(100 * h[0].fracao_secoes, 1)}% das seções` : "") +
+      kpi("Trocas de liderança", String(trocas.length), trocas.length ? trocas.map(t => t.hora).join(" · ") : "sem virada no placar") +
+      kpi("Virada definitiva", ult ? ult.hora : "—", ult ? `com ${fmt(100 * ult.fracao_secoes, 1)}% das seções · 2022: ~${fmt(100 * A.referencia_2022.fracao_virada, 1)}%` : "o vencedor liderou do início ao fim") +
+      kpi(`Maior desvantagem de ${nomeV}`, piorMomento.margem_placar * sinalV < 0 ? mi(Math.abs(piorMomento.margem_placar)) : "nenhuma",
+        piorMomento.margem_placar * sinalV < 0 ? `${piorMomento.hora}, ${fmt(100 * piorMomento.fracao_secoes, 1)}% das seções` : "") +
+      kpi("Projeção apontou o vencedor", desdeProj ? desdeProj.hora : "—", desdeProj ? `de vez, com ${fmt(100 * desdeProj.fracao_secoes, 1)}% das seções` : "") +
+      kpi("Projeção passou de 95%", desde95 ? desde95.hora : "—", desde95 ? `de vez, com ${fmt(100 * desde95.fracao_secoes, 1)}% das seções` : "") +
+      kpi("Erro da projeção", [0.25, 0.5, 0.75].map(f => errEm(f)).every(v => v != null) ? [0.25, 0.5, 0.75].map(f => sinal(errEm(f), 2)).join(" / ") : "—",
+        "p.p. de Lula com 25% / 50% / 75% das seções");
+    desenhaErro(h, L, totalFinal);
+
+    // Quem acertou o 2º turno (última pesquisa de cada instituto)
+    const ultimas = {}; for (const p of p2) if (!ultimas[p.instituto]) ultimas[p.instituto] = p;
+    const linhas = Object.values(ultimas).map(p => ({ ...p, eL: p.L - L, eM: p.margem - mReal, certo: (p.margem > 0) === (mReal > 0) }))
+      .sort((a, b) => Math.abs(a.eM) - Math.abs(b.eM));
+    // Média do agregador no último dia, bruta e corrigida pelo erro do 1º turno.
+    const media = modo => { let s = 0, w = 0; const ref = Object.values(ultimas).reduce((a, p) => p.fim > a ? p.fim : a, "");
+      for (const p of Object.values(ultimas)) { const peso = Math.sqrt(Math.min(p.amostra, 5000)) * Math.exp(-dias(p.fim, ref) / 7);
+        const c = modo === "bruta" ? 0 : -(erro1[p.instituto] ?? erroMedio1); s += peso * (p.margem + c); w += peso; } return s / w; };
+    const linhaMedia = (nome, m) => `<tr class="destaque"><td>${nome}</td><td></td><td class="num">${fmt(50 - m / 2)}</td><td class="num">${sinal(50 - m / 2 - L)}</td><td class="num">${sinal(m - mReal)}</td><td>${(m > 0) === (mReal > 0) ? "sim" : "não"}</td></tr>`;
+    el("acertos2t").innerHTML = `<tr><th>Instituto</th><th>Data</th><th>Lula</th><th>Erro Lula</th><th>Erro vantagem</th><th>Vencedor certo?</th></tr>` +
+      `<tr class="destaque"><td>Resultado TSE</td><td></td><td class="num lula">${fmt(L)}</td><td></td><td></td><td></td></tr>` +
+      linhaMedia("Nossa média bruta", media("bruta")) + linhaMedia("Nossa média corrigida", media("instituto")) +
+      linhas.map(p => `<tr><td>${p.instituto}</td><td class="num">${dataBR(p.fim)}</td><td class="num">${fmt(p.L)}</td><td class="num">${sinal(p.eL)}</td>` +
+        `<td class="num" style="color:${p.eM < 0 ? "var(--lula)" : "var(--flavio)"}">${sinal(p.eM)}</td><td>${p.certo ? "sim" : "não"}</td></tr>`).join("") +
+      `<tr><td colspan="6" class="sub" style="text-align:left;white-space:normal">Acertaram o vencedor: ${linhas.filter(p => p.certo).length} de ${linhas.length}. Erro negativo = puxou para Lula.</td></tr>`;
+
+    // Ranking nos dois turnos
+    const dois = linhas.filter(p => erro1[p.instituto] != null).map(p => ({ nome: p.instituto, e1: erro1[p.instituto], e2: p.eM, media: (Math.abs(erro1[p.instituto]) + Math.abs(p.eM)) / 2 }))
+      .sort((a, b) => a.media - b.media);
+    el("ranking").innerHTML = `<tr><th>#</th><th>Instituto</th><th>Erro 1º turno</th><th>Erro 2º turno</th><th>Média abs.</th></tr>` +
+      dois.map((d, i) => `<tr><td class="num">${i + 1}</td><td style="text-align:left">${d.nome}</td><td class="num">${sinal(d.e1)}</td><td class="num">${sinal(d.e2)}</td><td class="num">${fmt(d.media)}</td></tr>`).join("");
+
+    // Regiões e UFs: crescimento de 1º para 2º turno
+    const porUF = A.ufs.map(u => { const b = T1[u.uf]; const l1u = 100 * b.lula / b.validos, l2u = pct(u.lula, u.flavio);
+      return { ...u, l1u, l2u, d: l2u - l1u, gL: u.lula - b.lula, gF: u.flavio - b.flavio }; });
+    const reg = {}; for (const u of porUF) { const r = reg[u.regiao] ??= { lula: 0, flavio: 0, l1: 0, v1: 0 }; const b = T1[u.uf];
+      r.lula += u.lula; r.flavio += u.flavio; r.l1 += b.lula; r.v1 += b.validos; }
+    el("regioes").innerHTML = `<tr><th>Região</th><th>Lula 1º turno</th><th>Lula 2º turno</th><th>Variação</th><th>Saldo 2º turno</th></tr>` +
+      Object.entries(reg).sort((a, b) => (b[1].lula + b[1].flavio) - (a[1].lula + a[1].flavio)).map(([k, r]) => {
+        const a1 = 100 * r.l1 / r.v1, a2 = pct(r.lula, r.flavio), s = r.lula - r.flavio;
+        return `<tr><td>${nomeReg[k]}</td><td class="num">${fmt(a1)}</td><td class="num">${fmt(a2)}</td><td class="num ${a2 >= a1 ? "lula" : "flavio"}">${sinal(a2 - a1)}</td>` +
+          `<td class="num ${s >= 0 ? "lula" : "flavio"}">${s >= 0 ? "L" : "F"} +${mi(Math.abs(s))}</td></tr>`; }).join("");
+    el("ufs").innerHTML = `<tr><th>UF</th><th>Apurado</th><th>Lula 1º turno</th><th>Lula 2º turno</th><th>Variação</th><th>Votos novos Lula</th><th>Votos novos Flávio</th></tr>` +
+      porUF.sort((a, b) => b.d - a.d).map(u => `<tr><td>${u.uf.toUpperCase()}</td><td class="num">${fmt(100 * u.fracao, 0)}%</td><td class="num">${fmt(u.l1u)}</td><td class="num">${fmt(u.l2u)}</td>` +
+        `<td class="num ${u.d >= 0 ? "lula" : "flavio"}">${sinal(u.d)}</td><td class="num">${mi(u.gL)}</td><td class="num">${mi(u.gF)}</td></tr>`).join("");
+  }
+
+  function desenhaErro(h, L, total) {
+    const W = 900, H = 220, mE = 48, mD = 12, mT = 12, mB = 28;
+    const pts = h.map(x => [x.fracao_secoes, (50 + 50 * x.margem_proj / total) - L]);
+    const lim = Math.max(1, Math.ceil(Math.max(...pts.map(p => Math.abs(p[1])))));
+    const x = f => mE + (W - mE - mD) * f, y = v => mT + (H - mT - mB) * (lim - v) / (2 * lim);
+    let s = `<svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="Erro da projeção ao longo da apuração">`;
+    for (let v = -lim; v <= lim; v += Math.max(1, Math.round(lim / 3)))
+      s += `<line class="eixo" x1="${mE}" x2="${W - mD}" y1="${y(v)}" y2="${y(v)}" ${v === 0 ? 'style="stroke:var(--texto-2)"' : ""}/><text x="${mE - 6}" y="${y(v) + 4}" text-anchor="end">${v > 0 ? "+" + v : v}</text>`;
+    for (let f = 0; f <= 1.0001; f += 0.1) s += `<text x="${x(f)}" y="${H - 8}" text-anchor="middle">${Math.round(100 * f)}%</text>`;
+    s += `<polyline fill="none" stroke="var(--alerta)" stroke-width="2" points="${pts.map(p => x(p[0]) + "," + y(p[1])).join(" ")}"/></svg>`;
+    el("graficoErro").innerHTML = s;
+  }
+
+  // Mesma origem de dados da página de apuração.
+  const REPO = "andretab/monitor-eleicao-2026", LOCAL = location.protocol === "file:";
+  const API = `https://api.github.com/repos/${REPO}/contents/estado.json?ref=ao-vivo`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/ao-vivo/estado.json`;
+  function recarrega() {
+    if (LOCAL) {
+      const tag = document.createElement("script");
+      tag.src = "apuracao-dados.js?t=" + Date.now();
+      tag.onload = tag.onerror = () => { desenha(window.APURACAO); tag.remove(); };
+      document.body.appendChild(tag);
+      return;
+    }
+    fetch(API, { headers: { Accept: "application/vnd.github.raw" }, cache: "no-store" })
+      .then(r => (!r.ok && r.status !== 404) ? fetch(RAW + "?t=" + Date.now(), { cache: "no-store" }) : r)
+      .then(r => r.ok ? r.json() : null).then(desenha).catch(() => {});
+  }
+  recarrega();
+  setInterval(recarrega, LOCAL ? 10000 : 120000);
+})();
+</script>
+</body>
+</html>

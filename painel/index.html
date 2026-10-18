@@ -52,6 +52,12 @@
   svg text { fill: var(--texto-2); font: 11px "JetBrains Mono", monospace; }
   .eixo { stroke: var(--linha); }
   .pend td { color: var(--texto-2); }
+  .boletim { border-left: 3px solid var(--texto); padding: 2px 0 2px 12px; margin: 0 0 16px; }
+  .boletim h3 { font-size: 15px; margin: 0 0 4px; }
+  .boletim p { margin: 0 0 6px; font-size: 14px; }
+  .boletim .quando { font-size: 12px; color: var(--texto-2); }
+  details summary { cursor: pointer; color: var(--texto-2); font-size: 13px; }
+  nav.topo a { margin-right: 12px; }
 </style>
 </head>
 <body>
@@ -59,10 +65,16 @@
   <header>
     <div>
       <h1>Monitor Eleição 2026 · 2º turno</h1>
-      <p class="sub"><a href="apuracao.html">Apuração ao vivo →</a> · <span id="atualizado"></span></p>
+      <p class="sub"><nav class="topo" style="display:inline"><a href="apuracao.html">Apuração ao vivo →</a><a href="balanco.html">Balanço →</a></nav><span id="atualizado"></span></p>
     </div>
     <div class="contagem"><span class="sub">até a eleição (25/10)</span><br><b class="num" id="dias"></b></div>
   </header>
+
+  <section id="secBoletins" style="display:none">
+    <h2>Boletins do analista</h2>
+    <p class="sub">Análises escritas por um agente na nuvem, duas vezes por dia até a eleição.</p>
+    <div id="boletins"></div>
+  </section>
 
   <div class="grade">
     <section>
@@ -119,6 +131,19 @@
       <h2>Pesquisas registradas a divulgar</h2>
       <p class="sub">Registradas no TSE, resultado ainda não publicado.</p>
       <div class="tabela-rola"><table id="agenda"></table></div>
+    </section>
+  </div>
+
+  <div class="grade">
+    <section>
+      <h2>Tendência</h2>
+      <p class="sub">Regressão da vantagem (corrigida por instituto) contra a data, pesquisas dos últimos 10 dias.</p>
+      <div id="tendencia"></div>
+    </section>
+    <section>
+      <h2>Cada instituto no 2º turno</h2>
+      <p class="sub">"Viés" = quanto o instituto fica acima ou abaixo da média dos outros no mesmo período (vantagem de Flávio, bruta).</p>
+      <div class="tabela-rola"><table id="institutos"></table></div>
     </section>
   </div>
 
@@ -302,6 +327,50 @@
         `<td class="num">${fmt(p.lula)} × ${fmt(p.flavio)}</td><td class="num lula">${fmt(p.v.lula)}</td><td class="num flavio">${fmt(p.v.flavio)}</td>` +
         `<td class="num">${p.margem >= 0 ? "F" : "L"} ${sinal(Math.abs(p.margem))}</td><td class="num">${c >= 0 ? "F" : "L"} ${sinal(Math.abs(c))}${erroDe[p.instituto] == null ? "*" : ""}</td></tr>`; }).join("");
   el("fonte").innerHTML = `* Instituto sem pesquisa de 1º turno na base: usa a correção média. Fonte das pesquisas: <a href="${P.fonte}">compilação da Wikipédia</a> (conferir no PesqEle/TSE). 1º turno: arquivos oficiais de resultados do TSE.`;
+
+  // Boletins do analista (dados/boletins.json)
+  const bol = D.boletins || [];
+  if (bol.length) {
+    el("secBoletins").style.display = "block";
+    const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    const bloco = b => `<div class="boletim"><div class="quando num">${esc(b.quando).replace("T", " ").slice(0, 16)} · ${esc(b.tipo)}</div>` +
+      `<h3>${esc(b.titulo)}</h3>${(b.paragrafos || []).map(t => `<p>${esc(t)}</p>`).join("")}` +
+      `${(b.fontes || []).length ? `<p class="sub">Fontes: ${b.fontes.map((u, i) => `<a href="${esc(u)}" rel="noopener">[${i + 1}]</a>`).join(" ")}</p>` : ""}</div>`;
+    el("boletins").innerHTML = bloco(bol[0]) + (bol.length > 1 ? `<details><summary>Boletins anteriores (${bol.length - 1})</summary>${bol.slice(1).map(bloco).join("")}</details>` : "");
+  }
+
+  // Tendência: mínimos quadrados da vantagem corrigida contra o dia, últimos 10 dias.
+  (() => {
+    const pts = p2.filter(p => dias(p.fim, P.atualizado_em) <= 10).map(p => ({ x: -dias(p.fim, P.atualizado_em), y: p.margem + correcao(p.instituto, "instituto") }));
+    if (pts.length < 4) { el("tendencia").innerHTML = '<p class="sub">Poucas pesquisas para medir tendência.</p>'; return; }
+    const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length, my = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+    const b = pts.reduce((a, p) => a + (p.x - mx) * (p.y - my), 0) / pts.reduce((a, p) => a + (p.x - mx) ** 2, 0);
+    const res = Math.sqrt(pts.reduce((a, p) => a + (p.y - (my + b * (p.x - mx))) ** 2, 0) / (pts.length - 2));
+    const sb = res / Math.sqrt(pts.reduce((a, p) => a + (p.x - mx) ** 2, 0));
+    const ate = dias(P.atualizado_em, "2026-10-25");
+    const hoje = my + b * (0 - mx), dia25 = my + b * (ate - mx);
+    const quem = v => v >= 0 ? "Flávio" : "Lula";
+    el("tendencia").innerHTML = `<p style="font-size:20px;font-weight:600;margin:0 0 6px">${b === 0 ? "Estável" : (b > 0 ? "Flávio" : "Lula") + " ganhando " + fmt(Math.abs(b), 2) + " p.p./dia"}</p>` +
+      `<p class="sub">Vantagem hoje (linha): <b class="num">${quem(hoje)} ${sinal(Math.abs(hoje))}</b> · se o ritmo seguir, em 25/10: <b class="num">${quem(dia25)} ${sinal(Math.abs(dia25))}</b><br>` +
+      `Inclinação ±${fmt(1.96 * sb, 2)} p.p./dia (95%) — ${Math.abs(b) < 1.96 * sb ? "não dá para distinguir de estabilidade" : "movimento estatisticamente perceptível"}. ${pts.length} pesquisas.</p>`;
+  })();
+
+  // Por instituto: nº de pesquisas, primeira e última, variação, viés contra a média dos demais.
+  (() => {
+    const insts = [...new Set(p2.map(p => p.instituto))];
+    const linhas = insts.map(nome => {
+      const meus = p2.filter(p => p.instituto === nome).sort((a, b) => a.fim.localeCompare(b.fim));
+      const vies = meus.map(m => { const outros = p2.filter(o => o.instituto !== nome && Math.abs(dias(o.fim, m.fim)) <= 3);
+        return outros.length ? m.margem - outros.reduce((a, o) => a + o.margem, 0) / outros.length : null; }).filter(v => v != null);
+      return { nome, n: meus.length, primeira: meus[0], ultima: meus.at(-1), vies: vies.length ? vies.reduce((a, v) => a + v, 0) / vies.length : null };
+    }).sort((a, b) => b.ultima.fim.localeCompare(a.ultima.fim));
+    el("institutos").innerHTML = `<tr><th>Instituto</th><th>Nº</th><th>Lula 1ª → última</th><th>Variação</th><th>Viés</th><th>Erro 1º turno</th></tr>` +
+      linhas.map(l => { const d = l.ultima.v.lula - l.primeira.v.lula;
+        return `<tr><td>${l.nome}</td><td class="num">${l.n}</td><td class="num">${fmt(l.primeira.v.lula)} → ${fmt(l.ultima.v.lula)}</td>` +
+          `<td class="num ${d >= 0 ? "lula" : "flavio"}">${l.n > 1 ? sinal(d) : "—"}</td>` +
+          `<td class="num">${l.vies == null ? "—" : (l.vies >= 0 ? "F " : "L ") + sinal(Math.abs(l.vies))}</td>` +
+          `<td class="num">${erroDe[l.nome] == null ? "—" : sinal(erroDe[l.nome])}</td></tr>`; }).join("");
+  })();
 
   desenhaMedia();
   desenhaTransf();
