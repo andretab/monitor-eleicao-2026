@@ -3,377 +3,314 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>Monitor Eleição 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --fundo: #f6f5f1; --cartao: #ffffff; --texto: #1c1d21; --texto-2: #5b5e66; --linha: #dedcd5;
-    --lula: #c8202f; --flavio: #1d4f9c; --neutro: #8a8d94; --destaque: #f2efe6;
-  }
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --fundo: #131417; --cartao: #1c1d22; --texto: #ecebe7; --texto-2: #a3a5ab; --linha: #2e3036;
-      --lula: #ef5361; --flavio: #5b8fe0; --neutro: #7d8088; --destaque: #24262c;
-    }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.5 Inter, system-ui, sans-serif; }
-  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
-  h1 { font-size: 26px; margin: 0; letter-spacing: -.01em; }
-  h2 { font-size: 17px; margin: 0 0 4px; }
-  .sub { color: var(--texto-2); font-size: 13px; margin: 0 0 14px; }
-  a { color: inherit; }
-  .num { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
-  header { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
-  .contagem { text-align: right; }
-  .contagem b { font-size: 28px; }
-  section { background: var(--cartao); border: 1px solid var(--linha); border-radius: 6px; padding: 18px; margin-bottom: 16px; }
-  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
-  .placar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-  .cand { padding: 12px; border-radius: 4px; background: var(--destaque); }
-  .cand .nome { font-weight: 600; font-size: 13px; }
-  .cand .pct { font-size: 32px; font-weight: 600; }
-  .lula { color: var(--lula); } .flavio { color: var(--flavio); }
-  .barra { display: flex; height: 10px; border-radius: 2px; overflow: hidden; margin: 12px 0 4px; }
-  .barra span { display: block; }
-  .meio { position: relative; }
-  .meio::after { content: ""; position: absolute; left: 50%; top: -3px; bottom: -3px; border-left: 2px solid var(--texto); }
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  th, td { padding: 6px 8px; border-bottom: 1px solid var(--linha); text-align: right; white-space: nowrap; }
-  th:first-child, td:first-child { text-align: left; }
-  th { color: var(--texto-2); font-weight: 500; font-size: 12px; }
-  .tabela-rola { overflow-x: auto; }
-  .seg { display: inline-flex; border: 1px solid var(--linha); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
-  .seg button { border: 0; background: transparent; color: var(--texto-2); padding: 6px 10px; font: inherit; font-size: 13px; cursor: pointer; }
-  .seg button[aria-pressed="true"] { background: var(--texto); color: var(--cartao); }
-  input[type=range] { width: 100%; }
-  .aviso { font-size: 12px; color: var(--texto-2); border-left: 3px solid var(--linha); padding-left: 10px; margin-top: 12px; }
-  svg text { fill: var(--texto-2); font: 11px "JetBrains Mono", monospace; }
-  .eixo { stroke: var(--linha); }
-  .pend td { color: var(--texto-2); }
-  .boletim { border-left: 3px solid var(--texto); padding: 2px 0 2px 12px; margin: 0 0 16px; }
-  .boletim h3 { font-size: 15px; margin: 0 0 4px; }
-  .boletim p { margin: 0 0 6px; font-size: 14px; }
-  .boletim .quando { font-size: 12px; color: var(--texto-2); }
-  details summary { cursor: pointer; color: var(--texto-2); font-size: 13px; }
-  nav.topo a { margin-right: 12px; }
-</style>
+<link rel="stylesheet" href="estilo.css?v=4">
 </head>
 <body>
+<nav class="barra-topo"><div class="dentro">
+  <a class="marca" href="index.html">Monitor Eleição 2026 <span>· 2º turno</span></a>
+  <div class="abas"><a href="index.html" aria-current="page">Pesquisas</a><a href="apuracao.html">Apuração ao vivo</a><a href="balanco.html">Balanço</a></div>
+</div></nav>
+
 <main>
-  <header>
+  <div class="titulo">
     <div>
-      <h1>Monitor Eleição 2026 · 2º turno</h1>
-      <p class="sub"><nav class="topo" style="display:inline"><a href="apuracao.html">Apuração ao vivo →</a><a href="balanco.html">Balanço →</a></nav><span id="atualizado"></span></p>
+      <h1>Lula × Flávio nas pesquisas</h1>
+      <p class="sub" id="atualizado"></p>
     </div>
-    <div class="contagem"><span class="sub">até a eleição (25/10)</span><br><b class="num" id="dias"></b></div>
-  </header>
+    <div class="contagem"><div class="mini">até a eleição · 25/10</div><div class="val num" id="dias"></div></div>
+  </div>
 
-  <section id="secBoletins" style="display:none">
-    <h2>Boletins do analista</h2>
-    <p class="sub">Análises escritas por um agente na nuvem, duas vezes por dia até a eleição.</p>
-    <div id="boletins"></div>
-  </section>
-
-  <div class="grade">
-    <section>
-      <h2>Ponto de partida: 1º turno (TSE)</h2>
-      <p class="sub">Votos válidos, 100% das urnas</p>
-      <div class="placar" id="placar1t"></div>
-      <div class="barra" id="barra1t"></div>
-      <p class="sub" id="outros1t"></p>
-    </section>
-    <section>
-      <h2>Média das pesquisas do 2º turno</h2>
-      <p class="sub">Votos válidos · última pesquisa de cada instituto, ponderada por amostra e data</p>
-      <div class="seg" role="group" aria-label="Correção" id="modos">
-        <button data-modo="bruta">Bruta</button>
-        <button data-modo="instituto">Corrigida por instituto</button>
-        <button data-modo="media">Correção média</button>
+  <section class="cartao principal">
+    <div class="cabeca">
+      <div>
+        <h2>Resumo das pesquisas do 2º turno</h2>
+        <p class="sub" style="margin:0">Cada ponto é uma pesquisa (votos válidos); as linhas são a média dos últimos 7 dias.</p>
       </div>
-      <div class="placar" id="placarMedia"></div>
-      <div class="barra meio" id="barraMedia"></div>
-      <p class="sub" id="probab"></p>
-    </section>
-  </div>
-
-  <section>
-    <h2>Pesquisas do 2º turno ao longo do tempo</h2>
-    <p class="sub">Vantagem de Flávio sobre Lula em votos válidos (pontos). Acima de zero, Flávio à frente. A linha é a média móvel.</p>
-    <div id="grafico"></div>
+      <div class="seg" role="group" aria-label="Correção" id="modos">
+        <button data-modo="bruta">Como divulgado</button>
+        <button data-modo="instituto">Corrigido</button>
+      </div>
+    </div>
+    <div id="duelo"></div>
+    <div class="grafico" id="grafResumo" style="margin-top:12px"></div>
+    <div class="legenda">
+      <span><i class="ponto" style="background:var(--lula)"></i>Lula, cada pesquisa</span>
+      <span><i class="ponto" style="background:var(--flavio)"></i>Flávio, cada pesquisa</span>
+      <span><i class="linha" style="border-color:var(--texto)"></i>Média de 7 dias</span>
+      <span><i class="tracejada" style="border-color:var(--texto-3)"></i>Se a tendência seguir até 25/10</span>
+    </div>
+    <div class="kpis" id="kpis" style="margin-top:16px"></div>
+    <p class="aviso" id="explicaModo"></p>
   </section>
 
   <div class="grade">
-    <section>
-      <h2>Quem acertou o 1º turno</h2>
-      <p class="sub">Última pesquisa de cada instituto contra o resultado do TSE. Erro na vantagem (Flávio − Lula): negativo = subestimou Flávio.</p>
-      <div class="tabela-rola"><table id="erros1t"></table></div>
+    <section class="cartao">
+      <h2>Última pesquisa de cada instituto</h2>
+      <p class="sub">Vantagem em pontos nos votos válidos. O círculo mostra a vantagem corrigida pelo erro do instituto no 1º turno.</p>
+      <div class="grafico" id="grafInstitutos"></div>
+      <details class="tabela"><summary>Ver tabela por instituto</summary><div class="tabela-rola"><table id="institutos"></table></div></details>
     </section>
-    <section>
+    <section class="cartao">
+      <h2>Quanto cada instituto errou no 1º turno</h2>
+      <p class="sub">Erro na vantagem entre Flávio e Lula. Barra para a direita = a pesquisa puxou para Lula.</p>
+      <div class="grafico" id="grafErros"></div>
+      <p class="mini" id="resumoErros"></p>
+      <details class="tabela"><summary>Ver tabela do 1º turno</summary><div class="tabela-rola"><table id="erros1t"></table></div></details>
+    </section>
+  </div>
+
+  <div class="grade">
+    <section class="cartao">
       <h2>A conta da virada</h2>
-      <p class="sub">Com o mesmo comparecimento do 1º turno, quanto dos <span class="num" id="outrosVotos"></span> votos dos demais candidatos cada um precisa herdar?</p>
-      <label for="transf" class="sub">Parcela dos "outros" que vai para Lula: <b class="num" id="transfValor"></b></label>
+      <p class="sub">Com o mesmo comparecimento do 1º turno, quanto dos <span class="num" id="outrosVotos"></span> votos dos demais candidatos vai para Lula?</p>
+      <label for="transf" class="sub" style="display:block;margin-bottom:4px">Arraste: <b class="num" id="transfValor"></b> para Lula</label>
       <input type="range" id="transf" min="0" max="100" step="1" value="50">
-      <div class="placar" id="placarTransf" style="margin-top:10px"></div>
-      <p class="sub" id="empate" style="margin-top:10px"></p>
-      <p class="aviso">Modelo simplificado: ignora quem se absteve no 1º turno e vai votar agora, e quem troca o voto válido por branco ou nulo. Essas duas coisas podem decidir uma eleição apertada.</p>
+      <div id="dueloTransf" style="margin-top:8px"></div>
+      <p class="sub" id="empate" style="margin:10px 0 0"></p>
     </section>
-  </div>
-
-  <div class="grade">
-    <section>
+    <section class="cartao">
       <h2>1º turno por região</h2>
-      <p class="sub">É aqui que nasce a "virada" na apuração: o Nordeste costuma totalizar depois.</p>
-      <div class="tabela-rola"><table id="regioes"></table></div>
-    </section>
-    <section>
-      <h2>Pesquisas registradas a divulgar</h2>
-      <p class="sub">Registradas no TSE, resultado ainda não publicado.</p>
-      <div class="tabela-rola"><table id="agenda"></table></div>
+      <p class="sub">Votos válidos. É aqui que nasce a virada na apuração: o Nordeste costuma totalizar por último.</p>
+      <div class="grafico" id="grafRegioes"></div>
+      <div class="legenda">
+        <span><i style="background:var(--lula)"></i>Lula</span>
+        <span><i style="background:var(--neutro)"></i>Demais candidatos</span>
+        <span><i style="background:var(--flavio)"></i>Flávio</span>
+      </div>
     </section>
   </div>
 
   <div class="grade">
-    <section>
-      <h2>Tendência</h2>
-      <p class="sub">Regressão da vantagem (corrigida por instituto) contra a data, pesquisas dos últimos 10 dias.</p>
-      <div id="tendencia"></div>
+    <section class="cartao" id="secBoletins" style="display:none">
+      <h2>Boletim do analista</h2>
+      <p class="sub">Escrito por um agente na nuvem às 9h e às 20h.</p>
+      <div id="boletins"></div>
     </section>
-    <section>
-      <h2>Cada instituto no 2º turno</h2>
-      <p class="sub">"Viés" = quanto o instituto fica acima ou abaixo da média dos outros no mesmo período (vantagem de Flávio, bruta).</p>
-      <div class="tabela-rola"><table id="institutos"></table></div>
+    <section class="cartao">
+      <h2>Pesquisas registradas, a divulgar</h2>
+      <p class="sub">Registradas no TSE, ainda sem resultado publicado.</p>
+      <div class="tabela-rola" style="margin-top:0"><table id="agenda"></table></div>
     </section>
   </div>
 
-  <section>
+  <section class="cartao">
     <h2>Todas as pesquisas do 2º turno</h2>
-    <div class="tabela-rola"><table id="lista2t"></table></div>
+    <details class="tabela"><summary>Ver lista completa</summary><div class="tabela-rola"><table id="lista2t"></table></div></details>
     <p class="aviso" id="fonte"></p>
   </section>
 </main>
 
+<script src="graficos.js?v=4"></script>
 <script src="dados.js"></script>
 <script>
 (() => {
-  const D = window.DADOS;
-  const P = D.pesquisas;
-  const BR = D.primeiro_turno.br;
-  const HOJE = new Date(P.atualizado_em + "T12:00:00");
-  const ELEICAO = new Date("2026-10-25T12:00:00");
+  const D = window.DADOS, P = D.pesquisas, BR = D.primeiro_turno.br;
   const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
   const sinal = (n, c = 1) => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n), c);
   const milhoes = n => fmt(n / 1e6, 1) + " mi";
   const dataBR = s => s.slice(8, 10) + "/" + s.slice(5, 7);
   const dias = (a, b) => (new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5;
   const el = id => document.getElementById(id);
+  const esc = G.esc;
+  const HOJE = P.atualizado_em, ELEICAO = "2026-10-25";
 
   // Resultado real do 1º turno em % dos válidos (fonte: TSE).
   const real = { lula: 100 * BR.lula / BR.validos, flavio: 100 * BR.flavio / BR.validos };
   const margemReal = real.flavio - real.lula;
 
-  // Converte uma pesquisa em votos válidos. Sem 'indecisos' informado, o instituto já divulga válidos
-  // (ou a soma dos candidatos já é ~100); com ele, a base é o que sobra depois de tirar indecisos/brancos/nulos.
-  const validos1t = p => {
-    const base = p.indecisos == null ? 100 : 100 - p.indecisos;
-    return { lula: 100 * p.lula / base, flavio: 100 * p.flavio / base };
-  };
-  // No 2º turno só há dois nomes: válidos = participação de cada um na soma dos dois.
+  // Pesquisa → votos válidos. Sem 'indecisos', o instituto já divulga válidos; com ele, a base é o que sobra.
+  const validos1t = p => { const base = p.indecisos == null ? 100 : 100 - p.indecisos; return { lula: 100 * p.lula / base, flavio: 100 * p.flavio / base }; };
   const validos2t = p => ({ lula: 100 * p.lula / (p.lula + p.flavio), flavio: 100 * p.flavio / (p.lula + p.flavio) });
 
-  // Erro de cada instituto no 1º turno.
+  // Erro de cada instituto no 1º turno, na vantagem Flávio − Lula.
   const erros = P.primeiro_turno_ultima_por_instituto.map(p => {
     const v = validos1t(p);
-    return { ...p, v, erroLula: v.lula - real.lula, erroFlavio: v.flavio - real.flavio, erroMargem: (v.flavio - v.lula) - margemReal };
-  }).sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem));
+    return { ...p, v, erroMargem: (v.flavio - v.lula) - margemReal };
+  }).sort((a, b) => a.erroMargem - b.erroMargem);
   const erroDe = Object.fromEntries(erros.map(e => [e.instituto, e.erroMargem]));
   const erroMedio = erros.reduce((s, e) => s + e.erroMargem, 0) / erros.length;
   const desvio = Math.sqrt(erros.reduce((s, e) => s + (e.erroMargem - erroMedio) ** 2, 0) / (erros.length - 1));
 
-  // Correção: se o instituto subestimou Flávio em X pontos de vantagem no 1º turno, devolve X ao 2º.
-  const correcao = (inst, modo) => modo === "bruta" ? 0 : modo === "media" ? -erroMedio : -(erroDe[inst] ?? erroMedio);
-
+  // Correção: se o instituto subestimou Flávio em X pontos no 1º turno, devolve X ao 2º.
+  const correcao = (inst, modo) => modo === "bruta" ? 0 : -(erroDe[inst] ?? erroMedio);
   const p2 = P.segundo_turno.map(p => ({ ...p, v: validos2t(p), margem: validos2t(p).flavio - validos2t(p).lula }))
     .sort((a, b) => b.fim.localeCompare(a.fim));
+  const ultimas = {}; for (const p of p2) if (!ultimas[p.instituto]) ultimas[p.instituto] = p;
 
   function media(modo) {
-    // Só a última de cada instituto, para quem publica todo dia não pesar mais.
-    const ultimas = {};
-    for (const p of p2) if (!ultimas[p.instituto]) ultimas[p.instituto] = p;
     let soma = 0, pesos = 0;
     for (const p of Object.values(ultimas)) {
-      const idade = dias(p.fim, P.atualizado_em);
-      const peso = Math.sqrt(Math.min(p.amostra, 5000)) * Math.exp(-idade / 7);
-      soma += peso * (p.margem + correcao(p.instituto, modo));
-      pesos += peso;
+      const peso = Math.sqrt(Math.min(p.amostra, 5000)) * Math.exp(-dias(p.fim, HOJE) / 7);
+      soma += peso * (p.margem + correcao(p.instituto, modo)); pesos += peso;
     }
     return { margem: soma / pesos, n: Object.keys(ultimas).length };
   }
-
-  // Normal acumulada (aproximação de Abramowitz-Stegun) para traduzir vantagem e incerteza em chance.
+  function tendencia(modo) {
+    const pts = p2.filter(p => dias(p.fim, HOJE) <= 10).map(p => ({ x: -dias(p.fim, HOJE), y: p.margem + correcao(p.instituto, modo) }));
+    if (pts.length < 4) return null;
+    const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length, my = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+    const sxx = pts.reduce((a, p) => a + (p.x - mx) ** 2, 0);
+    const b = pts.reduce((a, p) => a + (p.x - mx) * (p.y - my), 0) / sxx;
+    const res = Math.sqrt(pts.reduce((a, p) => a + (p.y - (my + b * (p.x - mx))) ** 2, 0) / (pts.length - 2));
+    return { b, ic: 1.96 * res / Math.sqrt(sxx), hoje: my - b * mx, dia25: my + b * (dias(HOJE, ELEICAO) - mx), n: pts.length };
+  }
   const phi = x => { const t = 1 / (1 + .2316419 * Math.abs(x)); const d = .3989423 * Math.exp(-x * x / 2);
     const p = d * t * (.3193815 + t * (-.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return x > 0 ? 1 - p : p; };
+  const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
 
-  const placar = (alvo, lula, flavio) => {
-    el(alvo).innerHTML = `
-      <div class="cand"><div class="nome lula">Lula (PT)</div><div class="pct num lula">${fmt(lula)}%</div></div>
-      <div class="cand"><div class="nome flavio">Flávio Bolsonaro (PL)</div><div class="pct num flavio">${fmt(flavio)}%</div></div>`;
-  };
-  const barra = (alvo, partes) => { el(alvo).innerHTML = partes.map(([w, c]) => `<span style="width:${w}%;background:${c}"></span>`).join(""); };
+  el("atualizado").textContent = `Pesquisas conferidas em ${dataBR(HOJE)}/2026 · ${p2.length} pesquisas do 2º turno · 1º turno pelo TSE`;
+  el("dias").textContent = Math.round(dias(HOJE, ELEICAO)) + " dias";
 
-  // Cabeçalho
-  el("atualizado").textContent = `Pesquisas conferidas em ${dataBR(P.atualizado_em)}/2026 · 1º turno totalizado pelo TSE em ${BR.totalizado_em}`;
-  el("dias").textContent = Math.round((ELEICAO - HOJE) / 864e5) + " dias";
-
-  // 1º turno
-  placar("placar1t", real.lula, real.flavio);
-  const pOutros = 100 * BR.outros / BR.validos;
-  barra("barra1t", [[real.lula, "var(--lula)"], [pOutros, "var(--neutro)"], [real.flavio, "var(--flavio)"]]);
-  const det = Object.entries(BR.outros_detalhe).sort((a, b) => b[1] - a[1]).slice(0, 4)
-    .map(([n, v]) => `${n.replace("ESCRITOR ", "")} ${fmt(100 * v / BR.validos, 2)}%`).join(" · ");
-  el("outros1t").innerHTML = `Demais: <span class="num">${fmt(pOutros, 2)}%</span> (${milhoes(BR.outros)}) — ${det}`;
-
-  // Média + chance
+  // ------------------------------------------------ resumo principal
   let modo = "instituto";
-  function desenhaMedia() {
-    const m = media(modo);
-    const lula = 50 - m.margem / 2, flavio = 50 + m.margem / 2;
-    placar("placarMedia", lula, flavio);
-    barra("barraMedia", [[lula, "var(--lula)"], [flavio, "var(--flavio)"]]);
-    const chanceFlavio = phi(m.margem / desvio);
-    el("probab").innerHTML = `${m.n} institutos · vantagem <b class="num">${sinal(m.margem)}</b> p.p. para ${m.margem >= 0 ? "Flávio" : "Lula"} · ` +
-      `chance estimada: Lula <b class="num lula">${fmt(100 * (1 - chanceFlavio), 0)}%</b> × Flávio <b class="num flavio">${fmt(100 * chanceFlavio, 0)}%</b>` +
-      `<br><span style="font-size:12px">Incerteza = desvio dos erros dos institutos no 1º turno (${fmt(desvio)} p.p. na vantagem). Estimativa grosseira, não previsão.</span>`;
+  function desenhaResumo() {
     document.querySelectorAll("#modos button").forEach(b => b.setAttribute("aria-pressed", b.dataset.modo === modo));
-    desenhaGrafico();
-  }
-  document.querySelectorAll("#modos button").forEach(b => b.addEventListener("click", () => { modo = b.dataset.modo; desenhaMedia(); }));
+    const m = media(modo), t = tendencia(modo);
+    const lula = 50 - m.margem / 2, flavio = 50 + m.margem / 2;
+    const chanceF = phi(m.margem / desvio);
+    G.duelo(el("duelo"), lula, flavio, "Lula (PT)", "Flávio Bolsonaro (PL)", `média ${modo === "bruta" ? "como divulgada" : "corrigida"} de ${m.n} institutos`);
 
-  // Gráfico de vantagem ao longo do tempo
-  function desenhaGrafico() {
-    const L = 900, A = 260, mE = 40, mD = 12, mT = 12, mB = 26;
-    const ini = "2026-10-04", fim = "2026-10-25";
-    const total = dias(ini, fim);
-    const x = s => mE + (L - mE - mD) * dias(ini, s) / total;
-    const pts = p2.map(p => ({ ...p, y: p.margem + correcao(p.instituto, modo) }));
-    const lim = Math.max(8, Math.ceil(Math.max(...pts.map(p => Math.abs(p.y))) + 1));
-    const y = v => mT + (A - mT - mB) * (lim - v) / (2 * lim);
-    let s = `<svg viewBox="0 0 ${L} ${A}" width="100%" role="img" aria-label="Vantagem nas pesquisas por data">`;
-    for (let v = -lim + (lim % 2); v <= lim; v += 2) {
-      s += `<line class="eixo" x1="${mE}" x2="${L - mD}" y1="${y(v)}" y2="${y(v)}" ${v === 0 ? 'style="stroke:var(--texto-2)"' : ""}/>`;
-      s += `<text x="${mE - 6}" y="${y(v) + 4}" text-anchor="end">${v > 0 ? "+" + v : v}</text>`;
+    const pontoL = p => 50 - (p.margem + correcao(p.instituto, modo)) / 2;
+    // Média móvel de 7 dias em cada data de término, com só a pesquisa mais recente de cada instituto na janela.
+    const datas = [...new Set(p2.map(p => p.fim))].sort();
+    const mediaEm = dt => { const janela = {}; for (const p of p2) if (dias(p.fim, dt) >= 0 && dias(p.fim, dt) < 7 && !janela[p.instituto]) janela[p.instituto] = p;
+      const v = Object.values(janela); return v.reduce((a, p) => a + pontoL(p), 0) / v.length; };
+    const serieL = datas.map(dt => [dt, mediaEm(dt)]);
+    const vals = p2.map(pontoL);
+    const lim = Math.max(8, Math.ceil(Math.max(...vals.map(v => Math.abs(v - 50))) + 1));
+    const series = [
+      { nome: "Lula", cor: "var(--lula)", pontos: serieL },
+      { nome: "Flávio", cor: "var(--flavio)", pontos: serieL.map(([d, v]) => [d, 100 - v]) },
+    ];
+    if (t) {
+      const ultimo = serieL.at(-1)[0];
+      const fimL = 50 - t.dia25 / 2, iniL = serieL.at(-1)[1];
+      series.push({ nome: "", cor: "var(--lula)", pontos: [[ultimo, iniL], [ELEICAO, fimL]], tracejada: true, largura: 1.5, opacidade: .45, rotulo: false });
+      series.push({ nome: "", cor: "var(--flavio)", pontos: [[ultimo, 100 - iniL], [ELEICAO, 100 - fimL]], tracejada: true, largura: 1.5, opacidade: .45, rotulo: false });
     }
-    for (let d = 0; d <= total; d += 3) {
-      const dt = new Date(new Date(ini + "T12:00:00").getTime() + d * 864e5).toISOString().slice(0, 10);
-      s += `<text x="${x(dt)}" y="${A - 8}" text-anchor="middle">${dataBR(dt)}</text>`;
-    }
-    s += `<line x1="${x(P.atualizado_em)}" x2="${x(P.atualizado_em)}" y1="${mT}" y2="${A - mB}" stroke="var(--neutro)" stroke-dasharray="3 3"/>`;
-    s += `<text x="${x(P.atualizado_em) + 4}" y="${mT + 10}">hoje</text>`;
-    // 1º turno como referência
-    s += `<circle cx="${x(ini)}" cy="${y(margemReal)}" r="5" fill="none" stroke="var(--texto)" stroke-width="2"><title>Resultado 1º turno: Flávio ${sinal(margemReal, 2)}</title></circle>`;
-    for (const p of pts) {
-      s += `<circle cx="${x(p.fim)}" cy="${y(p.y)}" r="4" fill="${p.y >= 0 ? "var(--flavio)" : "var(--lula)"}" opacity=".75"><title>${p.instituto} (${dataBR(p.fim)}): ${p.y >= 0 ? "Flávio" : "Lula"} ${sinal(Math.abs(p.y))}</title></circle>`;
-    }
-    // Média móvel de 7 dias por data de término
-    const datas = [...new Set(pts.map(p => p.fim))].sort();
-    const linha = datas.map(dt => { const j = pts.filter(p => dias(p.fim, dt) >= 0 && dias(p.fim, dt) < 7);
-      return [x(dt), y(j.reduce((a, p) => a + p.y, 0) / j.length)]; });
-    s += `<polyline fill="none" stroke="var(--texto)" stroke-width="2" points="${linha.map(p => p.join(",")).join(" ")}"/>`;
-    s += `</svg>`;
-    el("grafico").innerHTML = s;
+    G.linhas(el("grafResumo"), {
+      rotulo: "Lula e Flávio nas pesquisas do 2º turno",
+      x: { min: "2026-10-04", max: ELEICAO },
+      y: { min: 50 - lim, max: 50 + lim, passo: lim > 10 ? 4 : 2, fmt: v => v + "%", fmtValor: v => fmt(v) + "%" },
+      series,
+      pontos: p2.flatMap(p => [{ x: p.fim, y: pontoL(p), cor: "var(--lula)" }, { x: p.fim, y: 100 - pontoL(p), cor: "var(--flavio)" }]),
+      refY: [{ y: 50, rotulo: "50%" }],
+      refX: [{ x: HOJE, rotulo: "hoje" }, { x: ELEICAO, rotulo: "eleição" }],
+      dicaX: dt => {
+        const doDia = p2.filter(p => p.fim === dt);
+        const mm = serieL.find(s => s[0] === dt);
+        return `<b>${dataBR(dt)}</b>` + (mm ? `<br>Média: <span class="q" style="background:var(--lula)"></span>${fmt(mm[1])}% × <span class="q" style="background:var(--flavio)"></span>${fmt(100 - mm[1])}%` : "") +
+          doDia.map(p => `<br>${esc(p.instituto)}: ${fmt(pontoL(p))}% × ${fmt(100 - pontoL(p))}%`).join("");
+      },
+    });
+
+    const tTexto = t ? `${t.b === 0 ? "estável" : (t.b > 0 ? "Flávio" : "Lula") + " +" + fmt(Math.abs(t.b), 2)}` : "—";
+    el("kpis").innerHTML =
+      kpi("Chance de Lula", fmt(100 * (1 - chanceF), 0) + "%", "estimativa, não previsão", "lula") +
+      kpi("Chance de Flávio", fmt(100 * chanceF, 0) + "%", "estimativa, não previsão", "flavio") +
+      kpi("Tendência por dia (10 dias)", tTexto, t ? (Math.abs(t.b) < t.ic ? "não dá para distinguir de estabilidade" : `±${fmt(t.ic, 2)} por dia (95%)`) : "") +
+      kpi("Se o ritmo seguir até 25/10", t ? (t.dia25 >= 0 ? "Flávio " : "Lula ") + sinal(Math.abs(t.dia25)) : "—", "extrapolação linear: trate como teto");
+    el("explicaModo").innerHTML = modo === "bruta"
+      ? "Mostrando as pesquisas como foram divulgadas, convertidas para votos válidos."
+      : `Mostrando as pesquisas corrigidas: cada instituto recebe de volta o erro que teve no 1º turno. Em média, as pesquisas do 1º turno puxaram ${fmt(Math.abs(erroMedio))} ponto(s) para Lula na vantagem. A chance usa como incerteza a dispersão desses erros (${fmt(desvio)} p.p.).`;
+    desenhaInstitutos();
+  }
+  document.querySelectorAll("#modos button").forEach(b => b.addEventListener("click", () => { modo = b.dataset.modo; desenhaResumo(); }));
+
+  // ------------------------------------------------ última pesquisa de cada instituto
+  function desenhaInstitutos() {
+    const lista = Object.values(ultimas).map(p => ({ p, bruta: -p.margem, corr: -(p.margem + correcao(p.instituto, "instituto")) }))
+      .sort((a, b) => b.bruta - a.bruta);
+    const max = Math.ceil(Math.max(...lista.flatMap(l => [Math.abs(l.bruta), Math.abs(l.corr)])) + 1);
+    G.barras(el("grafInstitutos"), {
+      divergente: true, max, rotuloNeg: "← Flávio", rotuloPos: "Lula →", colunaValor: 110, tituloColuna: "divulg. · corrig.",
+      itens: lista.map(l => ({
+        rotulo: l.p.instituto, valor: l.bruta, cor: l.bruta >= 0 ? "var(--lula)" : "var(--flavio)",
+        texto: `${l.bruta >= 0 ? "L" : "F"}${fmt(Math.abs(l.bruta))} · ${l.corr >= 0 ? "L" : "F"}${fmt(Math.abs(l.corr))}`,
+        marcador: { valor: l.corr, cor: "var(--texto)" },
+        dica: `<b>${esc(l.p.instituto)}</b> · ${dataBR(l.p.inicio)}–${dataBR(l.p.fim)}<br>Válidos: Lula ${fmt(l.p.v.lula)}% × Flávio ${fmt(l.p.v.flavio)}%<br>Corrigida: ${l.corr >= 0 ? "Lula" : "Flávio"} +${fmt(Math.abs(l.corr))}${erroDe[l.p.instituto] == null ? " (erro médio)" : ""}<br>Amostra ${l.p.amostra.toLocaleString("pt-BR")}`,
+      })),
+    });
   }
 
-  // Ranking do 1º turno
+  // ------------------------------------------------ erros do 1º turno
+  const maxErro = Math.ceil(Math.max(...erros.map(e => Math.abs(e.erroMargem))));
+  G.barras(el("grafErros"), {
+    divergente: true, max: maxErro, rotuloNeg: "← puxou para Flávio", rotuloPos: "puxou para Lula →",
+    itens: [...erros].sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem)).map(e => ({
+      rotulo: e.instituto, valor: -e.erroMargem, cor: e.erroMargem < 0 ? "var(--lula)" : "var(--flavio)",
+      texto: fmt(Math.abs(e.erroMargem)),
+      dica: `<b>${esc(e.instituto)}</b> · ${dataBR(e.fim)}<br>Pesquisa: Lula ${fmt(e.v.lula)}% × Flávio ${fmt(e.v.flavio)}%<br>Urna: Lula ${fmt(real.lula)}% × Flávio ${fmt(real.flavio)}%<br>Líder certo? ${e.v.flavio > e.v.lula ? "sim" : "não"}`,
+    })),
+  });
+  const acertaram = erros.filter(e => e.v.flavio > e.v.lula).length;
+  el("resumoErros").textContent = `Acertaram quem ficaria em 1º: ${acertaram} de ${erros.length}. Erro médio: ${fmt(Math.abs(erroMedio))} p.p. a favor de Lula.`;
   el("erros1t").innerHTML = `<tr><th>Instituto</th><th>Data</th><th>Lula</th><th>Flávio</th><th>Erro vantagem</th><th>Líder certo?</th></tr>` +
-    `<tr style="font-weight:600"><td>Resultado TSE</td><td class="num">04/10</td><td class="num lula">${fmt(real.lula)}</td><td class="num flavio">${fmt(real.flavio)}</td><td class="num">—</td><td></td></tr>` +
-    erros.map(e => `<tr><td>${e.instituto}</td><td class="num">${dataBR(e.fim)}</td><td class="num">${fmt(e.v.lula)}</td><td class="num">${fmt(e.v.flavio)}</td>` +
-      `<td class="num" style="color:${e.erroMargem < 0 ? "var(--lula)" : "var(--flavio)"}">${sinal(e.erroMargem)}</td>` +
-      `<td>${(e.v.flavio > e.v.lula) ? "sim" : "não"}</td></tr>`).join("") +
-    `<tr><td colspan="6" class="sub" style="text-align:left;white-space:normal">Erro médio: <span class="num">${sinal(erroMedio)}</span> p.p. — em média as pesquisas puxaram a vantagem para Lula. Acertaram o líder: ${erros.filter(e => e.v.flavio > e.v.lula).length} de ${erros.length}.</td></tr>`;
+    `<tr class="destaque"><td>Resultado TSE</td><td class="num">04/10</td><td class="num">${fmt(real.lula)}</td><td class="num">${fmt(real.flavio)}</td><td></td><td></td></tr>` +
+    [...erros].sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem)).map(e => `<tr><td>${esc(e.instituto)}</td><td class="num">${dataBR(e.fim)}</td><td class="num">${fmt(e.v.lula)}</td><td class="num">${fmt(e.v.flavio)}</td><td class="num">${sinal(e.erroMargem)}</td><td>${e.v.flavio > e.v.lula ? "sim" : "não"}</td></tr>`).join("");
 
-  // Calculadora de transferência
+  // ------------------------------------------------ tabela por instituto (2º turno)
+  el("institutos").innerHTML = `<tr><th>Instituto</th><th>Nº</th><th>Lula 1ª → última</th><th>Variação</th><th>Erro 1º turno</th></tr>` +
+    [...new Set(p2.map(p => p.instituto))].map(nome => {
+      const meus = p2.filter(p => p.instituto === nome).sort((a, b) => a.fim.localeCompare(b.fim));
+      const d = meus.at(-1).v.lula - meus[0].v.lula;
+      return `<tr><td>${esc(nome)}</td><td class="num">${meus.length}</td><td class="num">${fmt(meus[0].v.lula)} → ${fmt(meus.at(-1).v.lula)}</td><td class="num">${meus.length > 1 ? sinal(d) : "—"}</td><td class="num">${erroDe[nome] == null ? "—" : sinal(erroDe[nome])}</td></tr>`;
+    }).join("");
+
+  // ------------------------------------------------ conta da virada
   el("outrosVotos").textContent = milhoes(BR.outros);
   const empate = (BR.flavio - BR.lula + BR.outros) / (2 * BR.outros);
   function desenhaTransf() {
     const t = +el("transf").value / 100;
-    const l = BR.lula + t * BR.outros, f = BR.flavio + (1 - t) * BR.outros;
     el("transfValor").textContent = fmt(100 * t, 0) + "%";
-    placar("placarTransf", 100 * l / BR.validos, 100 * f / BR.validos);
-    el("empate").innerHTML = `Ponto de empate: Lula precisa de <b class="num">${fmt(100 * empate)}%</b> dos votos dos outros; Flávio, de <b class="num">${fmt(100 * (1 - empate))}%</b>.`;
+    G.duelo(el("dueloTransf"), BR.lula + t * BR.outros, BR.flavio + (1 - t) * BR.outros, "Lula", "Flávio", "resultado com essa divisão");
+    el("empate").innerHTML = `Empate exige <b class="num">${fmt(100 * empate)}%</b> dos votos dos demais para Lula. Ignora abstenção nova e voto em branco/nulo.`;
   }
   el("transf").addEventListener("input", desenhaTransf);
+  desenhaTransf();
 
-  // Regiões
-  const reg = {}; const nomes = { N: "Norte", NE: "Nordeste", CO: "Centro-Oeste", SE: "Sudeste", S: "Sul", EX: "Exterior" };
+  // ------------------------------------------------ regiões (1º turno)
+  const nomes = { N: "Norte", NE: "Nordeste", CO: "Centro-Oeste", SE: "Sudeste", S: "Sul", EX: "Exterior" };
+  const reg = {};
   for (const [uf, r] of Object.entries(D.primeiro_turno)) { if (uf === "br") continue;
-    const g = reg[r.regiao] ??= { lula: 0, flavio: 0, validos: 0 }; g.lula += r.lula; g.flavio += r.flavio; g.validos += r.validos; }
-  el("regioes").innerHTML = `<tr><th>Região</th><th>Válidos</th><th>% do país</th><th>Lula</th><th>Flávio</th><th>Saldo (votos)</th></tr>` +
-    Object.entries(reg).sort((a, b) => b[1].validos - a[1].validos).map(([k, g]) => {
-      const saldo = g.lula - g.flavio;
-      return `<tr><td>${nomes[k]}</td><td class="num">${milhoes(g.validos)}</td><td class="num">${fmt(100 * g.validos / BR.validos)}</td>` +
-        `<td class="num lula">${fmt(100 * g.lula / g.validos)}</td><td class="num flavio">${fmt(100 * g.flavio / g.validos)}</td>` +
-        `<td class="num" style="color:${saldo > 0 ? "var(--lula)" : "var(--flavio)"}">${saldo > 0 ? "Lula " : "Flávio "}+${milhoes(Math.abs(saldo))}</td></tr>`; }).join("");
+    const g = reg[r.regiao] ??= { lula: 0, flavio: 0, outros: 0, validos: 0 }; g.lula += r.lula; g.flavio += r.flavio; g.outros += r.outros; g.validos += r.validos; }
+  G.empilhadas(el("grafRegioes"), {
+    direita: true,
+    itens: Object.entries(reg).filter(([k]) => k !== "EX").sort((a, b) => b[1].validos - a[1].validos).map(([k, g]) => ({
+      rotulo: nomes[k], direita: milhoes(g.validos),
+      partes: [{ valor: g.lula, cor: "var(--lula)", texto: fmt(100 * g.lula / g.validos, 0) + "%" }, { valor: g.outros, cor: "var(--neutro)" },
+               { valor: g.flavio, cor: "var(--flavio)", texto: fmt(100 * g.flavio / g.validos, 0) + "%" }],
+      dica: `<b>${nomes[k]}</b> · ${milhoes(g.validos)} válidos<br>Lula ${fmt(100 * g.lula / g.validos)}% · Flávio ${fmt(100 * g.flavio / g.validos)}% · demais ${fmt(100 * g.outros / g.validos)}%<br>Saldo: ${g.lula > g.flavio ? "Lula" : "Flávio"} +${milhoes(Math.abs(g.lula - g.flavio))}`,
+    })),
+  });
 
-  // Agenda
-  el("agenda").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th><th>Margem</th></tr>` +
-    [...P.segundo_turno_a_divulgar].sort((a, b) => a.fim.localeCompare(b.fim)).map(p =>
-      `<tr class="pend"><td>${p.instituto}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td><td class="num">${p.margem == null ? "—" : "±" + fmt(p.margem)}</td></tr>`).join("");
-
-  // Lista completa
-  el("lista2t").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th><th>Divulgado L × F</th><th>Válidos Lula</th><th>Válidos Flávio</th><th>Vantagem</th><th>Corrigida</th></tr>` +
-    p2.map(p => { const c = p.margem + correcao(p.instituto, "instituto");
-      return `<tr><td>${p.instituto}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td>` +
-        `<td class="num">${fmt(p.lula)} × ${fmt(p.flavio)}</td><td class="num lula">${fmt(p.v.lula)}</td><td class="num flavio">${fmt(p.v.flavio)}</td>` +
-        `<td class="num">${p.margem >= 0 ? "F" : "L"} ${sinal(Math.abs(p.margem))}</td><td class="num">${c >= 0 ? "F" : "L"} ${sinal(Math.abs(c))}${erroDe[p.instituto] == null ? "*" : ""}</td></tr>`; }).join("");
-  el("fonte").innerHTML = `* Instituto sem pesquisa de 1º turno na base: usa a correção média. Fonte das pesquisas: <a href="${P.fonte}">compilação da Wikipédia</a> (conferir no PesqEle/TSE). 1º turno: arquivos oficiais de resultados do TSE.`;
-
-  // Boletins do analista (dados/boletins.json)
+  // ------------------------------------------------ boletins
   const bol = D.boletins || [];
   if (bol.length) {
     el("secBoletins").style.display = "block";
-    const esc = t => String(t).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
     const bloco = b => `<div class="boletim"><div class="quando num">${esc(b.quando).replace("T", " ").slice(0, 16)} · ${esc(b.tipo)}</div>` +
       `<h3>${esc(b.titulo)}</h3>${(b.paragrafos || []).map(t => `<p>${esc(t)}</p>`).join("")}` +
-      `${(b.fontes || []).length ? `<p class="sub">Fontes: ${b.fontes.map((u, i) => `<a href="${esc(u)}" rel="noopener">[${i + 1}]</a>`).join(" ")}</p>` : ""}</div>`;
-    el("boletins").innerHTML = bloco(bol[0]) + (bol.length > 1 ? `<details><summary>Boletins anteriores (${bol.length - 1})</summary>${bol.slice(1).map(bloco).join("")}</details>` : "");
+      `${(b.fontes || []).length ? `<p class="mini">Fontes: ${b.fontes.map((u, i) => `<a href="${esc(u)}" rel="noopener">[${i + 1}]</a>`).join(" ")}</p>` : ""}</div>`;
+    el("boletins").innerHTML = bloco(bol[0]) + (bol.length > 1 ? `<details class="anteriores"><summary>Boletins anteriores (${bol.length - 1})</summary>${bol.slice(1).map(bloco).join("")}</details>` : "");
   }
 
-  // Tendência: mínimos quadrados da vantagem corrigida contra o dia, últimos 10 dias.
-  (() => {
-    const pts = p2.filter(p => dias(p.fim, P.atualizado_em) <= 10).map(p => ({ x: -dias(p.fim, P.atualizado_em), y: p.margem + correcao(p.instituto, "instituto") }));
-    if (pts.length < 4) { el("tendencia").innerHTML = '<p class="sub">Poucas pesquisas para medir tendência.</p>'; return; }
-    const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length, my = pts.reduce((a, p) => a + p.y, 0) / pts.length;
-    const b = pts.reduce((a, p) => a + (p.x - mx) * (p.y - my), 0) / pts.reduce((a, p) => a + (p.x - mx) ** 2, 0);
-    const res = Math.sqrt(pts.reduce((a, p) => a + (p.y - (my + b * (p.x - mx))) ** 2, 0) / (pts.length - 2));
-    const sb = res / Math.sqrt(pts.reduce((a, p) => a + (p.x - mx) ** 2, 0));
-    const ate = dias(P.atualizado_em, "2026-10-25");
-    const hoje = my + b * (0 - mx), dia25 = my + b * (ate - mx);
-    const quem = v => v >= 0 ? "Flávio" : "Lula";
-    el("tendencia").innerHTML = `<p style="font-size:20px;font-weight:600;margin:0 0 6px">${b === 0 ? "Estável" : (b > 0 ? "Flávio" : "Lula") + " ganhando " + fmt(Math.abs(b), 2) + " p.p./dia"}</p>` +
-      `<p class="sub">Vantagem hoje (linha): <b class="num">${quem(hoje)} ${sinal(Math.abs(hoje))}</b> · se o ritmo seguir, em 25/10: <b class="num">${quem(dia25)} ${sinal(Math.abs(dia25))}</b> (extrapolação linear: ritmos de campanha raramente se mantêm, trate como teto)<br>` +
-      `Inclinação ±${fmt(1.96 * sb, 2)} p.p./dia (95%) — ${Math.abs(b) < 1.96 * sb ? "não dá para distinguir de estabilidade" : "movimento estatisticamente perceptível"}. ${pts.length} pesquisas.</p>`;
-  })();
+  // ------------------------------------------------ agenda e lista completa
+  el("agenda").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th></tr>` +
+    [...P.segundo_turno_a_divulgar].sort((a, b) => a.fim.localeCompare(b.fim)).map(p =>
+      `<tr class="pend"><td>${esc(p.instituto)}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td></tr>`).join("") ||
+    `<tr><td colspan="3" class="sub">Nenhuma no momento.</td></tr>`;
+  el("lista2t").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th><th>Divulgado L × F</th><th>Válidos Lula</th><th>Válidos Flávio</th><th>Corrigida</th></tr>` +
+    p2.map(p => { const c = p.margem + correcao(p.instituto, "instituto");
+      return `<tr><td>${esc(p.instituto)}${p.fonte === "extra" ? " †" : ""}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td>` +
+        `<td class="num">${fmt(p.lula)} × ${fmt(p.flavio)}</td><td class="num">${fmt(p.v.lula)}</td><td class="num">${fmt(p.v.flavio)}</td>` +
+        `<td class="num">${c >= 0 ? "F" : "L"} +${fmt(Math.abs(c))}${erroDe[p.instituto] == null ? "*" : ""}</td></tr>`; }).join("");
+  el("fonte").innerHTML = `Fontes: <a href="${P.fonte}">compilação da Wikipédia</a> (atualizada a cada 3 h) e pesquisas achadas pelo analista (†); 1º turno: arquivos oficiais do TSE. * Instituto sem pesquisa de 1º turno na base: usa a correção média.`;
 
-  // Por instituto: nº de pesquisas, primeira e última, variação, viés contra a média dos demais.
-  (() => {
-    const insts = [...new Set(p2.map(p => p.instituto))];
-    const linhas = insts.map(nome => {
-      const meus = p2.filter(p => p.instituto === nome).sort((a, b) => a.fim.localeCompare(b.fim));
-      const vies = meus.map(m => { const outros = p2.filter(o => o.instituto !== nome && Math.abs(dias(o.fim, m.fim)) <= 3);
-        return outros.length ? m.margem - outros.reduce((a, o) => a + o.margem, 0) / outros.length : null; }).filter(v => v != null);
-      return { nome, n: meus.length, primeira: meus[0], ultima: meus.at(-1), vies: vies.length ? vies.reduce((a, v) => a + v, 0) / vies.length : null };
-    }).sort((a, b) => b.ultima.fim.localeCompare(a.ultima.fim));
-    el("institutos").innerHTML = `<tr><th>Instituto</th><th>Nº</th><th>Lula 1ª → última</th><th>Variação</th><th>Viés</th><th>Erro 1º turno</th></tr>` +
-      linhas.map(l => { const d = l.ultima.v.lula - l.primeira.v.lula;
-        return `<tr><td>${l.nome}</td><td class="num">${l.n}</td><td class="num">${fmt(l.primeira.v.lula)} → ${fmt(l.ultima.v.lula)}</td>` +
-          `<td class="num ${d >= 0 ? "lula" : "flavio"}">${l.n > 1 ? sinal(d) : "—"}</td>` +
-          `<td class="num">${l.vies == null ? "—" : (l.vies >= 0 ? "F " : "L ") + sinal(Math.abs(l.vies))}</td>` +
-          `<td class="num">${erroDe[l.nome] == null ? "—" : sinal(erroDe[l.nome])}</td></tr>`; }).join("");
-  })();
-
-  desenhaMedia();
-  desenhaTransf();
+  desenhaResumo();
   // O robô atualiza as pesquisas a cada 3 h; a página se recarrega a cada 15 min para pegar a versão nova.
   setTimeout(() => location.reload(), 15 * 60 * 1000);
 })();

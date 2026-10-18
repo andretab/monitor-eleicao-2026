@@ -1,0 +1,124 @@
+/* Tema claro único das três páginas. Sem modo escuro de propósito: o site é lido de dia e de noite
+   no mesmo visual, e os gráficos foram calibrados contra este fundo. */
+:root {
+  color-scheme: light;
+  --fundo: #f4f5f7;
+  --cartao: #ffffff;
+  --texto: #14161a;
+  --texto-2: #545a66;
+  --texto-3: #8a909c;
+  --linha: #e3e6eb;
+  --grade: #eef0f3;
+  --lula: #d0263c;
+  --lula-claro: #f9dde1;
+  --flavio: #1f5fbf;
+  --flavio-claro: #dbe6f7;
+  --neutro: #a3a9b4;
+  --destaque: #f7f8fa;
+  --alerta: #c2410c;
+  --marca: #14161a;
+}
+
+* { box-sizing: border-box; }
+html { background: var(--fundo); }
+body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.55 Inter, system-ui, -apple-system, "Segoe UI", sans-serif; -webkit-font-smoothing: antialiased; }
+a { color: var(--flavio); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.num { font-family: "JetBrains Mono", ui-monospace, monospace; font-variant-numeric: tabular-nums; }
+.lula { color: var(--lula); }
+.flavio { color: var(--flavio); }
+
+/* Barra de navegação */
+.barra-topo { background: var(--cartao); border-bottom: 1px solid var(--linha); position: sticky; top: 0; z-index: 10; }
+.barra-topo .dentro { max-width: 1120px; margin: 0 auto; padding: 0 16px; display: flex; align-items: center; gap: 20px; height: 56px; overflow-x: auto; }
+.marca { font-weight: 700; font-size: 15px; white-space: nowrap; color: var(--texto); }
+.marca span { color: var(--texto-3); font-weight: 500; }
+.abas { display: flex; gap: 4px; margin-left: auto; }
+.abas a { color: var(--texto-2); padding: 7px 12px; border-radius: 6px; font-size: 14px; font-weight: 500; white-space: nowrap; }
+.abas a:hover { background: var(--destaque); text-decoration: none; }
+.abas a[aria-current="page"] { background: var(--texto); color: #fff; }
+
+main { max-width: 1120px; margin: 0 auto; padding: 24px 16px 64px; }
+.titulo { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; }
+h1 { font-size: 28px; line-height: 1.2; margin: 0 0 4px; letter-spacing: -.02em; }
+h2 { font-size: 17px; margin: 0 0 2px; letter-spacing: -.01em; }
+.sub { color: var(--texto-2); font-size: 13px; margin: 0 0 14px; }
+.mini { color: var(--texto-3); font-size: 12px; }
+
+.cartao { background: var(--cartao); border: 1px solid var(--linha); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+.cartao.principal { padding: 24px; }
+.grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); margin-bottom: 16px; }
+.grade > .cartao { margin-bottom: 0; }
+.cabeca { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; flex-wrap: wrap; margin-bottom: 12px; }
+
+/* Números de destaque */
+.kpis { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); }
+.kpi { background: var(--destaque); border-radius: 10px; padding: 12px 14px; }
+.kpi .rot { font-size: 12px; color: var(--texto-2); font-weight: 500; }
+.kpi .val { font-size: 26px; font-weight: 700; line-height: 1.2; letter-spacing: -.01em; }
+.kpi .det { font-size: 12px; color: var(--texto-3); }
+.contagem { text-align: right; }
+.contagem .val { font-size: 30px; font-weight: 700; }
+
+/* Barra dividida Lula × Flávio */
+.duelo { margin: 6px 0 4px; }
+.duelo .nomes { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+.duelo .nomes b { font-size: 30px; font-weight: 700; display: block; line-height: 1.1; }
+.duelo .trilho { position: relative; display: flex; height: 14px; border-radius: 7px; overflow: hidden; gap: 2px; background: var(--cartao); }
+.duelo .trilho span { display: block; height: 100%; }
+.duelo .trilho::after { content: ""; position: absolute; left: 50%; top: -4px; bottom: -4px; border-left: 2px dashed var(--texto); opacity: .5; }
+.duelo .legenda-meio { text-align: center; font-size: 11px; color: var(--texto-3); margin-top: 4px; }
+
+/* Controles */
+.seg { display: inline-flex; background: var(--destaque); border: 1px solid var(--linha); border-radius: 8px; padding: 3px; gap: 2px; }
+.seg button { border: 0; background: transparent; color: var(--texto-2); padding: 5px 10px; font: inherit; font-size: 13px; border-radius: 6px; cursor: pointer; white-space: nowrap; }
+.seg button[aria-pressed="true"] { background: var(--cartao); color: var(--texto); font-weight: 600; box-shadow: 0 1px 2px rgba(20, 22, 26, .12); }
+input[type=range] { width: 100%; accent-color: var(--texto); }
+
+/* Gráficos */
+.grafico { position: relative; width: 100%; }
+.grafico svg { display: block; width: 100%; height: auto; overflow: visible; }
+.grafico text { fill: var(--texto-3); font: 11px "JetBrains Mono", ui-monospace, monospace; }
+.grafico .rotulo-dado { fill: var(--texto); font-weight: 600; font-size: 12px; }
+.grafico .rotulo-cat { fill: var(--texto-2); font: 13px Inter, system-ui, sans-serif; }
+.grafico .grade-l { stroke: var(--grade); }
+.grafico .eixo-zero { stroke: var(--texto-3); }
+.legenda { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--texto-2); margin-top: 10px; }
+.legenda i { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -2px; margin-right: 6px; }
+.legenda i.linha { height: 0; border-top: 2px solid; border-radius: 0; width: 16px; vertical-align: middle; }
+.legenda i.tracejada { height: 0; border-top: 2px dashed; border-radius: 0; width: 16px; vertical-align: middle; }
+.legenda i.ponto { width: 9px; height: 9px; border-radius: 50%; }
+.dica { position: absolute; pointer-events: none; background: var(--texto); color: #fff; font-size: 12px; line-height: 1.45; padding: 8px 10px; border-radius: 8px; white-space: nowrap; z-index: 5; opacity: 0; transition: opacity .1s; }
+.dica b { font-weight: 600; }
+.dica .q { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 6px; }
+
+/* Tabelas (sempre recolhidas atrás dos gráficos) */
+details.tabela { margin-top: 14px; }
+details.tabela > summary { cursor: pointer; color: var(--texto-2); font-size: 13px; font-weight: 500; list-style: none; }
+details.tabela > summary::before { content: "▸ "; }
+details.tabela[open] > summary::before { content: "▾ "; }
+.tabela-rola { overflow-x: auto; margin-top: 10px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th, td { padding: 7px 8px; border-bottom: 1px solid var(--linha); text-align: right; white-space: nowrap; }
+th:first-child, td:first-child { text-align: left; }
+th { color: var(--texto-3); font-weight: 500; font-size: 12px; }
+tr.destaque td { font-weight: 600; background: var(--destaque); }
+.pend td { color: var(--texto-2); }
+
+.aviso { font-size: 12px; color: var(--texto-2); background: var(--destaque); border-radius: 8px; padding: 10px 12px; margin-top: 14px; }
+.faixa { color: #fff; font-weight: 600; padding: 10px 14px; border-radius: 10px; margin-bottom: 16px; display: none; }
+
+/* Boletins */
+.boletim { padding: 0 0 4px; margin: 0 0 14px; }
+.boletim h3 { font-size: 16px; margin: 2px 0 6px; }
+.boletim p { margin: 0 0 8px; font-size: 14px; color: var(--texto); }
+.boletim .quando { font-size: 12px; color: var(--texto-3); }
+details.anteriores summary { cursor: pointer; color: var(--texto-2); font-size: 13px; }
+
+@media (max-width: 560px) {
+  h1 { font-size: 23px; }
+  .cartao, .cartao.principal { padding: 16px; }
+  .duelo .nomes b { font-size: 24px; }
+  .kpi .val { font-size: 22px; }
+  .marca span { display: none; }
+}
