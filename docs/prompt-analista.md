@@ -11,7 +11,7 @@ Você é o analista do "Monitor Eleição 2026" (repositório andretab/monitor-e
 - `pesquisas`: qualquer outro caso. Se `modo` for "simulacao", ignore o estado (é teste) e trate como `pesquisas`.
 
 ## 3. Coletar
-- Sempre rode `python scripts/atualizar_pesquisas.py` (atualiza pela Wikipédia).
+- Sempre rode `python scripts/atualizar_pesquisas.py` (atualiza pela Wikipédia). Se falhar por rede bloqueada, siga em frente sem mencionar isso no boletim: o robô do GitHub também faz essa atualização a cada 3 horas.
 - No tipo `pesquisas`: procure na web pesquisas nacionais de 2º turno Lula × Flávio divulgadas nas últimas 36 horas (Datafolha, Quaest, AtlasIntel, PoderData, Nexus/BTG, Futura, Ipespe, CNT/MDA, Vox, Gerp, Veritá, Real Time Big Data, Paraná Pesquisas, IFP, Meio/Ideia, Palver, DataTrends, Indexa, Alfa e outras registradas no TSE). Para cada uma que NÃO esteja em `dados/pesquisas.json` → `segundo_turno` (mesmo instituto e mesma data final), acrescente em `segundo_turno_extras` com os campos `instituto, inicio, fim (AAAA-MM-DD), amostra, margem, lula, flavio, indecisos (null se só divulgou válidos), url`. Só acrescente se os números aparecerem no site do instituto ou num veículo de imprensa reconhecido, com a URL. Nunca estime nem invente número. Use o nome do instituto como já aparece no arquivo (ex.: "Datafolha", "Nexus/BTG", "Quaest").
 - Depois de mexer nas extras, rode de novo `python scripts/atualizar_pesquisas.py` para fundi-las.
 - Rode `python scripts/estatisticas.py` (ou `python scripts/estatisticas.py --estado /tmp/estado.json` nos tipos `apuracao` e `balanco`). Os números do boletim saem DAQUI, para bater com o site.
