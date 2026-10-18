@@ -58,10 +58,17 @@
     for (const r of cfg.refY || [])
       s += `<line x1="${m.e}" x2="${W - m.d}" y1="${Y(r.y)}" y2="${Y(r.y)}" stroke="var(--texto-3)" stroke-dasharray="4 4"/>` +
         (r.rotulo ? `<text x="${m.e + 4}" y="${Y(r.y) - 5}">${esc(r.rotulo)}</text>` : "");
-    for (const r of cfg.refX || [])
-      s += `<line x1="${X(r.x)}" x2="${X(r.x)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--texto-3)" stroke-dasharray="2 4"/>` +
-        (X(r.x) > W - m.d - 30 ? `<text x="${X(r.x) - 4}" y="${m.t + 10}" text-anchor="end">${esc(r.rotulo)}</text>`
-                               : `<text x="${X(r.x) + 4}" y="${m.t + 10}">${esc(r.rotulo)}</text>`);
+    // Rótulos das linhas verticais: junto à borda direita alinham para dentro; se dois colidem, o segundo desce.
+    let caixaAnterior = null;
+    for (const r of cfg.refX || []) {
+      const xr = X(r.x), larg = 7 * r.rotulo.length, fim = xr > W - m.d - 30;
+      const caixa = fim ? [xr - 4 - larg, xr - 4] : [xr + 4, xr + 4 + larg];
+      const desce = caixaAnterior && caixa[0] < caixaAnterior[1] + 4 && caixa[1] > caixaAnterior[0] - 4;
+      const yr = m.t + 10 + (desce ? 13 : 0);
+      s += `<line x1="${xr}" x2="${xr}" y1="${m.t}" y2="${H - m.b}" stroke="var(--texto-3)" stroke-dasharray="2 4"/>` +
+        `<text x="${fim ? xr - 4 : xr + 4}" y="${yr}" ${fim ? 'text-anchor="end"' : ""}>${esc(r.rotulo)}</text>`;
+      caixaAnterior = caixa;
+    }
     for (const p of cfg.pontos || [])
       s += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${p.raio || 4}" fill="${p.cor}" fill-opacity="${p.opacidade ?? .35}" stroke="${p.borda || "none"}" stroke-width="2"/>`;
     const fins = [];
