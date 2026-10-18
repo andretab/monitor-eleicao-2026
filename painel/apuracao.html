@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apuração ao Vivo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --fundo: #f6f5f1; --cartao: #ffffff; --texto: #1c1d21; --texto-2: #5b5e66; --linha: #dedcd5;
+    --lula: #c8202f; --flavio: #1d4f9c; --neutro: #8a8d94; --destaque: #f2efe6; --alerta: #b45309;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --fundo: #131417; --cartao: #1c1d22; --texto: #ecebe7; --texto-2: #a3a5ab; --linha: #2e3036;
+      --lula: #ef5361; --flavio: #5b8fe0; --neutro: #7d8088; --destaque: #24262c; --alerta: #f59e0b;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--fundo); color: var(--texto); font: 15px/1.5 Inter, system-ui, sans-serif; }
+  main { max-width: 1080px; margin: 0 auto; padding: 24px 16px 64px; }
+  h1 { font-size: 26px; margin: 0; letter-spacing: -.01em; }
+  h2 { font-size: 17px; margin: 0 0 4px; }
+  a { color: inherit; }
+  .sub { color: var(--texto-2); font-size: 13px; margin: 0 0 14px; }
+  .num { font-family: "JetBrains Mono", monospace; font-variant-numeric: tabular-nums; }
+  header { display: flex; justify-content: space-between; align-items: end; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .relogio { text-align: right; }
+  .relogio b { font-size: 28px; }
+  .simulacao { background: var(--alerta); color: #fff; font-weight: 600; padding: 8px 12px; border-radius: 4px; margin-bottom: 16px; display: none; }
+  section { background: var(--cartao); border: 1px solid var(--linha); border-radius: 6px; padding: 18px; margin-bottom: 16px; }
+  .grade { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+  .placar { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .cand { padding: 12px; border-radius: 4px; background: var(--destaque); }
+  .cand .nome { font-weight: 600; font-size: 13px; }
+  .cand .pct { font-size: 32px; font-weight: 600; }
+  .cand .votos { font-size: 12px; color: var(--texto-2); }
+  .lula { color: var(--lula); } .flavio { color: var(--flavio); }
+  .barra { position: relative; display: flex; height: 10px; border-radius: 2px; overflow: hidden; margin: 12px 0 4px; background: var(--linha); }
+  .barra span { display: block; height: 100%; }
+  .barra.meio::after { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 2px solid var(--texto); }
+  .progresso { height: 6px; background: var(--linha); border-radius: 2px; overflow: hidden; margin-top: 6px; }
+  .progresso span { display: block; height: 100%; background: var(--texto); }
+  .virada { font-size: 20px; font-weight: 600; margin: 4px 0 8px; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { padding: 6px 8px; border-bottom: 1px solid var(--linha); text-align: right; white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--texto-2); font-weight: 500; font-size: 12px; }
+  .tabela-rola { overflow-x: auto; }
+  .mini { display: inline-block; width: 60px; height: 6px; background: var(--linha); border-radius: 2px; vertical-align: middle; margin-right: 6px; overflow: hidden; }
+  .mini span { display: block; height: 100%; background: var(--texto-2); }
+  .aviso { font-size: 12px; color: var(--texto-2); border-left: 3px solid var(--linha); padding-left: 10px; margin-top: 12px; }
+  svg text { fill: var(--texto-2); font: 11px "JetBrains Mono", monospace; }
+  .eixo { stroke: var(--linha); }
+  .legenda { display: flex; gap: 16px; flex-wrap: wrap; font-size: 12px; color: var(--texto-2); margin-top: 6px; }
+  .legenda i { display: inline-block; width: 18px; height: 0; border-top: 2px solid; vertical-align: middle; margin-right: 6px; }
+  #vazio { display: none; }
+</style>
+</head>
+<body>
+<main>
+  <div class="simulacao" id="faixaSim">SIMULAÇÃO: estes números são de uma noite fictícia para teste, não da eleição.</div>
+  <header>
+    <div>
+      <h1>Apuração ao vivo · 2º turno</h1>
+      <p class="sub"><a href="index.html">← Pesquisas</a> · <span id="gerado"></span></p>
+    </div>
+    <div class="relogio"><span class="sub">seções totalizadas</span><br><b class="num" id="secoes"></b>
+      <div class="progresso" style="width:180px;margin-left:auto"><span id="barraSecoes"></span></div></div>
+  </header>
+
+  <section id="vazio"><h2>Aguardando a apuração</h2><p class="sub">A apuração começa domingo, 25/10, às 17h (Brasília). O robô liga sozinho às 16h45 e esta página se atualiza sozinha; pode deixá-la aberta.</p></section>
+
+  <div id="conteudo">
+  <div class="grade">
+    <section>
+      <h2>Placar do TSE agora</h2>
+      <p class="sub">Votos válidos já apurados</p>
+      <div class="placar" id="placar"></div>
+      <div class="barra meio" id="barraPlacar"></div>
+    </section>
+    <section>
+      <h2>Projeção do resultado final</h2>
+      <p class="sub">Soma, UF por UF, dos votos já apurados com os que faltam</p>
+      <div class="placar" id="projecao"></div>
+      <div class="barra meio" id="barraProj"></div>
+      <p class="sub" id="chance"></p>
+    </section>
+  </div>
+
+  <section>
+    <h2>A virada</h2>
+    <div class="virada" id="viradaTitulo"></div>
+    <p class="sub" id="viradaTexto"></p>
+    <div id="grafico"></div>
+    <div class="legenda">
+      <span><i style="border-color:var(--texto)"></i>Placar (vantagem em votos)</span>
+      <span><i style="border-color:var(--texto);border-top-style:dashed"></i>Placar previsto daqui em diante</span>
+      <span><i style="border-color:var(--alerta)"></i>Projeção do resultado final</span>
+      <span><i style="border-color:var(--neutro);border-top-style:dotted"></i>2022: Lula passou com ~67,8% das seções</span>
+    </div>
+  </section>
+
+  <section>
+    <h2>Por região</h2>
+    <p class="sub">De onde ainda vêm votos e para quem eles pendem</p>
+    <div class="tabela-rola"><table id="regioes"></table></div>
+  </section>
+
+  <section>
+    <h2>Por UF</h2>
+    <p class="sub">"Esperado" = 1º turno + transferência suposta dos demais + swing nacional observado. "Restante" = parcela de Lula usada para os votos que faltam.</p>
+    <div class="tabela-rola"><table id="ufs"></table></div>
+    <p class="aviso" id="metodo"></p>
+  </section>
+  </div>
+</main>
+
+<script>
+(() => {
+  const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
+  const mi = n => fmt(n / 1e6, 2) + " mi";
+  const el = id => document.getElementById(id);
+  const pct = (a, b) => (a + b) ? 100 * a / (a + b) : 0;
+
+  const placar = (alvo, l, f, extra = "") => {
+    el(alvo).innerHTML = `
+      <div class="cand"><div class="nome lula">Lula (PT)</div><div class="pct num lula">${fmt(pct(l, f), 2)}%</div><div class="votos num">${mi(l)}</div></div>
+      <div class="cand"><div class="nome flavio">Flávio Bolsonaro (PL)</div><div class="pct num flavio">${fmt(pct(f, l), 2)}%</div><div class="votos num">${mi(f)}</div></div>${extra}`;
+  };
+  const barra = (alvo, l, f) => { const p = pct(l, f); el(alvo).innerHTML = `<span style="width:${p}%;background:var(--lula)"></span><span style="width:${100 - p}%;background:var(--flavio)"></span>`; };
+  const nome = k => k === "lula" ? "Lula" : k === "flavio" ? "Flávio" : "ninguém";
+
+  function desenha(A) {
+    const vazio = !A || !(A.fracao_secoes > 0); // antes das 17h o TSE publica tudo zerado
+    el("vazio").style.display = vazio ? "block" : "none";
+    el("conteudo").style.display = vazio ? "none" : "block";
+    if (vazio) return;
+
+    el("faixaSim").style.display = A.modo === "simulacao" ? "block" : "none";
+    el("gerado").textContent = `Apuração ${A.hora_apuracao} · atualizado ${A.gerado_em}`;
+    el("secoes").textContent = fmt(100 * A.fracao_secoes, 2) + "%";
+    el("barraSecoes").style.width = (100 * A.fracao_secoes) + "%";
+
+    placar("placar", A.lula, A.flavio);
+    barra("barraPlacar", A.lula, A.flavio);
+    placar("projecao", A.proj_lula, A.proj_flavio);
+    barra("barraProj", A.proj_lula, A.proj_flavio);
+    const tot = A.proj_lula + A.proj_flavio;
+    const meia = 1.96 * A.desvio_margem / tot * 50; // ± na % de Lula (margem/2)
+    el("chance").innerHTML = `Lula entre <b class="num">${fmt(pct(A.proj_lula, A.proj_flavio) - meia, 1)}%</b> e <b class="num">${fmt(pct(A.proj_lula, A.proj_flavio) + meia, 1)}%</b> (95%) · ` +
+      `chance: Lula <b class="num lula">${fmt(100 * A.chance_lula, 0)}%</b> × Flávio <b class="num flavio">${fmt(100 * (1 - A.chance_lula), 0)}%</b>` +
+      `<br>Swing nacional sobre o esperado: <b class="num">${A.swing >= 0 ? "+" : "−"}${fmt(Math.abs(100 * A.swing), 2)}</b> p.p. para ${A.swing >= 0 ? "Lula" : "Flávio"}`;
+
+    // Virada
+    const V = A.virada;
+    if (A.fracao_secoes >= 1) {
+      el("viradaTitulo").textContent = `Apuração concluída: ${nome(V.lider_placar)} venceu.`;
+    } else if (V.vai_virar) {
+      el("viradaTitulo").innerHTML = `${nome(V.lider_placar)} lidera o placar, mas a projeção aponta <span class="${V.lider_projetado}">${nome(V.lider_projetado)}</span>.`;
+    } else {
+      el("viradaTitulo").innerHTML = `<span class="${V.lider_placar}">${nome(V.lider_placar)}</span> lidera e a projeção mantém.`;
+    }
+    const ultimaTroca = (() => { let t = null; const h = A.historico;
+      for (let i = 1; i < h.length; i++) if ((h[i].margem_placar > 0) !== (h[i - 1].margem_placar > 0)) t = h[i]; return t; })();
+    let txt = "";
+    if (V.vai_virar && V.fracao_secoes != null) txt += `Virada do placar prevista por volta das <b class="num">${A.historico.at(-1).virada_prevista_hora}</b>, com cerca de <b class="num">${fmt(100 * V.fracao_secoes, 1)}%</b> das seções. `;
+    if (V.vai_virar && !V.ritmo_medido) txt += "Ainda sem ritmo medido por UF: a previsão supõe que todas andam juntas e tende a adiantar a virada. ";
+    if (ultimaTroca) txt += `Última troca de liderança no placar: <b class="num">${ultimaTroca.hora}</b>, com <b class="num">${fmt(100 * ultimaTroca.fracao_secoes, 1)}%</b> das seções. `;
+    txt += `Referência: em 2022, Lula passou Bolsonaro com ~${fmt(100 * A.referencia_2022.fracao_virada, 1)}% das seções (${A.referencia_2022.hora}).`;
+    el("viradaTexto").innerHTML = txt;
+    desenhaGrafico(A);
+
+    // Regiões
+    const ordem = ["Nordeste", "Norte", "Sudeste", "Sul", "Centro-Oeste", "Exterior"];
+    el("regioes").innerHTML = `<tr><th>Região</th><th>Apurado</th><th>Lula</th><th>Flávio</th><th>Saldo apurado</th><th>Ainda faltam</th><th>Saldo projetado</th></tr>` +
+      [...A.regioes].sort((a, b) => ordem.indexOf(a.regiao) - ordem.indexOf(b.regiao)).map(r => {
+        const ap = (r.lula + r.flavio) / (r.lula + r.flavio + r.votos_rest || 1);
+        const s = r.lula - r.flavio, sp = r.proj_lula - r.proj_flavio;
+        return `<tr><td>${r.regiao}</td><td class="num"><span class="mini"><span style="width:${100 * ap}%"></span></span>${fmt(100 * ap, 0)}%</td>` +
+          `<td class="num lula">${fmt(pct(r.lula, r.flavio))}</td><td class="num flavio">${fmt(pct(r.flavio, r.lula))}</td>` +
+          `<td class="num ${s >= 0 ? "lula" : "flavio"}">${s >= 0 ? "L" : "F"} +${mi(Math.abs(s))}</td><td class="num">${mi(r.votos_rest)}</td>` +
+          `<td class="num ${sp >= 0 ? "lula" : "flavio"}">${sp >= 0 ? "L" : "F"} +${mi(Math.abs(sp))}</td></tr>`; }).join("");
+
+    // UFs
+    el("ufs").innerHTML = `<tr><th>UF</th><th>Seções</th><th>Lula apurado</th><th>Esperado</th><th>Restante</th><th>Votos faltando</th><th>Lula projetado</th><th>Saldo projetado</th></tr>` +
+      A.ufs.map(u => { const sp = u.proj_lula - u.proj_flavio;
+        return `<tr><td>${u.uf.toUpperCase()}${u.uf === "zz" ? " (exterior)" : ""}</td>` +
+          `<td class="num"><span class="mini"><span style="width:${100 * u.fracao}%"></span></span>${fmt(100 * u.fracao, 0)}%</td>` +
+          `<td class="num">${u.observado == null ? "—" : fmt(100 * u.observado)}</td><td class="num">${fmt(100 * (u.prior + A.swing))}</td>` +
+          `<td class="num">${fmt(100 * u.parcela_rest)}</td><td class="num">${mi(u.votos_rest)}</td>` +
+          `<td class="num">${fmt(pct(u.proj_lula, u.proj_flavio))}</td>` +
+          `<td class="num ${sp >= 0 ? "lula" : "flavio"}">${sp >= 0 ? "L" : "F"} +${mi(Math.abs(sp))}</td></tr>`; }).join("");
+
+    el("metodo").textContent = `Esperado parte do 1º turno com ${fmt(100 * A.transferencia_prior, 0)}% dos votos dos demais candidatos indo para Lula; o swing observado corrige isso conforme as UFs apuram. ` +
+      `Limite: dentro de cada UF supõe que as seções que faltam votam como as já apuradas; capitais costumam chegar antes do interior.`;
+  }
+
+  function desenhaGrafico(A) {
+    const L = 900, H = 280, mE = 56, mD = 12, mT = 12, mB = 28;
+    const h = A.historico.filter(p => p.fracao_secoes > 0);
+    const futuro = A.curva_futura || [];
+    const vals = [...h.map(p => p.margem_placar), ...h.map(p => p.margem_proj), ...futuro.map(p => p.margem_lula), 0];
+    const lim = Math.max(1e6, ...vals.map(Math.abs)) * 1.1;
+    const x = f => mE + (L - mE - mD) * f;
+    const y = v => mT + (H - mT - mB) * (lim - v) / (2 * lim);
+    let s = `<svg viewBox="0 0 ${L} ${H}" width="100%" role="img" aria-label="Vantagem de Lula ao longo da apuração">`;
+    const passo = lim > 6e6 ? 2e6 : lim > 3e6 ? 1e6 : 5e5;
+    for (let v = -Math.floor(lim / passo) * passo; v <= lim; v += passo) {
+      s += `<line class="eixo" x1="${mE}" x2="${L - mD}" y1="${y(v)}" y2="${y(v)}" ${v === 0 ? 'style="stroke:var(--texto-2)"' : ""}/>`;
+      s += `<text x="${mE - 6}" y="${y(v) + 4}" text-anchor="end">${v === 0 ? "0" : (v > 0 ? "L+" : "F+") + fmt(Math.abs(v) / 1e6, 1)}</text>`;
+    }
+    for (let f = 0; f <= 1.0001; f += 0.1) s += `<text x="${x(f)}" y="${H - 8}" text-anchor="middle">${Math.round(100 * f)}%</text>`;
+    s += `<line x1="${x(A.referencia_2022.fracao_virada)}" x2="${x(A.referencia_2022.fracao_virada)}" y1="${mT}" y2="${H - mB}" stroke="var(--neutro)" stroke-dasharray="2 3"/>`;
+    const linha = (pts, cor, extra = "") => pts.length ? `<polyline fill="none" stroke="${cor}" stroke-width="2" ${extra} points="${pts.map(p => p.join(",")).join(" ")}"/>` : "";
+    s += linha(h.map(p => [x(p.fracao_secoes), y(p.margem_proj)]), "var(--alerta)");
+    s += linha(futuro.map(p => [x(p.fracao_secoes), y(p.margem_lula)]), "var(--texto)", 'stroke-dasharray="5 4" opacity=".6"');
+    s += linha(h.map(p => [x(p.fracao_secoes), y(p.margem_placar)]), "var(--texto)");
+    if (A.virada.vai_virar && A.virada.fracao_secoes != null)
+      s += `<circle cx="${x(A.virada.fracao_secoes)}" cy="${y(0)}" r="5" fill="none" stroke="var(--alerta)" stroke-width="2"><title>Virada prevista</title></circle>`;
+    s += `</svg>`;
+    el("grafico").innerHTML = s;
+  }
+
+  // De onde vêm os dados:
+  //  - aberto do disco (file://): o apuracao-dados.js que o coletor local escreve;
+  //  - publicado (GitHub Pages): o estado.json do ramo ao-vivo, que o robô do GitHub Actions atualiza.
+  //    A API do GitHub entrega o arquivo sem cache (limite de 60 leituras/hora por aparelho, por isso 75 s);
+  //    se o limite estourar, cai para o raw, que tem até 5 min de cache.
+  const REPO = "andretab/monitor-eleicao-2026";
+  const LOCAL = location.protocol === "file:";
+  const API = `https://api.github.com/repos/${REPO}/contents/estado.json?ref=ao-vivo`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/ao-vivo/estado.json`;
+
+  function recarregaLocal() {
+    const tag = document.createElement("script");
+    tag.src = "apuracao-dados.js?t=" + Date.now();
+    tag.onload = tag.onerror = () => { desenha(window.APURACAO); tag.remove(); };
+    document.body.appendChild(tag);
+  }
+  async function recarregaRemoto() {
+    try {
+      let r = await fetch(API, { headers: { Accept: "application/vnd.github.raw" }, cache: "no-store" });
+      if (!r.ok && r.status !== 404) r = await fetch(RAW + "?t=" + Date.now(), { cache: "no-store" });
+      desenha(r.ok ? await r.json() : null);
+    } catch (e) { /* sem rede: mantém o que está na tela até a próxima tentativa */ }
+  }
+  const recarrega = LOCAL ? recarregaLocal : recarregaRemoto;
+  recarrega();
+  setInterval(recarrega, LOCAL ? 10000 : 75000);
+})();
+</script>
+</body>
+</html>

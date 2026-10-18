@@ -1,0 +1,6 @@
+__pycache__/
+apuracao/estado.json
+apuracao/bruto-2t/
+painel/apuracao-dados.js
+painel/*.tmp
+.claude/

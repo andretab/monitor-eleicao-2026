@@ -1,0 +1,50 @@
+# Noite da apuração: liga sozinho domingo, 25/10, às 16h45 de Brasília (19h45 UTC), lê o TSE a cada
+# minuto e publica a projeção no ramo ao-vivo, de onde a página lê. Para quando chega a 100%.
+# O segundo horário é reserva caso o GitHub atrase ou pule o primeiro; a fila (concurrency) impede
+# dois coletores ao mesmo tempo.
+name: apuracao
+
+on:
+  schedule:
+    - cron: "45 19 25 10 *"
+    - cron: "30 20 25 10 *"
+  workflow_dispatch:
+    inputs:
+      simular:
+        description: "Noite simulada (teste)"
+        type: boolean
+        default: true
+      velocidade:
+        description: "Simulação: minutos de apuração por segundo"
+        default: "2"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apuracao
+  cancel-in-progress: false
+
+jobs:
+  coletar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Só em 2026
+        if: github.event_name == 'schedule'
+        run: test "$(date -u +%Y)" = "2026"
+      - name: Diagnóstico de acesso ao TSE
+        run: curl -s -o /dev/null -w "TSE respondeu HTTP %{http_code}\n" -A monitor-eleicao-2026 https://resultados.tse.jus.br/oficial/ele2026/6258/dados/sp/sp-c0001-e006258-u.json
+      - name: Coletor
+        env:
+          PYTHONUNBUFFERED: "1"
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.simular }}" = "true" ]; then
+            python apuracao/coletor.py --simular --velocidade "${{ inputs.velocidade }}" --sim-transferencia 0.62 --sim-swing 0.01 --publicar
+          else
+            python apuracao/coletor.py --intervalo 60 --publicar
+          fi
