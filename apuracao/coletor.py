@@ -87,7 +87,8 @@ def publicar(texto: str) -> None:
                                                   text=True, check=True).stdout.strip()
     try:
         blob = git("hash-object", "-w", "--stdin", entrada=texto)
-        arvore = git("mktree", entrada=f"100644 blob {blob}\testado.json\n")
+        # -z (registro terminado em \0): no Windows o modo texto troca \n por \r\n e o nome viraria "estado.json\r".
+        arvore = git("mktree", "-z", entrada=f"100644 blob {blob}\testado.json\0")
         commit = git("-c", "user.name=monitor-eleicao", "-c", "user.email=monitor@users.noreply.github.com",
                      "commit-tree", arvore, "-m", "apuração ao vivo")
         git("push", "--force", "--quiet", "origin", f"{commit}:refs/heads/ao-vivo")

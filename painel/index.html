@@ -351,7 +351,7 @@
     const hoje = my + b * (0 - mx), dia25 = my + b * (ate - mx);
     const quem = v => v >= 0 ? "Flávio" : "Lula";
     el("tendencia").innerHTML = `<p style="font-size:20px;font-weight:600;margin:0 0 6px">${b === 0 ? "Estável" : (b > 0 ? "Flávio" : "Lula") + " ganhando " + fmt(Math.abs(b), 2) + " p.p./dia"}</p>` +
-      `<p class="sub">Vantagem hoje (linha): <b class="num">${quem(hoje)} ${sinal(Math.abs(hoje))}</b> · se o ritmo seguir, em 25/10: <b class="num">${quem(dia25)} ${sinal(Math.abs(dia25))}</b><br>` +
+      `<p class="sub">Vantagem hoje (linha): <b class="num">${quem(hoje)} ${sinal(Math.abs(hoje))}</b> · se o ritmo seguir, em 25/10: <b class="num">${quem(dia25)} ${sinal(Math.abs(dia25))}</b> (extrapolação linear: ritmos de campanha raramente se mantêm, trate como teto)<br>` +
       `Inclinação ±${fmt(1.96 * sb, 2)} p.p./dia (95%) — ${Math.abs(b) < 1.96 * sb ? "não dá para distinguir de estabilidade" : "movimento estatisticamente perceptível"}. ${pts.length} pesquisas.</p>`;
   })();
 

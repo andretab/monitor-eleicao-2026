@@ -1,26 +1,4 @@
 {
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
- "boletins": [
-  {
-   "quando": "2026-10-18T18:30",
-   "tipo": "pesquisas",
-   "titulo": "TESTE — boletim de exemplo",
-   "paragrafos": [
-    "Este é um boletim de teste para conferir a exibição. Será removido.",
-    "Segundo parágrafo <com caracteres especiais & aspas \"assim\">."
-   ],
-   "fontes": [
-    "https://pt.wikipedia.org/wiki/Pesquisas_de_opini%C3%A3o_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
-   ]
-  },
-  {
-   "quando": "2026-10-18T09:00",
-   "tipo": "pesquisas",
-   "titulo": "TESTE — boletim anterior",
-   "paragrafos": [
-    "Anterior."
-   ],
-   "fontes": []
-  }
- ]
+ "boletins": []
 }

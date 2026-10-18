@@ -150,7 +150,7 @@
         `dos votos novos de Lula+Flávio · empate exigia ${fmt(100 * (BR1.flavio - BR1.lula + BR1.outros) / (2 * BR1.outros), 1)}%`);
 
     // Virada
-    const h = A.historico.filter(x => x.fracao_secoes > 0.001);
+    const h = A.historico.filter(x => x.fracao_secoes >= 0.02); // antes de 2% das seções é ruído das primeiras urnas
     const trocas = []; for (let i = 1; i < h.length; i++) if ((h[i].margem_placar > 0) !== (h[i - 1].margem_placar > 0)) trocas.push(h[i]);
     const ult = trocas.at(-1);
     const sinalV = venc === "lula" ? 1 : -1;
