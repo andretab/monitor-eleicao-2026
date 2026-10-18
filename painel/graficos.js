@@ -60,7 +60,8 @@
         (r.rotulo ? `<text x="${m.e + 4}" y="${Y(r.y) - 5}">${esc(r.rotulo)}</text>` : "");
     for (const r of cfg.refX || [])
       s += `<line x1="${X(r.x)}" x2="${X(r.x)}" y1="${m.t}" y2="${H - m.b}" stroke="var(--texto-3)" stroke-dasharray="2 4"/>` +
-        `<text x="${X(r.x) + 4}" y="${m.t + 10}">${esc(r.rotulo)}</text>`;
+        (X(r.x) > W - m.d - 30 ? `<text x="${X(r.x) - 4}" y="${m.t + 10}" text-anchor="end">${esc(r.rotulo)}</text>`
+                               : `<text x="${X(r.x) + 4}" y="${m.t + 10}">${esc(r.rotulo)}</text>`);
     for (const p of cfg.pontos || [])
       s += `<circle cx="${X(p.x)}" cy="${Y(p.y)}" r="${p.raio || 4}" fill="${p.cor}" fill-opacity="${p.opacidade ?? .35}" stroke="${p.borda || "none"}" stroke-width="2"/>`;
     const fins = [];

@@ -120,5 +120,7 @@ details.anteriores summary { cursor: pointer; color: var(--texto-2); font-size: 
   .cartao, .cartao.principal { padding: 16px; }
   .duelo .nomes b { font-size: 24px; }
   .kpi .val { font-size: 22px; }
-  .marca span { display: none; }
+  .marca span, .abas .longo { display: none; }
+  .barra-topo .dentro { gap: 10px; }
+  .abas a { padding: 7px 9px; }
 }

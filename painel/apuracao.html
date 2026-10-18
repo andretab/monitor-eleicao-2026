@@ -7,7 +7,7 @@
 <title>Apuração ao Vivo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="estilo.css?v=4">
+<link rel="stylesheet" href="estilo.css?v=5">
 <style>
   .progresso { height: 8px; background: var(--linha); border-radius: 4px; overflow: hidden; margin-top: 6px; width: 200px; margin-left: auto; }
   .progresso span { display: block; height: 100%; background: var(--texto); }
@@ -16,8 +16,8 @@
 </head>
 <body>
 <nav class="barra-topo"><div class="dentro">
-  <a class="marca" href="index.html">Monitor Eleição 2026 <span>· 2º turno</span></a>
-  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html" aria-current="page">Apuração ao vivo</a><a href="balanco.html">Balanço</a></div>
+  <a class="marca" href="index.html">Eleição 2026<span> · monitor do 2º turno</span></a>
+  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html" aria-current="page">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a></div>
 </div></nav>
 
 <main>
@@ -87,7 +87,7 @@
   </div>
 </main>
 
-<script src="graficos.js?v=4"></script>
+<script src="graficos.js?v=5"></script>
 <script>
 (() => {
   const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
