@@ -1,4 +1,21 @@
 {
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
- "boletins": []
+ "boletins": [
+  {
+   "quando": "2026-10-18T18:14",
+   "tipo": "pesquisas",
+   "titulo": "Média ainda favorece Flávio, mas tendência recente é de queda de sua vantagem",
+   "paragrafos": [
+    "Nenhuma pesquisa nacional nova de 2º turno foi localizada nas últimas 36 horas com números publicados; as mais recentes na base são Vox (15–17/10: Lula 46,4% x Flávio 44,6%), Gerp (14–16/10: 45% x 50%) e Veritá (12–16/10: 48,9% x 51,1% nos válidos). Nesta execução a atualização automática pela Wikipédia foi bloqueada pela rede, então a base reflete a última coleta.",
+    "A média bruta dos institutos é Lula 49,02% x Flávio 50,98% (vantagem de 1,96 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, a média vai a Lula 47,75% x Flávio 52,25% (4,49 p.p.), chance estimada de 91%. Com a correção pelo erro médio dos institutos, são 5,75 p.p. e 96%. São estimativas, não certezas.",
+    "A tendência nas pesquisas é de -0,72 p.p. por dia na vantagem de Flávio (IC95% de ±0,51), ou seja, distinguível de estabilidade, na direção de Lula; a vantagem de Flávio hoje seria de 2,1 p.p. Se o ritmo se mantivesse até 25/10, a extrapolação mecânica indicaria Lula à frente por 2,9 p.p., mas essa extrapolação é frágil e não deve ser lida como previsão.",
+    "Divergem da média: Gerp (Flávio +5 p.p.) e Vox (Lula +1,8 p.p.); a PoderData/Aya mostra 50% a 50%. O Datafolha de 15/10 registrou Lula 45% x Flávio 47%, e o Quaest de 13/10, 44% x 46%.",
+    "Ainda constam como registradas e não divulgadas: IFP, Meio/Ideia, Veritá, Alfa Inteligência e Real Time Big Data (todas com fim de campo em 19/10), além de AtlasIntel, Nexus/BTG, PoderData/Aya, DataTrends e Futura (campo até 17–18/10) e Vetor Arrow (22–23/10). Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos), o que sustenta a incerteza sobre qualquer média."
+   ],
+   "fontes": [
+    "https://www.moneytimes.com.br/pesquisa-datafolha-15-de-outubro-gaep/",
+    "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+   ]
+  }
+ ]
 }
