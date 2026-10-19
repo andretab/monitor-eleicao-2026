@@ -15,6 +15,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import subprocess
 import sys
 import time
@@ -73,6 +74,8 @@ def montar_estado(cfg, unidades, proj, virada, saida_hist, modo, transferencia, 
         "corrida": cfg["titulo"], "candidatos": cfg["candidatos"], "rotulo_unidade": cfg["unidade"],
         "modo": modo,
         "gerado_em": datetime.now(BRASILIA).strftime("%d/%m %H:%M:%S"),
+        "gerado_iso": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+        "origem": ORIGEM,
         "hora_apuracao": hora_de(minuto),
         "transferencia_prior": transferencia,
         "fracao_secoes": proj.fracao_secoes,
@@ -112,6 +115,35 @@ def gravar(cfg, estado: dict) -> None:
     print("  painel local não atualizado neste ciclo (arquivo em uso)")
 
 
+# Quem está publicando: o robô do GitHub ou o reserva no PC. O reserva só publica se o do GitHub parar.
+ORIGEM = "github" if os.environ.get("GITHUB_ACTIONS") else "pc"
+LIMITE_SILENCIO_S = 240  # 4 min sem atualização do GitHub = ele parou; o PC assume
+
+
+def github_em_dia(ramo: str) -> tuple[bool, str]:
+    """O estado publicado no ramo veio do GitHub e tem menos de 4 minutos?"""
+    r = subprocess.run(["git", "fetch", "-q", "origin", ramo], cwd=RAIZ, capture_output=True, text=True)
+    if r.returncode != 0:
+        return False, "ramo ainda não existe"
+    txt = subprocess.run(["git", "show", "FETCH_HEAD:estado.json"], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8").stdout
+    try:
+        e = json.loads(txt)
+    except json.JSONDecodeError:
+        return False, "estado ilegível"
+    if e.get("origem") != "github" or not e.get("gerado_iso"):
+        return False, f"último estado veio de: {e.get('origem', 'desconhecido')}"
+    idade = (datetime.now(timezone.utc) - datetime.fromisoformat(e["gerado_iso"])).total_seconds()
+    return idade < LIMITE_SILENCIO_S, f"GitHub publicou há {idade:.0f}s"
+
+
+def manter_acordado() -> None:
+    """No Windows, impede a suspensão enquanto o coletor roda (vale só para este processo)."""
+    if sys.platform == "win32":
+        import ctypes
+        ES_CONTINUOUS, ES_SYSTEM_REQUIRED = 0x80000000, 0x00000001
+        ctypes.windll.kernel32.SetThreadExecutionState(ES_CONTINUOUS | ES_SYSTEM_REQUIRED)
+
+
 def publicar(texto: str, ramo: str = "ao-vivo") -> None:
     """Põe o estado.json num commit avulso e força o ramo (ao-vivo ou ao-vivo-rn) para ele.
 
@@ -144,10 +176,13 @@ def main() -> None:
     ap.add_argument("--sim-vies-capital", type=float, default=-0.04)
     ap.add_argument("--ate", type=float, help="simulação: para neste minuto após as 17h (para ver o meio da noite)")
     ap.add_argument("--publicar", action="store_true", help="envia cada atualização ao ramo ao-vivo do GitHub")
+    ap.add_argument("--reserva", action="store_true",
+                    help="robô reserva (PC): só publica se o robô do GitHub ficar mais de 4 min sem publicar")
     ap.add_argument("--uma-vez", action="store_true", help="faz uma leitura e sai")
     a = ap.parse_args()
 
     cfg = CORRIDAS[a.corrida]
+    manter_acordado()
     base, unidades = cfg["carregar_base"]()
     if a.simular:
         fonte = FonteSimulada(base, a.sim_transferencia, a.sim_swing, a.sim_vies_capital, regioes_lentas=cfg["regioes_lentas"])
@@ -175,7 +210,14 @@ def main() -> None:
             estado = montar_estado(cfg, unidades, proj, virada, saida_hist, modo, a.transferencia, minuto,
                                    fonte.resultado_real() if a.simular else None, prob_virada)
             gravar(cfg, estado)
-            if a.publicar:
+            if a.publicar and a.reserva:
+                em_dia, motivo = github_em_dia(cfg["ramo"])
+                if em_dia:
+                    print(f"  reserva: {motivo}; não publico")
+                else:
+                    print(f"  reserva ASSUMIU ({motivo}); publicando do PC")
+                    publicar(json.dumps(estado, ensure_ascii=False), cfg["ramo"])
+            elif a.publicar:
                 publicar(json.dumps(estado, ensure_ascii=False), cfg["ramo"])
             tot = proj.proj_lula + proj.proj_flavio
             ca = cfg["candidatos"]["a"]
