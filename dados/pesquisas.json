@@ -176,6 +176,16 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "PoderData/Aya",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-18",
+   "amostra": 3000,
+   "margem": 1.8,
+   "lula": 48.0,
+   "flavio": 52.0,
+   "indecisos": null
+  },
+  {
    "instituto": "Vox",
    "inicio": "2026-10-15",
    "fim": "2026-10-17",
@@ -437,13 +447,6 @@
    "margem": 2.83
   },
   {
-   "instituto": "PoderData/Aya",
-   "inicio": "2026-10-16",
-   "fim": "2026-10-18",
-   "amostra": 3000,
-   "margem": 1.8
-  },
-  {
    "instituto": "AtlasIntel",
    "inicio": "2026-10-13",
    "fim": "2026-10-18",
@@ -488,5 +491,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-19 07:39"
+ "conferido_em": "2026-10-19 08:29"
 }
