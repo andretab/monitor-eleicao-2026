@@ -438,11 +438,172 @@
  ],
  "segundo_turno_a_divulgar": [
   {
+   "instituto": "Datafolha",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 4050,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Quaest",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 3702,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Nexus/BTG",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 2000,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Palver",
+   "inicio": "2026-10-22",
+   "fim": "2026-10-24",
+   "amostra": 5000,
+   "margem": 3.0
+  },
+  {
+   "instituto": "Futura",
+   "inicio": "2026-10-21",
+   "fim": "2026-10-24",
+   "amostra": 2000,
+   "margem": 2.2
+  },
+  {
+   "instituto": "Gerp",
+   "inicio": "2026-10-21",
+   "fim": "2026-10-24",
+   "amostra": 2400,
+   "margem": 2.04
+  },
+  {
+   "instituto": "CNT/MDA",
+   "inicio": "2026-10-21",
+   "fim": "2026-10-23",
+   "amostra": 2002,
+   "margem": 2.2
+  },
+  {
    "instituto": "Vetor Arrow",
    "inicio": "2026-10-22",
    "fim": "2026-10-23",
    "amostra": 3000,
    "margem": null
+  },
+  {
+   "instituto": "Veritá",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-23",
+   "amostra": 15554,
+   "margem": 1.0
+  },
+  {
+   "instituto": "AtlasIntel",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-23",
+   "amostra": 5000,
+   "margem": 1.0
+  },
+  {
+   "instituto": "Ipespe",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-22",
+   "amostra": 1500,
+   "margem": 2.6
+  },
+  {
+   "instituto": "Vox",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-22",
+   "amostra": 2100,
+   "margem": 2.15
+  },
+  {
+   "instituto": "Datafolha",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-22",
+   "amostra": 2520,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Phoenix",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-22",
+   "amostra": 4001,
+   "margem": 1.0
+  },
+  {
+   "instituto": "Real Time Big Data",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-22",
+   "amostra": 2000,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Veritá",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-22",
+   "amostra": 15554,
+   "margem": 1.0
+  },
+  {
+   "instituto": "Alfa Inteligência",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-22",
+   "amostra": 1200,
+   "margem": 1.9
+  },
+  {
+   "instituto": "Indexa",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-21",
+   "amostra": 2000,
+   "margem": 2.19
+  },
+  {
+   "instituto": "DataTrends",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-21",
+   "amostra": 2000,
+   "margem": 2.19
+  },
+  {
+   "instituto": "PoderData/Aya",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-21",
+   "amostra": 4000,
+   "margem": 1.6
+  },
+  {
+   "instituto": "Futura",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-20",
+   "amostra": 2000,
+   "margem": 2.2
+  },
+  {
+   "instituto": "Quaest",
+   "inicio": "2026-10-17",
+   "fim": "2026-10-20",
+   "amostra": 2154,
+   "margem": 2.0
+  },
+  {
+   "instituto": "Gerp",
+   "inicio": "2026-10-17",
+   "fim": "2026-10-20",
+   "amostra": 2400,
+   "margem": 2.04
+  },
+  {
+   "instituto": "Palver",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-20",
+   "amostra": 5000,
+   "margem": 3.0
   },
   {
    "instituto": "IFP",
@@ -503,5 +664,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-19 14:30"
+ "conferido_em": "2026-10-19 19:24"
 }
