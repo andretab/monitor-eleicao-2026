@@ -22,6 +22,14 @@ Acompanhamento do 2º turno de 25/10/2026: presidente (Lula × Flávio) e govern
 Pesquisas até a véspera, corrigidas pelo erro de cada instituto no 1º turno, e, no dia, a apuração ao vivo
 com projeção por UF (presidente) ou por município (RN) e a chance de virada.
 
+## Robô reserva no PC (domingo)
+
+Tarefa do Windows "Monitor Eleicao - reserva domingo", agendada para 25/10 às 16h50: roda
+`scripts/reserva-domingo.ps1`, que liga os dois coletores com `--publicar --reserva`. Cada coletor lê o TSE a
+cada minuto, mas só publica no site se o robô do GitHub ficar mais de 4 min sem publicar (campo `origem` e
+`gerado_iso` do estado.json); quando o GitHub volta, o PC sai da frente. Registros em `apuracao/logs/`.
+Ensaio: `powershell -ExecutionPolicy Bypass -File scriptseserva-domingo.ps1 -Simular -Ate 15`.
+
 ## RN · governador
 
 - `dados/rn/tse-1t/`: TSE, 1º turno por município (eleição 6259, cargo 3); `scripts/extrair_rn.py` resume em
