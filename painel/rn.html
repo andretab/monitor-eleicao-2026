@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>RN · Cadu × Allyson</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css?v=11">
+</head>
+<body>
+<nav class="barra-topo"><div class="dentro">
+  <a class="marca" href="index.html">Eleição 2026<span> · monitor do 2º turno</span></a>
+  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a><a href="rn.html" aria-current="page">RN</a></div>
+</div></nav>
+
+<main>
+  <div class="titulo">
+    <div>
+      <h1>RN · Governador: Cadu × Allyson</h1>
+      <p class="sub" style="margin:0 0 4px"><a href="rn-apuracao.html">Apuração ao vivo do RN →</a></p>
+      <p class="sub" id="atualizado"></p>
+    </div>
+    <div class="contagem"><div class="mini">até a eleição · 25/10</div><div class="val num" id="dias"></div></div>
+  </div>
+
+  <section class="cartao principal">
+    <div class="cabeca">
+      <div>
+        <h2>Resumo das pesquisas do 2º turno</h2>
+        <p class="sub" style="margin:0">Cada ponto é uma pesquisa (votos válidos); as linhas são a média dos últimos 7 dias.</p>
+      </div>
+      <div class="seg" role="group" aria-label="Correção" id="modos">
+        <button data-modo="bruta">Como divulgado</button>
+        <button data-modo="instituto">Corrigido</button>
+      </div>
+    </div>
+    <div id="duelo"></div>
+    <div class="grafico" id="grafResumo" style="margin-top:12px"></div>
+    <div class="legenda">
+      <span><i class="ponto" style="background:var(--lula)"></i>Cadu, cada pesquisa</span>
+      <span><i class="ponto" style="background:var(--flavio)"></i>Allyson, cada pesquisa</span>
+      <span><i class="linha" style="border-color:var(--texto)"></i>Média de 7 dias</span>
+      <span><i class="tracejada" style="border-color:var(--texto-3)"></i>Se a tendência seguir até 25/10</span>
+    </div>
+    <div class="kpis" id="kpis" style="margin-top:16px"></div>
+    <p class="aviso" id="explicaModo"></p>
+    <p class="aviso" style="border-left:3px solid var(--alerta)">Atenção: no 1º turno do RN quase todas as pesquisas erraram muito (15 a 24 pontos a favor de Allyson; Cadu cresceu na reta final). Por isso esta página abre "como divulgado": a versão "corrigida" aplica esses erros inteiros e tende a exagerar a vantagem de Cadu.</p>
+  </section>
+
+  <div class="grade">
+    <section class="cartao">
+      <h2>Última pesquisa de cada instituto</h2>
+      <p class="sub" id="subInstitutos">Votos válidos. A linha tracejada é o empate (50%).</p>
+      <div class="grafico" id="grafInstitutos"></div>
+      <details class="tabela"><summary>Ver tabela por instituto</summary><div class="tabela-rola"><table id="institutos"></table></div></details>
+    </section>
+    <section class="cartao">
+      <h2>Quanto cada instituto errou no 1º turno</h2>
+      <p class="sub">Erro na vantagem entre Allyson e Cadu. Barra para a direita = a pesquisa puxou para Cadu.</p>
+      <div class="grafico" id="grafErros"></div>
+      <p class="mini" id="resumoErros"></p>
+      <details class="tabela"><summary>Ver tabela do 1º turno</summary><div class="tabela-rola"><table id="erros1t"></table></div></details>
+    </section>
+  </div>
+
+  <div class="grade">
+    <section class="cartao">
+      <h2>1º turno por município</h2>
+      <p class="sub">Vantagem entre Cadu e Allyson nos votos válidos de cada município (TSE). Passe o mouse ou toque num município.</p>
+      <div class="grafico" id="mapa1t"></div>
+      <div id="legMapa1t"></div>
+    </section>
+    <section class="cartao">
+      <h2>1º turno por região do RN</h2>
+      <p class="sub">Votos válidos por mesorregião. Os votos de Álvaro Dias (cinza) decidem o 2º turno.</p>
+      <div class="grafico" id="grafRegioes"></div>
+      <div class="legenda">
+        <span><i style="background:var(--lula)"></i>Cadu</span>
+        <span><i style="background:var(--neutro)"></i>Álvaro Dias e demais</span>
+        <span><i style="background:var(--flavio)"></i>Allyson</span>
+      </div>
+    </section>
+  </div>
+
+  <section class="cartao" id="secBoletins" style="display:none">
+    <h2>Boletim do analista</h2>
+    <p class="sub">Escrito por um agente na nuvem às 9h e às 20h.</p>
+    <div id="boletins"></div>
+  </section>
+
+  <div class="grade">
+    <section class="cartao">
+      <h2>A conta da virada</h2>
+      <p class="sub">Com o mesmo comparecimento do 1º turno, quanto dos <span class="num" id="outrosVotos"></span> votos dos demais candidatos vai para Cadu?</p>
+      <label for="transf" class="sub" style="display:block;margin-bottom:4px">Arraste: <b class="num" id="transfValor"></b> para Cadu</label>
+      <input type="range" id="transf" min="0" max="100" step="1" value="50">
+      <div id="dueloTransf" style="margin-top:8px"></div>
+      <p class="sub" id="empate" style="margin:10px 0 0"></p>
+    </section>
+    <section class="cartao">
+      <h2>Pesquisas registradas, a divulgar</h2>
+      <p class="sub">Registradas no TSE, ainda sem resultado publicado.</p>
+      <div class="tabela-rola" style="margin-top:0"><table id="agenda"></table></div>
+    </section>
+  </div>
+
+  <section class="cartao">
+    <h2>Todas as pesquisas do 2º turno</h2>
+    <details class="tabela"><summary>Ver lista completa</summary><div class="tabela-rola"><table id="lista2t"></table></div></details>
+    <p class="aviso" id="fonte"></p>
+  </section>
+</main>
+<footer class="rodape" id="rodape"></footer>
+
+<script src="graficos.js?v=11"></script>
+<script src="mapa-rn.js?v=1"></script>
+<script>document.write('<script src="dados-rn.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
+<script>
+// Adaptador: o motor desta página usa os campos lula/flavio; no RN, lula = Cadu (a) e flavio = Allyson (b).
+(() => {
+  const R = window.DADOS_RN, conv = p => ({ ...p, lula: p.a, flavio: p.b });
+  const est = R.primeiro_turno.estado;
+  window.DADOS = {
+    pesquisas: { ...R.pesquisas, segundo_turno_a_divulgar: [],
+      primeiro_turno_ultima_por_instituto: R.pesquisas.primeiro_turno_ultima_por_instituto.map(conv),
+      segundo_turno: R.pesquisas.segundo_turno.map(conv) },
+    primeiro_turno: { br: { ...est, lula: est.a, flavio: est.b, totalizado_em: "" },
+      ...Object.fromEntries(Object.entries(R.primeiro_turno.municipios).map(([cd, m]) => [cd, { ...m, lula: m.a, flavio: m.b }])) },
+    boletins: R.boletins || [],
+  };
+})();
+</script>
+<script>
+(() => {
+  const D = window.DADOS, P = D.pesquisas, BR = D.primeiro_turno.br;
+  const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
+  const sinal = (n, c = 1) => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n), c);
+  const milhoes = n => fmt(n / 1e6, 1) + " mi";
+  const dataBR = s => s.slice(8, 10) + "/" + s.slice(5, 7);
+  const dias = (a, b) => (new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5;
+  const el = id => document.getElementById(id);
+  const esc = G.esc;
+  const HOJE = P.atualizado_em, ELEICAO = "2026-10-25";
+
+  // Resultado real do 1º turno em % dos válidos (fonte: TSE).
+  const real = { lula: 100 * BR.lula / BR.validos, flavio: 100 * BR.flavio / BR.validos };
+  const margemReal = real.flavio - real.lula;
+
+  // Pesquisa → votos válidos. Sem 'indecisos', o instituto já divulga válidos; com ele, a base é o que sobra.
+  const validos1t = p => { const base = p.indecisos == null ? 100 : 100 - p.indecisos; return { lula: 100 * p.lula / base, flavio: 100 * p.flavio / base }; };
+  const validos2t = p => ({ lula: 100 * p.lula / (p.lula + p.flavio), flavio: 100 * p.flavio / (p.lula + p.flavio) });
+
+  // Erro de cada instituto no 1º turno, na vantagem Allyson − Cadu.
+  const erros = P.primeiro_turno_ultima_por_instituto.map(p => {
+    const v = validos1t(p);
+    return { ...p, v, erroMargem: (v.flavio - v.lula) - margemReal };
+  }).sort((a, b) => a.erroMargem - b.erroMargem);
+  const erroDe = Object.fromEntries(erros.map(e => [e.instituto, e.erroMargem]));
+  const erroMedio = erros.reduce((s, e) => s + e.erroMargem, 0) / erros.length;
+  const desvio = Math.sqrt(erros.reduce((s, e) => s + (e.erroMargem - erroMedio) ** 2, 0) / (erros.length - 1));
+
+  // Correção: se o instituto subestimou Allyson em X pontos no 1º turno, devolve X ao 2º.
+  const correcao = (inst, modo) => modo === "bruta" ? 0 : -(erroDe[inst] ?? erroMedio);
+  const p2 = P.segundo_turno.map(p => ({ ...p, v: validos2t(p), margem: validos2t(p).flavio - validos2t(p).lula }))
+    .sort((a, b) => b.fim.localeCompare(a.fim));
+  const ultimas = {}; for (const p of p2) if (!ultimas[p.instituto]) ultimas[p.instituto] = p;
+
+  function media(modo) {
+    let soma = 0, pesos = 0;
+    for (const p of Object.values(ultimas)) {
+      const peso = Math.sqrt(Math.min(p.amostra, 5000)) * Math.exp(-dias(p.fim, HOJE) / 7);
+      soma += peso * (p.margem + correcao(p.instituto, modo)); pesos += peso;
+    }
+    return { margem: soma / pesos, n: Object.keys(ultimas).length };
+  }
+  function tendencia(modo) {
+    const pts = p2.filter(p => dias(p.fim, HOJE) <= 10).map(p => ({ x: -dias(p.fim, HOJE), y: p.margem + correcao(p.instituto, modo) }));
+    if (pts.length < 4) return null;
+    const mx = pts.reduce((a, p) => a + p.x, 0) / pts.length, my = pts.reduce((a, p) => a + p.y, 0) / pts.length;
+    const sxx = pts.reduce((a, p) => a + (p.x - mx) ** 2, 0);
+    const b = pts.reduce((a, p) => a + (p.x - mx) * (p.y - my), 0) / sxx;
+    const res = Math.sqrt(pts.reduce((a, p) => a + (p.y - (my + b * (p.x - mx))) ** 2, 0) / (pts.length - 2));
+    return { b, ic: 1.96 * res / Math.sqrt(sxx), hoje: my - b * mx, dia25: my + b * (dias(HOJE, ELEICAO) - mx), n: pts.length };
+  }
+  const phi = x => { const t = 1 / (1 + .2316419 * Math.abs(x)); const d = .3989423 * Math.exp(-x * x / 2);
+    const p = d * t * (.3193815 + t * (-.3565638 + t * (1.781478 + t * (-1.821256 + t * 1.330274)))); return x > 0 ? 1 - p : p; };
+  const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
+
+  el("atualizado").textContent = `Pesquisas conferidas em ${dataBR(HOJE)}/2026 · ${p2.length} pesquisas do 2º turno · 1º turno pelo TSE`;
+  el("dias").textContent = Math.round(dias(HOJE, ELEICAO)) + " dias";
+
+  // ------------------------------------------------ resumo principal
+  let modo = "bruta";
+  function desenhaResumo() {
+    document.querySelectorAll("#modos button").forEach(b => b.setAttribute("aria-pressed", b.dataset.modo === modo));
+    const m = media(modo), t = tendencia(modo);
+    const lula = 50 - m.margem / 2, flavio = 50 + m.margem / 2;
+    const chanceF = phi(m.margem / desvio);
+    G.duelo(el("duelo"), lula, flavio, "Cadu (PT)", "Allyson (União)", `média ${modo === "bruta" ? "como divulgada" : "corrigida"} de ${m.n} institutos`);
+
+    const pontoL = p => 50 - (p.margem + correcao(p.instituto, modo)) / 2;
+    // Média móvel de 7 dias em cada data de término, com só a pesquisa mais recente de cada instituto na janela.
+    const datas = [...new Set(p2.map(p => p.fim))].sort();
+    const mediaEm = dt => { const janela = {}; for (const p of p2) if (dias(p.fim, dt) >= 0 && dias(p.fim, dt) < 7 && !janela[p.instituto]) janela[p.instituto] = p;
+      const v = Object.values(janela); return v.reduce((a, p) => a + pontoL(p), 0) / v.length; };
+    const serieL = datas.map(dt => [dt, mediaEm(dt)]);
+    const vals = p2.map(pontoL);
+    const lim = Math.max(8, Math.ceil(Math.max(...vals.map(v => Math.abs(v - 50))) + 1));
+    const series = [
+      { nome: "Cadu", cor: "var(--lula)", pontos: serieL },
+      { nome: "Allyson", cor: "var(--flavio)", pontos: serieL.map(([d, v]) => [d, 100 - v]) },
+    ];
+    if (t) {
+      const ultimo = serieL.at(-1)[0];
+      const fimL = 50 - t.dia25 / 2, iniL = serieL.at(-1)[1];
+      series.push({ nome: "", cor: "var(--lula)", pontos: [[ultimo, iniL], [ELEICAO, fimL]], tracejada: true, largura: 1.5, opacidade: .45, rotulo: false });
+      series.push({ nome: "", cor: "var(--flavio)", pontos: [[ultimo, 100 - iniL], [ELEICAO, 100 - fimL]], tracejada: true, largura: 1.5, opacidade: .45, rotulo: false });
+    }
+    G.linhas(el("grafResumo"), {
+      rotulo: "Cadu e Allyson nas pesquisas do 2º turno",
+      x: { min: "2026-10-04", max: ELEICAO },
+      y: { min: 50 - lim, max: 50 + lim, passo: lim > 10 ? 4 : 2, fmt: v => v + "%", fmtValor: v => fmt(v) + "%" },
+      series,
+      pontos: p2.flatMap(p => [{ x: p.fim, y: pontoL(p), cor: "var(--lula)" }, { x: p.fim, y: 100 - pontoL(p), cor: "var(--flavio)" }]),
+      refY: [{ y: 50, rotulo: "50%" }],
+      refX: [{ x: HOJE, rotulo: "hoje" }, { x: ELEICAO, rotulo: "eleição" }],
+      dicaX: dt => {
+        const doDia = p2.filter(p => p.fim === dt);
+        const mm = serieL.find(s => s[0] === dt);
+        return `<b>${dataBR(dt)}</b>` + (mm ? `<br>Média: <span class="q" style="background:var(--lula)"></span>${fmt(mm[1])}% × <span class="q" style="background:var(--flavio)"></span>${fmt(100 - mm[1])}%` : "") +
+          doDia.map(p => `<br>${esc(p.instituto)}: ${fmt(pontoL(p))}% × ${fmt(100 - pontoL(p))}%`).join("");
+      },
+    });
+
+    const tTexto = t ? `${t.b === 0 ? "estável" : (t.b > 0 ? "Allyson" : "Cadu") + " +" + fmt(Math.abs(t.b), 2)}` : "—";
+    el("kpis").innerHTML =
+      kpi("Chance de Cadu", fmt(100 * (1 - chanceF), 0) + "%", "estimativa, não previsão", "lula") +
+      kpi("Chance de Allyson", fmt(100 * chanceF, 0) + "%", "estimativa, não previsão", "flavio") +
+      kpi("Tendência por dia (10 dias)", tTexto, t ? (Math.abs(t.b) < t.ic ? "não dá para distinguir de estabilidade" : `±${fmt(t.ic, 2)} por dia (95%)`) : "") +
+      kpi("Se o ritmo seguir até 25/10", t ? (t.dia25 >= 0 ? "Allyson " : "Cadu ") + sinal(Math.abs(t.dia25)) : "—", "extrapolação linear: trate como teto");
+    el("explicaModo").innerHTML = modo === "bruta"
+      ? "Mostrando as pesquisas como foram divulgadas, convertidas para votos válidos."
+      : `Mostrando as pesquisas corrigidas: cada instituto recebe de volta o erro que teve no 1º turno. Em média, as pesquisas do 1º turno puxaram ${fmt(Math.abs(erroMedio))} ponto(s) para ${erroMedio < 0 ? "Cadu" : "Allyson"} na vantagem. A chance usa como incerteza a dispersão desses erros (${fmt(desvio)} p.p.).`;
+    desenhaInstitutos();
+  }
+  document.querySelectorAll("#modos button").forEach(b => b.addEventListener("click", () => { modo = b.dataset.modo; desenhaResumo(); }));
+
+  // ------------------------------------------------ última pesquisa de cada instituto
+  function desenhaInstitutos() {
+    // Uma barra Cadu × Allyson por instituto, no mesmo modo (divulgado ou corrigido) do gráfico principal.
+    const lista = Object.values(ultimas).map(p => { const L = 50 - (p.margem + correcao(p.instituto, modo)) / 2; return { p, L, F: 100 - L }; })
+      .sort((a, b) => b.L - a.L);
+    el("subInstitutos").textContent = `Votos válidos, ${modo === "bruta" ? "como divulgado" : "corrigido pelo erro de cada instituto no 1º turno"}. A linha tracejada é o empate (50%).`;
+    G.empilhadas(el("grafInstitutos"), {
+      direita: true, meio: true, larguraDireita: 112, direitaCelular: false,
+      itens: lista.map(l => {
+        const v = Math.abs(l.L - l.F), quem = l.L > l.F ? "Cadu" : l.F > l.L ? "Allyson" : "Empate";
+        return {
+          rotulo: l.p.instituto,
+          partes: [{ valor: l.L, cor: "var(--lula)", texto: fmt(l.L) + "%" }, { valor: l.F, cor: "var(--flavio)", texto: fmt(l.F) + "%" }],
+          direita: quem === "Empate" ? "empate" : `${quem} +${fmt(v)}`, corDireita: quem === "Cadu" ? "var(--lula)" : quem === "Allyson" ? "var(--flavio)" : null,
+          dica: `<b>${esc(l.p.instituto)}</b> · campo ${dataBR(l.p.inicio)}–${dataBR(l.p.fim)}<br>Divulgado (válidos): Cadu ${fmt(l.p.v.lula)}% × Allyson ${fmt(l.p.v.flavio)}%` +
+            (modo === "bruta" ? "" : `<br>Corrigido: Cadu ${fmt(l.L)}% × Allyson ${fmt(l.F)}%${erroDe[l.p.instituto] == null ? " (erro médio)" : ""}`) +
+            `<br>Amostra ${l.p.amostra.toLocaleString("pt-BR")}`,
+        };
+      }),
+    });
+  }
+
+  // ------------------------------------------------ erros do 1º turno
+  const maxErro = Math.ceil(Math.max(...erros.map(e => Math.abs(e.erroMargem))));
+  G.barras(el("grafErros"), {
+    divergente: true, max: maxErro, rotuloNeg: "← puxou para Allyson", rotuloPos: "puxou para Cadu →",
+    itens: [...erros].sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem)).map(e => ({
+      rotulo: e.instituto, valor: -e.erroMargem, cor: e.erroMargem < 0 ? "var(--lula)" : "var(--flavio)",
+      texto: fmt(Math.abs(e.erroMargem)),
+      dica: `<b>${esc(e.instituto)}</b> · ${dataBR(e.fim)}<br>Pesquisa: Cadu ${fmt(e.v.lula)}% × Allyson ${fmt(e.v.flavio)}%<br>Urna: Cadu ${fmt(real.lula)}% × Allyson ${fmt(real.flavio)}%<br>Líder certo? ${e.v.flavio > e.v.lula ? "sim" : "não"}`,
+    })),
+  });
+  const acertaram = erros.filter(e => e.v.flavio > e.v.lula).length;
+  el("resumoErros").textContent = `Acertaram quem ficaria em 1º: ${acertaram} de ${erros.length}. Erro médio: ${fmt(Math.abs(erroMedio))} p.p. a favor de ${erroMedio < 0 ? "Cadu" : "Allyson"}.`;
+  el("erros1t").innerHTML = `<tr><th>Instituto</th><th>Data</th><th>Cadu</th><th>Allyson</th><th>Erro vantagem</th><th>Líder certo?</th></tr>` +
+    `<tr class="destaque"><td>Resultado TSE</td><td class="num">04/10</td><td class="num">${fmt(real.lula)}</td><td class="num">${fmt(real.flavio)}</td><td></td><td></td></tr>` +
+    [...erros].sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem)).map(e => `<tr><td>${esc(e.instituto)}</td><td class="num">${dataBR(e.fim)}</td><td class="num">${fmt(e.v.lula)}</td><td class="num">${fmt(e.v.flavio)}</td><td class="num">${sinal(e.erroMargem)}</td><td>${e.v.flavio > e.v.lula ? "sim" : "não"}</td></tr>`).join("");
+
+  // ------------------------------------------------ tabela por instituto (2º turno)
+  el("institutos").innerHTML = `<tr><th>Instituto</th><th>Nº</th><th>Cadu 1ª → última</th><th>Variação</th><th>Erro 1º turno</th></tr>` +
+    [...new Set(p2.map(p => p.instituto))].map(nome => {
+      const meus = p2.filter(p => p.instituto === nome).sort((a, b) => a.fim.localeCompare(b.fim));
+      const d = meus.at(-1).v.lula - meus[0].v.lula;
+      return `<tr><td>${esc(nome)}</td><td class="num">${meus.length}</td><td class="num">${fmt(meus[0].v.lula)} → ${fmt(meus.at(-1).v.lula)}</td><td class="num">${meus.length > 1 ? sinal(d) : "—"}</td><td class="num">${erroDe[nome] == null ? "—" : sinal(erroDe[nome])}</td></tr>`;
+    }).join("");
+
+  // ------------------------------------------------ conta da virada
+  el("outrosVotos").textContent = milhoes(BR.outros);
+  const empate = (BR.flavio - BR.lula + BR.outros) / (2 * BR.outros);
+  function desenhaTransf() {
+    const t = +el("transf").value / 100;
+    el("transfValor").textContent = fmt(100 * t, 0) + "%";
+    G.duelo(el("dueloTransf"), BR.lula + t * BR.outros, BR.flavio + (1 - t) * BR.outros, "Cadu", "Allyson", "resultado com essa divisão");
+    el("empate").innerHTML = `Empate exige <b class="num">${fmt(100 * empate)}%</b> dos votos dos demais para Cadu. Ignora abstenção nova e voto em branco/nulo.`;
+  }
+  el("transf").addEventListener("input", desenhaTransf);
+  desenhaTransf();
+
+  // ------------------------------------------------ regiões (1º turno)
+  const nomes = { Leste: "Leste", Agreste: "Agreste", Central: "Central", Oeste: "Oeste" };
+  const reg = {};
+  for (const [uf, r] of Object.entries(D.primeiro_turno)) { if (uf === "br") continue;
+    const g = reg[r.regiao] ??= { lula: 0, flavio: 0, outros: 0, validos: 0 }; g.lula += r.lula; g.flavio += r.flavio; g.outros += r.outros; g.validos += r.validos; }
+  G.empilhadas(el("grafRegioes"), {
+    direita: true,
+    itens: Object.entries(reg).filter(([k]) => k !== "EX").sort((a, b) => b[1].validos - a[1].validos).map(([k, g]) => ({
+      rotulo: nomes[k], direita: milhoes(g.validos),
+      partes: [{ valor: g.lula, cor: "var(--lula)", texto: fmt(100 * g.lula / g.validos, 0) + "%" }, { valor: g.outros, cor: "var(--neutro)" },
+               { valor: g.flavio, cor: "var(--flavio)", texto: fmt(100 * g.flavio / g.validos, 0) + "%" }],
+      dica: `<b>${nomes[k]}</b> · ${milhoes(g.validos)} válidos<br>Cadu ${fmt(100 * g.lula / g.validos)}% · Allyson ${fmt(100 * g.flavio / g.validos)}% · demais ${fmt(100 * g.outros / g.validos)}%<br>Saldo: ${g.lula > g.flavio ? "Cadu" : "Allyson"} +${milhoes(Math.abs(g.lula - g.flavio))}`,
+    })),
+  });
+
+  // ------------------------------------------------ mapa do 1º turno (municípios)
+  const valores1t = {}, rotulos = {};
+  // Só três rótulos, espaçados: a região metropolitana de Natal é pequena demais para mais nomes.
+  const maiores = Object.values(DADOS_RN.primeiro_turno.municipios).filter(m => ["Natal", "Mossoró", "Caicó"].includes(m.nome));
+  for (const m of Object.values(DADOS_RN.primeiro_turno.municipios)) {
+    const l = 100 * m.a / m.validos, f = 100 * m.b / m.validos, t = 100 * m.terceiro / m.validos, mg = l - f;
+    valores1t[m.ibge] = { cor: G.corMargem(mg),
+      dica: `<b>${esc(m.nome)}</b> · ${esc(m.regiao)}<br>Cadu ${fmt(l)}% · Allyson ${fmt(f)}% · Álvaro ${fmt(t)}%<br>Vantagem: ${mg >= 0 ? "Cadu" : "Allyson"} +${fmt(Math.abs(mg))} · ${m.validos.toLocaleString("pt-BR")} válidos` };
+  }
+  for (const m of maiores) rotulos[m.ibge] = m.nome;
+  G.mapa(el("mapa1t"), { base: window.MAPA_RN, valores: valores1t, rotulos, alturaMax: 460, rotulo: "Resultado do 1º turno por município do RN" });
+  el("legMapa1t").innerHTML = G.legendaMapa("Cadu", "Allyson");
+
+  // ------------------------------------------------ boletins
+  const bol = D.boletins || [];
+  if (bol.length) {
+    el("secBoletins").style.display = "block";
+    const bloco = b => `<div class="boletim"><div class="quando num">${esc(b.quando).replace("T", " ").slice(0, 16)} · ${esc(b.tipo)}</div>` +
+      `<h3>${esc(b.titulo)}</h3>${(b.paragrafos || []).map(t => `<p>${esc(t)}</p>`).join("")}` +
+      `${(b.fontes || []).length ? `<p class="mini">Fontes: ${b.fontes.map((u, i) => `<a href="${esc(u)}" rel="noopener">[${i + 1}]</a>`).join(" ")}</p>` : ""}</div>`;
+    el("boletins").innerHTML = bloco(bol[0]) + (bol.length > 1 ? `<details class="anteriores"><summary>Boletins anteriores (${bol.length - 1})</summary>${bol.slice(1).map(bloco).join("")}</details>` : "");
+  }
+
+  // ------------------------------------------------ agenda e lista completa
+  el("agenda").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th></tr>` +
+    [...P.segundo_turno_a_divulgar].sort((a, b) => a.fim.localeCompare(b.fim)).map(p =>
+      `<tr class="pend"><td>${esc(p.instituto)}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td></tr>`).join("") ||
+    `<tr><td colspan="3" class="sub">Nenhuma no momento.</td></tr>`;
+  el("lista2t").innerHTML = `<tr><th>Instituto</th><th>Campo</th><th>Amostra</th><th>Divulgado L × F</th><th>Válidos Cadu</th><th>Válidos Allyson</th><th>Corrigida</th></tr>` +
+    p2.map(p => { const c = p.margem + correcao(p.instituto, "instituto");
+      return `<tr><td>${esc(p.instituto)}${p.fonte === "extra" ? " †" : ""}</td><td class="num">${dataBR(p.inicio)}–${dataBR(p.fim)}</td><td class="num">${p.amostra.toLocaleString("pt-BR")}</td>` +
+        `<td class="num">${fmt(p.lula)} × ${fmt(p.flavio)}</td><td class="num">${fmt(p.v.lula)}</td><td class="num">${fmt(p.v.flavio)}</td>` +
+        `<td class="num">${c >= 0 ? "F" : "L"} +${fmt(Math.abs(c))}${erroDe[p.instituto] == null ? "*" : ""}</td></tr>`; }).join("");
+  el("fonte").innerHTML = `Fontes: <a href="${P.fonte}">compilação da Wikipédia</a> (atualizada a cada 3 h) e pesquisas achadas pelo analista (†); 1º turno: arquivos oficiais do TSE. * Instituto sem pesquisa de 1º turno na base: usa a correção média.`;
+
+  // Rodapé: quando o robô conferiu as pesquisas pela última vez e o ritmo de cada atualização.
+  const conf = P.conferido_em || P.atualizado_em;
+  const quando = conf.length > 10 ? `${dataBR(conf)} às ${conf.slice(11, 16)}` : dataBR(conf);
+  el("rodape").innerHTML = `Última atualização: <b class="num">${quando}</b> · pesquisas conferidas de hora em hora · esta página se recarrega sozinha a cada 15 min`;
+
+  desenhaResumo();
+  // O robô atualiza as pesquisas a cada 3 h; a página se recarrega a cada 15 min para pegar a versão nova.
+  setTimeout(() => location.reload(), 15 * 60 * 1000);
+})();
+</script>
+</body>
+</html>

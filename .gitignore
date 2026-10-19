@@ -4,3 +4,6 @@ apuracao/bruto-2t/
 painel/apuracao-dados.js
 painel/*.tmp
 .claude/
+apuracao/estado-rn.json
+apuracao/bruto-2t-rn/
+painel/apuracao-rn-dados.js

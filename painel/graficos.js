@@ -201,14 +201,14 @@
     const a = Math.abs(m), i = DEGRAUS.filter(d => a >= d).length;
     return m >= 0 ? TONS_L[i] : TONS_F[i];
   }
-  function legendaMapa(rotL = "Lula", rotF = "Flávio") {
+  function legendaMapa(rotL = "Lula", rotF = "Flávio") { // rotL = candidato A (vermelho), rotF = candidato B (azul)
     const faixa = (t, txt) => `<span style="display:inline-flex;align-items:center;gap:3px"><i style="background:${t};margin:0"></i>${txt}</span>`;
     return `<div class="legenda" style="gap:8px">${rotF}: ${[...TONS_F].reverse().map((t, i) => faixa(t, ["20+", "10–20", "5–10", "0–5"][i])).join("")}` +
       `<span style="width:8px"></span>${rotL}: ${TONS_L.map((t, i) => faixa(t, ["0–5", "5–10", "10–20", "20+"][i])).join("")}<span class="mini">pontos de vantagem</span></div>`;
   }
   // cfg: { valores: { uf: { cor, opacidade, dica } }, rotulos }
   function mapa(el, cfg) {
-    const M = window.MAPA_BR;
+    const M = cfg.base || window.MAPA_BR; // cfg.base: outra malha (ex.: window.MAPA_RN, municípios do RN)
     if (!M) { el.innerHTML = '<p class="sub">Mapa indisponível.</p>'; return; }
     let s = `<svg viewBox="-10 -10 ${M.largura + 20} ${M.altura + 20}" role="img" aria-label="${esc(cfg.rotulo || "mapa do Brasil por estado")}" style="max-height:${cfg.alturaMax || 520}px">`;
     for (const [uf, g] of Object.entries(M.ufs)) {
@@ -216,8 +216,8 @@
       s += `<path class="uf" data-uf="${uf}" d="${g.d}" fill="${v.cor || "var(--linha)"}" fill-opacity="${v.opacidade ?? 1}" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/>`;
     }
     if (cfg.rotulos !== false)
-      for (const [uf, g] of Object.entries(M.ufs)) if (g.area > 1500)
-        s += `<text x="${g.cx}" y="${g.cy + 7}" text-anchor="middle" style="font:600 20px Inter,system-ui,sans-serif;fill:var(--texto);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none">${uf.toUpperCase()}</text>`;
+      for (const [uf, g] of Object.entries(M.ufs)) if (cfg.rotulos ? cfg.rotulos[uf] : g.area > 1500)
+        s += `<text x="${g.cx}" y="${g.cy + 7}" text-anchor="middle" style="font:600 20px Inter,system-ui,sans-serif;fill:var(--texto);paint-order:stroke;stroke:#fff;stroke-width:4px;stroke-linejoin:round;pointer-events:none">${cfg.rotulos ? esc(cfg.rotulos[uf]) : uf.toUpperCase()}</text>`;
     s += `</svg>`;
     el.innerHTML = s;
     const d = dica(el);

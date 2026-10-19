@@ -1,0 +1,40 @@
+
+{ "ele" : "6259", "t" : "1", "f" : "o", "sup" : "n", "tpabr" : "mu", "cdabr" : "17019", "dg" : "04/10/2026", "hg" : "23:01:59", "idg" : "2444559", "dt" : "04/10/2026", "ht" : "23:01:26", "dv" : "s", "tf" : "s", "and" : "f", "esae" : "n", "mnae" : [  ], "carg" : [ 
+{ "cd" : "3", "nmn" : "Governador", "nmm" : "Governador", "nmf" : "Governadora", "nv" : "1", "fed" : [ 
+{ "n" : "104", "sg" : "UNIÃO/PP", "nm" : "FEDERAÇÃO UNIÃO PROGRESSISTA", "com" : "UNIÃO/PP", "npar" : [ "11", "44" ] }, 
+{ "n" : "101", "sg" : "PT/PC do B/PV", "nm" : "FEDERAÇÃO BRASIL DA ESPERANÇA - FE BRASIL", "com" : "PT/PC do B/PV", "npar" : [ "13", "43", "65" ] } ], "agr" : [ 
+{ "n" : "200001800836", "nm" : "AGIR", "tp" : "i", "com" : "AGIR", "vag" : "0", "par" : [ 
+{ "n" : "36", "sg" : "AGIR", "nm" : "AGIR", "nfed" : "", "tvtn" : "0", "tvan" : "0", "cand" : [ 
+{ "n" : "36", "sqcand" : "200002546756", "nm" : "KARLO RODRIGO LUCIO VIEIRA", "nmu" : "RODRIGO DE BOLSONARO", "dt" : "17/07/1980", "dvt" : "Válido", "seq" : "7", "e" : "n", "st" : "Não eleito", "vap" : "0", "pvap" : "0,00", "pvapn" : "0", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002546755", "nm" : "MARIA SOCORRO BATISTA DE MACEDO", "nmu" : "SOCORRO BATISTA", "sgp" : "AGIR" } ] } ] } ] }, 
+{ "n" : "200001800947", "nm" : "UNIDADE POPULAR", "tp" : "i", "com" : "UP", "vag" : "0", "par" : [ 
+{ "n" : "80", "sg" : "UP", "nm" : "UNIDADE POPULAR", "nfed" : "", "tvtn" : "1", "tvan" : "1", "cand" : [ 
+{ "n" : "80", "sqcand" : "200002547826", "nm" : "ARINALDA VASCONCELOS DE MEDEIROS", "nmu" : "ARINALDA DO MLB", "dt" : "28/06/1980", "dvt" : "Válido", "seq" : "4", "e" : "n", "st" : "Não eleito", "vap" : "1", "pvap" : "0,03", "pvapn" : "0,028433324", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002547827", "nm" : "FRANCISCO DE ASSIS DA COSTA DIAS", "nmu" : "FRANCISCO DIAS", "sgp" : "UP" } ] } ] } ] }, 
+{ "n" : "200001801097", "nm" : "DEMOCRACIA CRISTÃ", "tp" : "i", "com" : "DC", "vag" : "0", "par" : [ 
+{ "n" : "27", "sg" : "DC", "nm" : "DEMOCRACIA CRISTÃ", "nfed" : "", "tvtn" : "0", "tvan" : "0", "cand" : [ 
+{ "n" : "27", "sqcand" : "200002554482", "nm" : "GLADYER LINHARES GODEIRO", "nmu" : "GODEIRO LINHARESS", "dt" : "25/04/1977", "dvt" : "Válido", "seq" : "6", "e" : "n", "st" : "Não eleito", "vap" : "0", "pvap" : "0,00", "pvapn" : "0", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002550224", "nm" : "JULIO CESAR NEVES", "nmu" : "PASTOR JÚLIO", "sgp" : "DC" } ] } ] } ] }, 
+{ "n" : "200001800178", "nm" : "TIME QUE CUIDA", "tp" : "c", "com" : "PDT / PSB / PCDOB / PT / PV", "tvtn" : "2042", "tvan" : "2042", "par" : [ 
+{ "n" : "13", "sg" : "PT", "nm" : "PARTIDO DOS TRABALHADORES", "nfed" : "101", "tvtn" : "2042", "tvan" : "2042", "cand" : [ 
+{ "n" : "13", "sqcand" : "200002534001", "nm" : "CARLOS EDUARDO XAVIER", "nmu" : "CADU DE LULA", "dt" : "14/06/1978", "dvt" : "Válido", "seq" : "2", "e" : "s", "st" : "2º turno", "vap" : "2042", "pvap" : "58,06", "pvapn" : "58,060847313", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002534002", "nm" : "LARISSA DANIELA ESCOSSIA ROSADO", "nmu" : "LARISSA", "sgp" : "PSB" } ] } ] } ] }, 
+{ "n" : "200001800163", "nm" : "ENDIREITA RN", "tp" : "c", "com" : "PODE / PL / NOVO / CIDADANIA / PSDB / MOBILIZA", "tvtn" : "295", "tvan" : "295", "par" : [ 
+{ "n" : "22", "sg" : "PL", "nm" : "PARTIDO LIBERAL", "nfed" : "", "tvtn" : "295", "tvan" : "295", "cand" : [ 
+{ "n" : "22", "sqcand" : "200002534442", "nm" : "ÁLVARO COSTA DIAS", "nmu" : "ÁLVARO DIAS", "dt" : "04/09/1959", "dvt" : "Válido", "seq" : "3", "e" : "n", "st" : "Não eleito", "vap" : "295", "pvap" : "8,39", "pvapn" : "8,387830537", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002534441", "nm" : "ANTEOMAR PEREIRA DA SILVA", "nmu" : "BABÁ", "sgp" : "PL" } ] } ] } ] }, 
+{ "n" : "200001800610", "nm" : "PARTIDO SOCIALISTA  DOS TRABALHADORES UNIFICADO", "tp" : "i", "com" : "PSTU", "vag" : "0", "par" : [ 
+{ "n" : "16", "sg" : "PSTU", "nm" : "PARTIDO SOCIALISTA  DOS TRABALHADORES UNIFICADO", "nfed" : "", "tvtn" : "0", "tvan" : "0", "cand" : [ 
+{ "n" : "16", "sqcand" : "200002542481", "nm" : "DARIO BARBOSA DE MELO", "nmu" : "DÁRIO BARBOSA", "dt" : "28/05/1953", "dvt" : "Válido", "seq" : "5", "e" : "n", "st" : "Não eleito", "vap" : "0", "pvap" : "0,00", "pvapn" : "0", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002542482", "nm" : "FERNANDA LOURENA PEREIRA SOARES", "nmu" : "FERNANDA SOARES", "sgp" : "PSTU" } ] } ] } ] }, 
+{ "n" : "200001800267", "nm" : "ESPERANÇA E TRABALHO'", "tp" : "c", "com" : "REPUBLICANOS / MDB / PSD / AVANTE / PRD / SOLIDARIEDADE / PP / UNIÃO", "tvtn" : "1179", "tvan" : "1179", "par" : [ 
+{ "n" : "44", "sg" : "UNIÃO", "nm" : "UNIÃO BRASIL", "nfed" : "104", "tvtn" : "1179", "tvan" : "1179", "cand" : [ 
+{ "n" : "44", "sqcand" : "200002535255", "nm" : "ALLYSON LEANDRO BEZERRA SILVA", "nmu" : "ALLYSON", "dt" : "12/05/1992", "dvt" : "Válido", "seq" : "1", "e" : "s", "st" : "2º turno", "vap" : "1179", "pvap" : "33,52", "pvapn" : "33,522888826", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002535256", "nm" : "HERMANO DA COSTA MORAES", "nmu" : "HERMANO", "sgp" : "MDB" } ] } ] } ] }, 
+{ "n" : "200001801344", "nm" : "PARTIDO DA CAUSA OPERÁRIA", "tp" : "i", "com" : "PCO", "vag" : "0", "par" : [ 
+{ "n" : "29", "sg" : "PCO", "nm" : "PARTIDO DA CAUSA OPERÁRIA", "nfed" : "", "tvtn" : "0", "tvan" : "0", "cand" : [ 
+{ "n" : "29", "sqcand" : "200002553301", "nm" : "HENRIQUE OTHON COSTA DE LYRA", "nmu" : "HENRIQUE LYRA", "dt" : "20/04/1985", "dvt" : "Anulado sub judice", "seq" : "8", "e" : "n", "st" : "Não eleito", "vap" : "0", "pvap" : "0,00", "pvapn" : "0", "vs" : [ 
+{ "tp" : "v", "sqcand" : "200002554523", "nm" : "MAVIAEL RIBEIRO DA COSTA JUNIOR", "nmu" : "MAVIAEL RIBEIRO", "sgp" : "PCO" } ] } ] } ] } ] } ], "s" : 
+{ "ts" : "17", "st" : "17", "pst" : "100,00", "pstn" : "100", "snt" : "0", "psnt" : "0,00", "psntn" : "0", "si" : "17", "psi" : "100,00", "psin" : "100", "sni" : "0", "psni" : "0,00", "psnin" : "0", "sa" : "17", "psa" : "100,00", "psan" : "100", "sna" : "0", "psna" : "0,00", "psnan" : "0" }, "e" : 
+{ "te" : "4470", "est" : "4470", "pest" : "100,00", "pestn" : "100", "esnt" : "0", "pesnt" : "0,00", "pesntn" : "0", "esi" : "4470", "pesi" : "100,00", "pesin" : "100", "esni" : "0", "pesni" : "0,00", "pesnin" : "0", "esa" : "4470", "pesa" : "100,00", "pesan" : "100", "esna" : "0", "pesna" : "0,00", "pesnan" : "0", "c" : "3722", "pc" : "83,27", "pcn" : "83,266219239", "a" : "748", "pa" : "16,73", "pan" : "16,733780761" }, "v" : 
+{ "tv" : "3722", "vvc" : "3517", "pvvc" : "94,49", "pvvcn" : "94,492208490", "vv" : "3517", "pvv" : "100,00", "pvvn" : "100", "vnom" : "3517", "pvnom" : "100,00", "pvnomn" : "100", "van" : "0", "pvan" : "0,00", "pvann" : "0", "vansj" : "0", "pvansj" : "0,00", "pvansjn" : "0", "vb" : "80", "pvb" : "2,15", "pvbn" : "2,149382053", "tvn" : "125", "ptvn" : "3,36", "ptvnn" : "3,358409457", "vn" : "124", "pvn" : "99,20", "pvnn" : "99,200000000", "vnt" : "1", "pvnt" : "0,80", "pvntn" : "0,800000000", "vsan" : "0", "vscv" : "0" } }

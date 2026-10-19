@@ -4,10 +4,12 @@ Fonte: API de malhas do IBGE (qualidade mínima, divisão por UF)
   https://servicodados.ibge.gov.br/api/v3/malhas/paises/BR?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=UF
   https://servicodados.ibge.gov.br/api/v1/localidades/estados (código IBGE → sigla)
 
-    python scripts/gerar_mapa.py <malha.json> <estados.json>
+    python scripts/gerar_mapa.py <malha.json> <estados.json>       # Brasil por UF → painel/mapa-br.js
+    python scripts/gerar_mapa.py --rn <malha-municipios-rn.json>   # RN por município → painel/mapa-rn.js
+      (malha: .../api/v3/malhas/estados/24?formato=application/vnd.geo+json&qualidade=minima&intrarregiao=municipio)
 
-Projeção equiretangular com a longitude encolhida por cos(15°S): no recorte do Brasil a distorção é
-pequena e o desenho fica reconhecível sem biblioteca de mapas no navegador.
+Projeção equiretangular com a longitude encolhida por cos(latitude central): no recorte do Brasil
+(15°S) ou do RN (5,8°S) a distorção é pequena e o desenho fica reconhecível sem biblioteca de mapas.
 """
 import json
 import math
@@ -16,7 +18,6 @@ from pathlib import Path
 
 RAIZ = Path(__file__).resolve().parent.parent
 LARGURA = 1000
-FATOR_LON = math.cos(math.radians(15))
 
 
 def aneis(geom):
@@ -25,9 +26,11 @@ def aneis(geom):
     return geom["coordinates"]  # MultiPolygon
 
 
-def main(malha, estados):
+def main(malha, estados=None, destino="mapa-br.js", variavel="MAPA_BR", lat_central=15, fonte="IBGE, malha de UFs (qualidade mínima)"):
+    FATOR_LON = math.cos(math.radians(lat_central))
     g = json.loads(Path(malha).read_text(encoding="utf-8"))
-    sigla = {str(e["id"]): e["sigla"].lower() for e in json.loads(Path(estados).read_text(encoding="utf-8"))}
+    # Chave de cada área: sigla da UF (Brasil) ou o próprio código IBGE do município (RN).
+    sigla = {str(e["id"]): e["sigla"].lower() for e in json.loads(Path(estados).read_text(encoding="utf-8"))} if estados else None
     pontos = [(lon * FATOR_LON, -lat) for f in g["features"] for poli in aneis(f["geometry"]) for anel in poli for lon, lat in anel]
     x0, x1 = min(p[0] for p in pontos), max(p[0] for p in pontos)
     y0, y1 = min(p[1] for p in pontos), max(p[1] for p in pontos)
@@ -37,7 +40,7 @@ def main(malha, estados):
 
     ufs = {}
     for f in g["features"]:
-        uf = sigla[f["properties"]["codarea"]]
+        uf = sigla[f["properties"]["codarea"]] if sigla else f["properties"]["codarea"]
         partes, maior, area_maior = [], None, -1
         for poli in aneis(f["geometry"]):
             for k, anel in enumerate(poli):
@@ -52,11 +55,14 @@ def main(malha, estados):
         cy = sum((pts[i][1] + pts[i + 1][1]) * (pts[i][0] * pts[i + 1][1] - pts[i + 1][0] * pts[i][1]) for i in range(len(pts) - 1)) / (6 * a)
         ufs[uf] = {"d": "".join(partes), "cx": round(cx, 1), "cy": round(cy, 1), "area": round(area_maior)}
 
-    saida = {"largura": LARGURA, "altura": altura, "fonte": "IBGE, malha de UFs (qualidade mínima)", "ufs": ufs}
-    destino = RAIZ / "painel" / "mapa-br.js"
-    destino.write_text("window.MAPA_BR = " + json.dumps(saida, separators=(",", ":")) + ";\n", encoding="utf-8")
-    print(f"{len(ufs)} UFs, {LARGURA}x{altura}, {destino.stat().st_size // 1024} KB")
+    saida = {"largura": LARGURA, "altura": altura, "fonte": fonte, "ufs": ufs}
+    caminho = RAIZ / "painel" / destino
+    caminho.write_text(f"window.{variavel} = " + json.dumps(saida, separators=(",", ":")) + ";\n", encoding="utf-8")
+    print(f"{len(ufs)} áreas, {LARGURA}x{altura}, {caminho.stat().st_size // 1024} KB -> {destino}")
 
 
 if __name__ == "__main__":
-    main(*sys.argv[1:3])
+    if sys.argv[1] == "--rn":
+        main(sys.argv[2], None, "mapa-rn.js", "MAPA_RN", 5.8, "IBGE, malha de municípios do RN (qualidade mínima)")
+    else:
+        main(*sys.argv[1:3])

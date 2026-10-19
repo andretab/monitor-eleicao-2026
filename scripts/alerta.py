@@ -49,7 +49,11 @@ def main() -> int:
     titulos_antes = {(b.get("quando"), b.get("titulo")) for b in ba.get("boletins", [])}
     boletins = [b for b in bd.get("boletins", []) if (b.get("quando"), b.get("titulo")) not in titulos_antes]
 
-    if not (novas or registradas or boletins):
+    ra, rd = ler(antes, "dados/rn/pesquisas.json"), ler(depois, "dados/rn/pesquisas.json")
+    vistas_rn = {chave(p) for p in ra.get("segundo_turno", [])}
+    novas_rn = [p for p in rd.get("segundo_turno", []) if chave(p) not in vistas_rn]
+
+    if not (novas or registradas or boletins or novas_rn):
         return 0
 
     linhas = ["@andretab novidade no Monitor Eleição 2026:", ""]
@@ -72,6 +76,14 @@ def main() -> int:
     if registradas:
         linhas.append(f"**{len(registradas)} pesquisa(s) nova(s) registrada(s) no TSE, a divulgar:** "
                       + ", ".join(f"{p['instituto']} (campo até {p['fim'][8:10]}/{p['fim'][5:7]})" for p in registradas))
+        linhas.append("")
+    if novas_rn:
+        linhas.append(f"**RN · {len(novas_rn)} pesquisa(s) nova(s) para governador (Cadu × Allyson)**")
+        for p in sorted(novas_rn, key=lambda p: p["fim"], reverse=True):
+            tot = p["a"] + p["b"]
+            linhas.append(f"- {p['instituto']} ({p['inicio'][8:10]}/{p['inicio'][5:7]}–{p['fim'][8:10]}/{p['fim'][5:7]}): "
+                          f"Cadu {br(p['a'])}% × Allyson {br(p['b'])}% · válidos {br(100 * p['a'] / tot)}% × {br(100 * p['b'] / tot)}%")
+        linhas.append(f"Ver o RN: {SITE}/painel/rn.html")
         linhas.append("")
     for b in boletins:
         linhas.append(f"**Boletim do analista ({b.get('quando', '').replace('T', ' ')}):** {b.get('titulo', '')}")

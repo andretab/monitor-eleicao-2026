@@ -12,7 +12,7 @@
 <body>
 <nav class="barra-topo"><div class="dentro">
   <a class="marca" href="index.html">Eleição 2026<span> · monitor do 2º turno</span></a>
-  <div class="abas"><a href="index.html" aria-current="page">Pesquisas</a><a href="apuracao.html">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a></div>
+  <div class="abas"><a href="index.html" aria-current="page">Pesquisas</a><a href="apuracao.html">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a><a href="rn.html">RN</a></div>
 </div></nav>
 
 <main>
@@ -225,7 +225,7 @@
       kpi("Se o ritmo seguir até 25/10", t ? (t.dia25 >= 0 ? "Flávio " : "Lula ") + sinal(Math.abs(t.dia25)) : "—", "extrapolação linear: trate como teto");
     el("explicaModo").innerHTML = modo === "bruta"
       ? "Mostrando as pesquisas como foram divulgadas, convertidas para votos válidos."
-      : `Mostrando as pesquisas corrigidas: cada instituto recebe de volta o erro que teve no 1º turno. Em média, as pesquisas do 1º turno puxaram ${fmt(Math.abs(erroMedio))} ponto(s) para Lula na vantagem. A chance usa como incerteza a dispersão desses erros (${fmt(desvio)} p.p.).`;
+      : `Mostrando as pesquisas corrigidas: cada instituto recebe de volta o erro que teve no 1º turno. Em média, as pesquisas do 1º turno puxaram ${fmt(Math.abs(erroMedio))} ponto(s) para ${erroMedio < 0 ? "Lula" : "Flávio"} na vantagem. A chance usa como incerteza a dispersão desses erros (${fmt(desvio)} p.p.).`;
     desenhaInstitutos();
   }
   document.querySelectorAll("#modos button").forEach(b => b.addEventListener("click", () => { modo = b.dataset.modo; desenhaResumo(); }));
@@ -263,7 +263,7 @@
     })),
   });
   const acertaram = erros.filter(e => e.v.flavio > e.v.lula).length;
-  el("resumoErros").textContent = `Acertaram quem ficaria em 1º: ${acertaram} de ${erros.length}. Erro médio: ${fmt(Math.abs(erroMedio))} p.p. a favor de Lula.`;
+  el("resumoErros").textContent = `Acertaram quem ficaria em 1º: ${acertaram} de ${erros.length}. Erro médio: ${fmt(Math.abs(erroMedio))} p.p. a favor de ${erroMedio < 0 ? "Lula" : "Flávio"}.`;
   el("erros1t").innerHTML = `<tr><th>Instituto</th><th>Data</th><th>Lula</th><th>Flávio</th><th>Erro vantagem</th><th>Líder certo?</th></tr>` +
     `<tr class="destaque"><td>Resultado TSE</td><td class="num">04/10</td><td class="num">${fmt(real.lula)}</td><td class="num">${fmt(real.flavio)}</td><td></td><td></td></tr>` +
     [...erros].sort((a, b) => Math.abs(a.erroMargem) - Math.abs(b.erroMargem)).map(e => `<tr><td>${esc(e.instituto)}</td><td class="num">${dataBR(e.fim)}</td><td class="num">${fmt(e.v.lula)}</td><td class="num">${fmt(e.v.flavio)}</td><td class="num">${sinal(e.erroMargem)}</td><td>${e.v.flavio > e.v.lula ? "sim" : "não"}</td></tr>`).join("");

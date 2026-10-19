@@ -82,7 +82,7 @@ def prior_uf(base: dict, transferencia: float) -> float:
 
 
 def projetar(leituras: dict[str, LeituraUF], base1t: dict, transferencia: float) -> Projecao:
-    ufs = [u for u in base1t if u != "br"]
+    ufs = [u for u in base1t if u != "br"]  # "unidades": UFs (presidente) ou municípios (RN)
 
     # Swing nacional: só UFs com apuração relevante, ponderadas pelos votos já contados.
     num = den = 0.0
@@ -203,7 +203,7 @@ def prever_virada(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str, 
 
 
 def simular_viradas(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str, float], n: int = 300,
-                    passo: float = 3.0, limite_min: float = 480, semente: int = 0) -> dict:
+                    passo: float = 3.0, limite_min: float = 480, semente: int = 0, regioes_lentas=("N", "NE")) -> dict:
     """Sorteia `n` finais de noite e conta em quantos o placar troca de líder, e quando.
 
     Em cada final sorteado variam:
@@ -232,7 +232,7 @@ def simular_viradas(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str
         incerteza_ritmo = .35
     else:
         # Padrão de atraso conhecido: o que falta no N/NE leva ~1,5× mais que no resto do país.
-        base = {x.uf: restantes[x.uf] / (120 * (1.5 if x.regiao in ("N", "NE") else .85)) for x in ufs}
+        base = {x.uf: restantes[x.uf] / (120 * (1.5 if x.regiao in regioes_lentas else .85 if regioes_lentas else 1)) for x in ufs}
         incerteza_ritmo = .6
     desvio_nacional = p.desvio_margem / (2 * resto_total)  # em fração do voto que falta
 
@@ -259,7 +259,7 @@ def simular_viradas(p: Projecao, leituras: dict[str, LeituraUF], ritmo: dict[str
             if all(v >= 1 for v in feito.values()):
                 break
         lula_vence += lider > 0
-        if lider != lider_agora and ultima_troca:
+        if lider_agora != 0 and lider != lider_agora and ultima_troca:  # sem voto ainda, não há "virada"
             minutos.append(ultima_troca[0])
             fracoes.append(ultima_troca[1])
     return {"n": n, "prob_lula_vence": lula_vence / n, "prob_troca": len(minutos) / n, "lider_placar": lider_agora,

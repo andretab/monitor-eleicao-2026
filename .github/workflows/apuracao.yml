@@ -1,5 +1,6 @@
 # Noite da apuração: liga sozinho domingo, 25/10, às 16h45 de Brasília (19h45 UTC), lê o TSE a cada
-# minuto e publica a projeção no ramo ao-vivo, de onde a página lê. Para quando chega a 100%.
+# minuto e publica a projeção. Duas disputas em paralelo: presidente (ramo ao-vivo) e governador do RN
+# (ramo ao-vivo-rn). Cada uma para quando chega a 100%.
 # O segundo horário é reserva caso o GitHub atrase ou pule o primeiro; a fila (concurrency) impede
 # dois coletores ao mesmo tempo.
 name: apuracao
@@ -21,14 +22,17 @@ on:
 permissions:
   contents: write
 
-concurrency:
-  group: apuracao
-  cancel-in-progress: false
-
 jobs:
   coletar:
     runs-on: ubuntu-latest
     timeout-minutes: 360
+    strategy:
+      fail-fast: false  # uma disputa com problema não derruba a outra
+      matrix:
+        corrida: [presidente, rn]
+    concurrency:
+      group: apuracao-${{ matrix.corrida }}
+      cancel-in-progress: false
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -44,7 +48,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.simular }}" = "true" ]; then
-            python apuracao/coletor.py --simular --velocidade "${{ inputs.velocidade }}" --sim-transferencia 0.62 --sim-swing 0.01 --publicar
+            python apuracao/coletor.py --corrida ${{ matrix.corrida }} --simular --velocidade "${{ inputs.velocidade }}" --sim-transferencia 0.62 --sim-swing 0.01 --publicar
           else
-            python apuracao/coletor.py --intervalo 60 --publicar
+            python apuracao/coletor.py --corrida ${{ matrix.corrida }} --intervalo 60 --publicar
           fi

@@ -17,7 +17,7 @@
 <body>
 <nav class="barra-topo"><div class="dentro">
   <a class="marca" href="index.html">Eleição 2026<span> · monitor do 2º turno</span></a>
-  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html" aria-current="page">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a></div>
+  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html" aria-current="page">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a><a href="rn.html">RN</a></div>
 </div></nav>
 
 <main>
@@ -135,6 +135,10 @@
   const nome = k => k === "lula" ? "Lula" : k === "flavio" ? "Flávio" : "ninguém";
   const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
   const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins", zz: "Exterior" };
+  const esc = G.esc;
+  const nomeUnid = (A, u) => A.unidades?.[u]?.nome ?? NOMES_UF[u] ?? u.toUpperCase();
+  const chaveMapa = (A, u) => A.unidades?.[u]?.mapa ?? u;
+  const curto = (A, u) => A.unidades ? nomeUnid(A, u) : u.toUpperCase();
 
   // Mapa: "apurado" pinta pelo placar de cada UF e apaga quem apurou pouco; "projeção" pinta pelo resultado projetado.
   let modoMapa = "apurado", ultimoEstado = null;
@@ -150,15 +154,15 @@
       const lAp = pct(u.lula, u.flavio), lPr = pct(u.proj_lula, u.proj_flavio);
       const m = modoMapa === "apurado" ? 2 * lAp - 100 : 2 * lPr - 100;
       const semDados = modoMapa === "apurado" && !(u.lula + u.flavio);
-      valores[u.uf] = {
+      valores[chaveMapa(A, u.uf)] = {
         cor: semDados ? "var(--linha)" : G.corMargem(m),
         opacidade: modoMapa === "apurado" ? .3 + .7 * u.fracao : 1,
-        dica: `<b>${NOMES_UF[u.uf]}</b> · ${fmt(100 * u.fracao, 0)}% das seções<br>Apurado: ${u.lula + u.flavio ? `Lula ${fmt(lAp)}% × Flávio ${fmt(100 - lAp)}%` : "ainda sem votos"}` +
+        dica: `<b>${esc(nomeUnid(A, u.uf))}</b> · ${fmt(100 * u.fracao, 0)}% das seções<br>Apurado: ${u.lula + u.flavio ? `Lula ${fmt(lAp)}% × Flávio ${fmt(100 - lAp)}%` : "ainda sem votos"}` +
           `<br>Projeção: Lula ${fmt(lPr)}% × Flávio ${fmt(100 - lPr)}%<br>Faltam ${mi(u.votos_rest)}`,
       };
     }
-    G.mapa(el("mapaVivo"), { valores, rotulo: "Apuração por estado" });
-    el("legMapa").innerHTML = G.legendaMapa();
+    G.mapa(el("mapaVivo"), { base: window.MAPA_RN || window.MAPA_BR, valores, rotulos: A.unidades ? {} : undefined, alturaMax: A.unidades ? 460 : 520, rotulo: "Apuração por " + A.rotulo_unidade });
+    el("legMapa").innerHTML = G.legendaMapa(A.candidatos?.a || "Lula", A.candidatos?.b || "Flávio");
   }
   document.querySelectorAll("#modosMapa button").forEach(b => b.addEventListener("click", () => { modoMapa = b.dataset.modo; desenhaMapa(); }));
 
@@ -185,8 +189,8 @@
       el("probKpis").innerHTML = P.faixas ? (
         kpi("80% de chance entre", `${P.hora_p10}–${P.hora_p90}`, "se a virada acontecer") +
         kpi("Horário mediano", P.hora_p50, `com ~${fmt(100 * P.fracao_p50, 0)}% das seções`) +
-        kpi("Seções na virada", `${fmt(100 * P.fracao_p10, 0)}–${fmt(100 * P.fracao_p90, 0)}%`, "faixa de 80% · 2022: ~67,8%") +
-        kpi("Ritmo dos estados", P.ritmo_medido ? "medido" : "estimado", P.ritmo_medido ? "chegada real dos últimos 15 min" : "ainda sem medição: padrão N/NE por último")) : "";
+        kpi("Seções na virada", `${fmt(100 * P.fracao_p10, 0)}–${fmt(100 * P.fracao_p90, 0)}%`, "faixa de 80%" + (A.referencia_2022 ? " · 2022: ~67,8%" : "")) +
+        kpi("Ritmo dos estados", P.ritmo_medido ? "medido" : "estimado", P.ritmo_medido ? "chegada real dos últimos 15 min" : (A.referencia_2022 ? "ainda sem medição: padrão N/NE por último" : "ainda sem medição"))) : "";
       el("probFaixasTit").textContent = P.faixas ? "Se virar, em que horário (probabilidade de cada faixa de 15 min)" : "";
       if (P.faixas) {
         const tot = P.faixas.reduce((a, f) => a + f.prob, 0);
@@ -251,24 +255,27 @@
 
     const futuro = A.curva_futura || [];
     const vals = [...h.map(p => p.margem_placar), ...h.map(p => p.margem_proj), ...futuro.map(p => p.margem_lula), 0];
-    const lim = Math.max(1e6, ...vals.map(Math.abs)) * 1.15;
-    const passo = lim > 6e6 ? 2e6 : lim > 3e6 ? 1e6 : 5e5;
+    // Escala: milhões no presidente, milhares nas disputas por município (RN).
+    const ESC = A.unidades ? 1e3 : 1e6, SUF = A.unidades ? " mil" : " mi";
+    const lim = Math.max(A.unidades ? 2e4 : 1e6, ...vals.map(Math.abs)) * 1.15;
+    const bruto = lim / 3, mag = 10 ** Math.floor(Math.log10(bruto));
+    const passo = [1, 2, 5, 10].map(k => k * mag).find(v => v >= bruto);
     const yMax = Math.ceil(lim / passo) * passo;
-    const fmtVotos = v => v === 0 ? "0" : (v > 0 ? "L+" : "F+") + fmt(Math.abs(v) / 1e6, 1);
+    const fmtVotos = v => v === 0 ? "0" : (v > 0 ? "L+" : "F+") + fmt(Math.abs(v) / ESC, A.unidades ? 0 : 1);
     G.linhas(el("grafVirada"), {
       rotulo: "Vantagem de Lula ao longo da apuração",
       x: { tipo: "num", min: 0, max: 1, passo: .1, fmt: v => Math.round(100 * v) + "%" },
-      y: { min: -yMax, max: yMax, passo, fmt: fmtVotos, fmtValor: v => fmtVotos(v) + " mi" },
+      y: { min: -yMax, max: yMax, passo, fmt: fmtVotos, fmtValor: v => fmtVotos(v) + SUF },
       series: [
         { nome: "Projeção", cor: "var(--alerta)", pontos: h.map(p => [p.fracao_secoes, p.margem_proj]) },
         { nome: "", cor: "var(--texto-3)", pontos: futuro.map(p => [p.fracao_secoes, p.margem_lula]), tracejada: true, largura: 1.5, rotulo: false },
         { nome: "Placar", cor: "var(--texto)", pontos: h.map(p => [p.fracao_secoes, p.margem_placar]) },
       ],
       refY: [{ y: 0, rotulo: "empate" }],
-      refX: [{ x: A.referencia_2022.fracao_virada, rotulo: "2022" }],
+      refX: A.referencia_2022 ? [{ x: A.referencia_2022.fracao_virada, rotulo: "2022" }] : [],
       alvosDica: h.map(p => p.fracao_secoes),
       dicaX: f => { const p = h.find(q => q.fracao_secoes === f); if (!p) return "";
-        return `<b>${p.hora}</b> · ${fmt(100 * p.fracao_secoes)}% das seções<br>Placar: ${fmtVotos(p.margem_placar)} mi<br>Projeção: ${fmtVotos(p.margem_proj)} mi<br>Chance de Lula: ${fmt(100 * p.chance_lula, 0)}%`; },
+        return `<b>${p.hora}</b> · ${fmt(100 * p.fracao_secoes)}% das seções<br>Placar: ${fmtVotos(p.margem_placar)}${SUF}<br>Projeção: ${fmtVotos(p.margem_proj)}${SUF}<br>Chance de Lula: ${fmt(100 * p.chance_lula, 0)}%`; },
     });
 
     ultimoEstado = A;
@@ -290,18 +297,21 @@
     });
 
     // UFs: saldo projetado, ordenado.
-    const ufs = A.ufs.filter(u => u.uf !== "zz").map(u => ({ ...u, sp: u.proj_lula - u.proj_flavio })).sort((a, b) => b.sp - a.sp);
-    const maxUF = Math.max(...ufs.map(u => Math.abs(u.sp))) / 1e6;
+    let ufs = A.ufs.filter(u => u.uf !== "zz").map(u => ({ ...u, sp: u.proj_lula - u.proj_flavio }));
+    if (ufs.length > 30) ufs = ufs.sort((a, b) => Math.abs(b.sp) - Math.abs(a.sp)).slice(0, 20);
+    ufs.sort((a, b) => b.sp - a.sp);
+    const ESCU = A.unidades ? 1e3 : 1e6;
+    const maxUF = Math.max(...ufs.map(u => Math.abs(u.sp))) / ESCU;
     G.barras(el("grafUFs"), {
-      divergente: true, max: maxUF, alturaLinha: 22, larguraRotulo: 34, rotuloNeg: "← Flávio", rotuloPos: "Lula →",
+      divergente: true, max: maxUF, alturaLinha: 22, larguraRotulo: A.unidades ? 150 : 34, rotuloNeg: "← Flávio", rotuloPos: "Lula →",
       itens: ufs.map(u => ({
-        rotulo: u.uf.toUpperCase(), valor: u.sp / 1e6, cor: u.sp >= 0 ? "var(--lula)" : "var(--flavio)", texto: fmt(Math.abs(u.sp) / 1e6, 2),
-        dica: `<b>${NOMES_UF[u.uf]}</b> · ${fmt(100 * u.fracao, 0)}% das seções<br>Apurado: Lula ${u.observado == null ? "—" : fmt(100 * u.observado) + "%"}<br>Projetado: Lula ${fmt(pct(u.proj_lula, u.proj_flavio))}%<br>Faltam ${mi(u.votos_rest)}`,
+        rotulo: curto(A, u.uf), valor: u.sp / ESCU, cor: u.sp >= 0 ? "var(--lula)" : "var(--flavio)", texto: fmt(Math.abs(u.sp) / ESCU, A.unidades ? 1 : 2),
+        dica: `<b>${esc(nomeUnid(A, u.uf))}</b> · ${fmt(100 * u.fracao, 0)}% das seções<br>Apurado: Lula ${u.observado == null ? "—" : fmt(100 * u.observado) + "%"}<br>Projetado: Lula ${fmt(pct(u.proj_lula, u.proj_flavio))}%<br>Faltam ${mi(u.votos_rest)}`,
       })),
     });
     el("ufs").innerHTML = `<tr><th>UF</th><th>Seções</th><th>Lula apurado</th><th>Esperado</th><th>Usado no restante</th><th>Faltam</th><th>Lula projetado</th><th>Saldo projetado</th></tr>` +
       A.ufs.map(u => { const sp = u.proj_lula - u.proj_flavio;
-        return `<tr><td>${u.uf.toUpperCase()}</td><td class="num">${fmt(100 * u.fracao, 0)}%</td><td class="num">${u.observado == null ? "—" : fmt(100 * u.observado)}</td>` +
+        return `<tr><td>${esc(curto(A, u.uf))}</td><td class="num">${fmt(100 * u.fracao, 0)}%</td><td class="num">${u.observado == null ? "—" : fmt(100 * u.observado)}</td>` +
           `<td class="num">${fmt(100 * (u.prior + A.swing))}</td><td class="num">${fmt(100 * u.parcela_rest)}</td><td class="num">${mi(u.votos_rest)}</td>` +
           `<td class="num">${fmt(pct(u.proj_lula, u.proj_flavio))}</td><td class="num ${sp >= 0 ? "lula" : "flavio"}">${sp >= 0 ? "L" : "F"} +${mi(Math.abs(sp))}</td></tr>`; }).join("");
 
@@ -314,14 +324,15 @@
   //  - publicado (GitHub Pages): o estado.json do ramo ao-vivo, atualizado pelo robô do GitHub Actions.
   //    A API do GitHub entrega sem cache (limite de 60 leituras/hora por aparelho, por isso 75 s);
   //    se o limite estourar, cai para o raw, que tem até 5 min de cache.
+  const FONTE = { arquivo: "estado.json", ramo: "ao-vivo", js: "apuracao-dados.js", variavel: "APURACAO" };
   const REPO = "andretab/monitor-eleicao-2026";
   const LOCAL = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
-  const API = `https://api.github.com/repos/${REPO}/contents/estado.json?ref=ao-vivo`;
-  const RAW = `https://raw.githubusercontent.com/${REPO}/ao-vivo/estado.json`;
+  const API = `https://api.github.com/repos/${REPO}/contents/${FONTE.arquivo}?ref=${FONTE.ramo}`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/${FONTE.ramo}/${FONTE.arquivo}`;
   function recarregaLocal() {
     const tag = document.createElement("script");
-    tag.src = "apuracao-dados.js?t=" + Date.now();
-    tag.onload = tag.onerror = () => { desenha(window.APURACAO); tag.remove(); };
+    tag.src = FONTE.js + "?t=" + Date.now();
+    tag.onload = tag.onerror = () => { desenha(window[FONTE.variavel]); tag.remove(); };
     document.body.appendChild(tag);
   }
   async function recarregaRemoto() {

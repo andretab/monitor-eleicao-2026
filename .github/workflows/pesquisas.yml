@@ -27,12 +27,16 @@ jobs:
       - run: pip install lxml
       - run: echo "ANTES=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - run: python scripts/atualizar_pesquisas.py
+      - name: Pesquisas do RN (governador)
+        continue-on-error: true  # se a página do RN mudar de formato, o nacional segue publicando
+        run: python scripts/atualizar_pesquisas_rn.py
       - name: Publica se mudou
         run: |
           if git diff --quiet; then echo "sem mudanças"; exit 0; fi
           git config user.name "monitor-eleicao"
           git config user.email "monitor@users.noreply.github.com"
-          git commit -am "Pesquisas atualizadas da Wikipédia"
+          git add -A dados painel
+          git commit -m "Pesquisas atualizadas da Wikipédia"
           git pull --rebase origin main
           git push
       - name: Alerta por e-mail se houver novidade

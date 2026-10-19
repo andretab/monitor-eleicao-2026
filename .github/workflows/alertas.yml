@@ -9,6 +9,7 @@ on:
     paths:
       - dados/boletins.json
       - dados/pesquisas.json
+      - dados/rn/pesquisas.json
   workflow_dispatch:  # botão manual: manda um alerta de teste para conferir se o e-mail chega
 
 permissions:

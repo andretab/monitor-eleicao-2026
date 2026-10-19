@@ -1,0 +1,140 @@
+{
+ "_leia": "a = Cadu (PT), b = Allyson (União), terceiro = Álvaro Dias (PL). Percentuais como divulgados; 'indecisos' = indecisos + brancos/nulos. segundo_turno_extras: achadas fora da Wikipédia (com 'url').",
+ "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_eleição_estadual_de_2026_no_Rio_Grande_do_Norte",
+ "atualizado_em": "2026-10-19",
+ "conferido_em": "2026-10-19 07:44",
+ "primeiro_turno_ultima_por_instituto": [
+  {
+   "instituto": "Exatus",
+   "inicio": "2026-09-28",
+   "fim": "2026-09-30",
+   "amostra": 1500,
+   "a": 24.42,
+   "b": 43.26,
+   "terceiro": 22.22,
+   "outros": 0.9,
+   "indecisos": 9.2
+  },
+  {
+   "instituto": "AtlasIntel",
+   "inicio": "2026-09-23",
+   "fim": "2026-09-28",
+   "amostra": 1207,
+   "a": 37.1,
+   "b": 27.1,
+   "terceiro": 27.3,
+   "outros": 2.5,
+   "indecisos": 6.0
+  },
+  {
+   "instituto": "TN/Consult",
+   "inicio": "2026-09-24",
+   "fim": "2026-09-26",
+   "amostra": 1700,
+   "a": 22.0,
+   "b": 36.18,
+   "terceiro": 24.41,
+   "outros": 0.53,
+   "indecisos": 16.88
+  },
+  {
+   "instituto": "Seta",
+   "inicio": "2026-09-21",
+   "fim": "2026-09-24",
+   "amostra": 1500,
+   "a": 22.5,
+   "b": 40.5,
+   "terceiro": 21.2,
+   "outros": 1.9,
+   "indecisos": 14.0
+  },
+  {
+   "instituto": "Quaest",
+   "inicio": "2026-09-21",
+   "fim": "2026-09-24",
+   "amostra": 804,
+   "a": 21.0,
+   "b": 39.0,
+   "terceiro": 18.0,
+   "outros": 1.0,
+   "indecisos": 21.0
+  },
+  {
+   "instituto": "Exatus/Agora RN",
+   "inicio": "2026-09-21",
+   "fim": "2026-09-23",
+   "amostra": 1500,
+   "a": 22.52,
+   "b": 44.11,
+   "terceiro": 20.6,
+   "outros": null,
+   "indecisos": 12.13
+  },
+  {
+   "instituto": "Metadata/Grupo Dial",
+   "inicio": "2026-09-21",
+   "fim": "2026-09-23",
+   "amostra": 1536,
+   "a": 22.28,
+   "b": 43.25,
+   "terceiro": 17.37,
+   "outros": 1.61,
+   "indecisos": 15.5
+  },
+  {
+   "instituto": "Média/O Potengi",
+   "inicio": "2026-09-12",
+   "fim": "2026-09-17",
+   "amostra": 2000,
+   "a": 27.11,
+   "b": 38.19,
+   "terceiro": 32.48,
+   "outros": 1.95,
+   "indecisos": null
+  },
+  {
+   "instituto": "Perfil",
+   "inicio": "2026-09-12",
+   "fim": "2026-09-15",
+   "amostra": 1600,
+   "a": 23.31,
+   "b": 36.05,
+   "terceiro": 20.06,
+   "outros": 1.51,
+   "indecisos": 19.07
+  }
+ ],
+ "segundo_turno": [
+  {
+   "instituto": "Affare",
+   "inicio": "2026-10-09",
+   "fim": "2026-10-12",
+   "amostra": 1350,
+   "margem": 2.67,
+   "a": 49.1,
+   "b": 44.2,
+   "indecisos": 6.7
+  },
+  {
+   "instituto": "Quaest",
+   "inicio": "2026-10-09",
+   "fim": "2026-10-12",
+   "amostra": 1098,
+   "margem": 3.0,
+   "a": 42.0,
+   "b": 45.0,
+   "indecisos": 13.0
+  },
+  {
+   "instituto": "Seta",
+   "inicio": "2026-10-07",
+   "fim": "2026-10-10",
+   "amostra": 1500,
+   "margem": 2.5,
+   "a": 32.4,
+   "b": 43.5,
+   "indecisos": 9.9
+  }
+ ],
+ "segundo_turno_extras": []
+}
