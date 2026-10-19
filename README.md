@@ -1,21 +1,37 @@
 # Monitor Eleição 2026
 
-**Link:** https://eleicao.andrefreitas.eng.br/ (pesquisas) ·
-https://eleicao.andrefreitas.eng.br/painel/apuracao.html (apuração ao vivo)
+**Link:** https://eleicao.andrefreitas.eng.br/ — abas Pesquisas · Apuração ao vivo · Balanço · RN
+(governador do RN: `painel/rn.html` e `painel/rn-apuracao.html`).
 
 ## Tudo automático (GitHub Actions)
 
 | Robô | Quando | O que faz |
 |---|---|---|
-| `pesquisas.yml` | a cada 3 h | lê a Wikipédia, atualiza `dados/pesquisas.json` e o site |
-| `apuracao.yml` | dom 25/10, 16h45 (reserva 17h30) | lê o TSE a cada minuto e publica `estado.json` no ramo `ao-vivo` |
+| `pesquisas.yml` | de hora em hora | lê a Wikipédia (presidente e RN), atualiza os dados e o site; avisa novidades |
+| `alertas.yml` | a cada commit de dados | avisa boletim ou pesquisa nova do analista; botão manual manda um alerta de teste |
+| `apuracao.yml` | dom 25/10, 16h45 (reserva 17h30) | duas disputas em paralelo, lendo o TSE a cada minuto: presidente → ramo `ao-vivo`, governador do RN → ramo `ao-vivo-rn` |
+
+Alertas por e-mail: o robô comenta no aviso nº 1 mencionando @andretab e o GitHub envia o e-mail. Só há
+alerta com novidade real (pesquisa nova, pesquisa registrada no TSE, boletim do analista).
 
 A página de pesquisas recarrega a cada 15 min; a da apuração busca o `estado.json` a cada 75 s.
-Ensaio manual: aba Actions → apuracao → Run workflow (simular = sim). Depois do ensaio, apagar o ramo
-`ao-vivo` (`git push origin --delete ao-vivo`) para a página voltar a "Aguardando a apuração".
+Ensaio manual: aba Actions → apuracao → Run workflow (simular = sim). Depois do ensaio, apagar os ramos
+(`git push origin --delete ao-vivo ao-vivo-rn`) para as páginas voltarem a "Aguardando a apuração".
 
-Acompanhamento do 2º turno presidencial (25/10/2026): pesquisas até a véspera, corrigidas pelo erro
-de cada instituto no 1º turno, e, no dia, a apuração ao vivo com projeção por UF.
+Acompanhamento do 2º turno de 25/10/2026: presidente (Lula × Flávio) e governador do RN (Cadu × Allyson).
+Pesquisas até a véspera, corrigidas pelo erro de cada instituto no 1º turno, e, no dia, a apuração ao vivo
+com projeção por UF (presidente) ou por município (RN) e a chance de virada.
+
+## RN · governador
+
+- `dados/rn/tse-1t/`: TSE, 1º turno por município (eleição 6259, cargo 3); `scripts/extrair_rn.py` resume em
+  `dados/rn/primeiro-turno-mun.json` (a = Cadu, b = Allyson, terceiro = Álvaro Dias).
+- `scripts/atualizar_pesquisas_rn.py`: pesquisas da Wikipédia → `dados/rn/pesquisas.json` e `painel/dados-rn.js`.
+  O erro de cada instituto usa só pesquisas da reta final do 1º turno (a partir de 15/9).
+- `scripts/gerar_paginas_rn.py`: gera `rn.html` e `rn-apuracao.html` a partir das páginas nacionais. Rodar de
+  novo sempre que `index.html` ou `apuracao.html` mudarem.
+- Apuração: `python apuracao/coletor.py --corrida rn` (2º turno = eleição 6260, 167 arquivos por minuto).
+- Mapa: `python scripts/gerar_mapa.py --rn <malha de municípios do IBGE>` → `painel/mapa-rn.js`.
 
 ## Estrutura
 
@@ -24,8 +40,8 @@ de cada instituto no 1º turno, e, no dia, a apuração ao vivo com projeção p
 | `dados/tse-1t/` | Arquivos oficiais do TSE do 1º turno, um por UF (`br` = Brasil, `zz` = exterior) |
 | `dados/primeiro-turno-uf.json` | Resumo por UF gerado de `tse-1t/` (Lula, Flávio, outros, válidos, comparecimento) |
 | `dados/pesquisas.json` | Pesquisas: última de cada instituto no 1º turno, todas do 2º turno, agenda a divulgar |
-| `painel/` | `index.html` (pesquisas) e `apuracao.html` (apuração ao vivo); abrem com duplo clique |
-| `apuracao/` | Apuração ao vivo: `coletor.py` (laço), `modelo.py` (projeção e virada), `fontes.py` (TSE e simulador) |
+| `painel/` | `index.html`, `apuracao.html`, `balanco.html`, `rn.html`, `rn-apuracao.html`; `graficos.js` e `estilo.css` compartilhados |
+| `apuracao/` | Apuração ao vivo: `coletor.py` (laço), `corridas.py` (as disputas), `modelo.py` (projeção e virada), `fontes.py` (TSE e simulador) |
 | `scripts/` | `extrair_1t.py` (TSE → resumo) e `gerar_dados_js.py` (JSON → `painel/dados.js`) |
 
 ## Rotina para lançar uma pesquisa nova
