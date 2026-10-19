@@ -17,7 +17,6 @@ import urllib.request
 from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 
-import lxml.html
 
 RAIZ = Path(__file__).resolve().parent.parent
 PAGINA = "Pesquisas eleitorais para a eleição estadual de 2026 no Rio Grande do Norte"
@@ -74,6 +73,7 @@ def datas(txt: str) -> tuple[str, str]:
 
 
 def linhas(html: str):
+    import lxml.html  # só a leitura da Wikipédia precisa; o analista usa este script (--so-js) sem lxml
     doc = lxml.html.fromstring(html)
     tabela = doc.xpath("//table[contains(@class,'wikitable')]")[0]
     for tr in tabela.xpath(".//tr"):
