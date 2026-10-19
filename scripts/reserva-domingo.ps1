@@ -26,7 +26,8 @@ $processos = foreach ($corrida in @("presidente", "rn")) {
     }
     else { $argumentos += @("--intervalo", "60") }
     $saida = Join-Path $logs "$corrida-$carimbo.log"
-    "$(Get-Date -Format 'HH:mm:ss') ligando coletor $corrida -> $saida" | Tee-Object -FilePath $geral -Append
+    # Out-Host: a mensagem vai para a tela e o registro sem entrar na lista de processos esperados abaixo.
+    "$(Get-Date -Format 'HH:mm:ss') ligando coletor $corrida -> $saida" | Tee-Object -FilePath $geral -Append | Out-Host
     Start-Process -FilePath $python -ArgumentList $argumentos -WorkingDirectory $raiz -NoNewWindow -PassThru `
         -RedirectStandardOutput $saida -RedirectStandardError "$saida.erros"
 }

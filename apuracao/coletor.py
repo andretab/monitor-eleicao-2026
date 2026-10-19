@@ -122,10 +122,14 @@ LIMITE_SILENCIO_S = 240  # 4 min sem atualização do GitHub = ele parou; o PC a
 
 def github_em_dia(ramo: str) -> tuple[bool, str]:
     """O estado publicado no ramo veio do GitHub e tem menos de 4 minutos?"""
-    r = subprocess.run(["git", "fetch", "-q", "origin", ramo], cwd=RAIZ, capture_output=True, text=True)
+    # Cada coletor lê o seu próprio ramo numa referência própria: os dois rodam juntos no PC e o FETCH_HEAD,
+    # compartilhado, faria um ler o estado do outro.
+    ref = f"refs/remotes/origin/{ramo}"
+    r = subprocess.run(["git", "fetch", "-q", "--no-write-fetch-head", "origin", f"+refs/heads/{ramo}:{ref}"],
+                       cwd=RAIZ, capture_output=True)
     if r.returncode != 0:
         return False, "ramo ainda não existe"
-    txt = subprocess.run(["git", "show", "FETCH_HEAD:estado.json"], cwd=RAIZ, capture_output=True, text=True, encoding="utf-8").stdout
+    txt = subprocess.run(["git", "show", f"{ref}:estado.json"], cwd=RAIZ, capture_output=True).stdout.decode("utf-8", "replace")
     try:
         e = json.loads(txt)
     except json.JSONDecodeError:
