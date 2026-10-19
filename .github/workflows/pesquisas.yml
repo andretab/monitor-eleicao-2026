@@ -1,13 +1,16 @@
-# Lê as pesquisas do 2º turno na Wikipédia a cada 3 horas e publica no GitHub Pages.
+# Lê as pesquisas do 2º turno na Wikipédia de hora em hora e publica no GitHub Pages.
+# De hora em hora porque o agendador do GitHub atrasa e às vezes pula execuções: rodando mais vezes,
+# o atraso real fica pequeno. Havendo novidade, comenta no aviso nº 1 e o GitHub manda e-mail.
 name: pesquisas
 
 on:
   schedule:
-    - cron: "15 */3 * * *"
+    - cron: "15 * * * *"
   workflow_dispatch:
 
 permissions:
   contents: write
+  issues: write
 
 concurrency:
   group: pesquisas
@@ -22,11 +25,19 @@ jobs:
         with:
           python-version: "3.12"
       - run: pip install lxml
+      - run: echo "ANTES=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
       - run: python scripts/atualizar_pesquisas.py
       - name: Publica se mudou
         run: |
-          if git diff --quiet; then echo "sem novidades"; exit 0; fi
+          if git diff --quiet; then echo "sem mudanças"; exit 0; fi
           git config user.name "monitor-eleicao"
           git config user.email "monitor@users.noreply.github.com"
           git commit -am "Pesquisas atualizadas da Wikipédia"
+          git pull --rebase origin main
           git push
+      - name: Alerta por e-mail se houver novidade
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/alerta.py "$ANTES" HEAD > alerta.md
+          if [ -s alerta.md ]; then gh issue comment 1 --body-file alerta.md; else echo "nada novo para avisar"; fi
