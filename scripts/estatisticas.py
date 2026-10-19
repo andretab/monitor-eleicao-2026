@@ -1,7 +1,8 @@
 """Números para os boletins, com as mesmas contas do site (painel/index.html e painel/balanco.html).
 
-    python scripts/estatisticas.py                       # pesquisas
+    python scripts/estatisticas.py                       # pesquisas (presidente)
     python scripts/estatisticas.py --estado estado.json  # + apuração / balanço
+    python scripts/estatisticas.py --rn [--estado estado-rn.json]   # governador do RN (Cadu × Allyson)
 
 Imprime JSON. O analista na nuvem escreve o texto a partir daqui, para que boletim e site nunca
 discordem nos números.
@@ -26,9 +27,10 @@ def phi(x: float) -> float:
     return 0.5 * (1 + math.erf(x / math.sqrt(2)))
 
 
-def pesquisas() -> dict:
-    P = json.loads((RAIZ / "dados" / "pesquisas.json").read_text(encoding="utf-8"))
-    br = json.loads((RAIZ / "dados" / "primeiro-turno-uf.json").read_text(encoding="utf-8"))["br"]
+def pesquisas(P: dict | None = None, br: dict | None = None) -> dict:
+    if P is None:
+        P = json.loads((RAIZ / "dados" / "pesquisas.json").read_text(encoding="utf-8"))
+        br = json.loads((RAIZ / "dados" / "primeiro-turno-uf.json").read_text(encoding="utf-8"))["br"]
     rl, rf = 100 * br["lula"] / br["validos"], 100 * br["flavio"] / br["validos"]
     mreal = rf - rl
 
@@ -92,8 +94,9 @@ def pesquisas() -> dict:
     }
 
 
-def apuracao(estado: dict, pesq: dict) -> dict:
-    t1 = json.loads((RAIZ / "dados" / "primeiro-turno-uf.json").read_text(encoding="utf-8"))
+def apuracao(estado: dict, pesq: dict, t1: dict | None = None) -> dict:
+    if t1 is None:
+        t1 = json.loads((RAIZ / "dados" / "primeiro-turno-uf.json").read_text(encoding="utf-8"))
     L = 100 * estado["lula"] / max(estado["lula"] + estado["flavio"], 1)
     tot = estado["proj_lula"] + estado["proj_flavio"]
     h = [x for x in estado["historico"] if x["fracao_secoes"] >= 0.02]
@@ -114,22 +117,75 @@ def apuracao(estado: dict, pesq: dict) -> dict:
                             "erro_vantagem_flavio": round(m - mreal, 2), "acertou_vencedor": (m > 0) == (mreal > 0),
                             "erro_1t": pesq["erro_1t_por_instituto_vantagem_flavio"].get(p["instituto"])})
         acertos.sort(key=lambda a: abs(a["erro_vantagem_flavio"]))
+        crescimento = sorted(
+            [{"unidade": estado.get("unidades", {}).get(u["uf"], {}).get("nome", u["uf"]),
+              "pp": round(100 * u["lula"] / max(u["lula"] + u["flavio"], 1) - 100 * t1[u["uf"]]["lula"] / t1[u["uf"]]["validos"], 2)}
+             for u in estado["ufs"] if u["uf"] in t1], key=lambda x: -x["pp"])
+        if len(crescimento) > 30:  # municípios: só as pontas
+            crescimento = crescimento[:10] + crescimento[-10:]
         out["balanco"] = {
             "acertos_2t": acertos,
             "media_bruta_erro": round(pesq["medias_2t"]["bruta"]["vantagem_flavio_pp"] - mreal, 2),
             "media_corrigida_erro": round(pesq["medias_2t"]["instituto"]["vantagem_flavio_pp"] - mreal, 2),
-            "crescimento_lula_por_uf_pp": sorted(
-                [{"uf": u["uf"], "pp": round(100 * u["lula"] / max(u["lula"] + u["flavio"], 1) - 100 * t1[u["uf"]]["lula"] / t1[u["uf"]]["validos"], 2)}
-                 for u in estado["ufs"]], key=lambda x: -x["pp"]),
+            "crescimento_lula_por_unidade_pp": crescimento,
         }
     return out
 
 
+def _renomear(x, trocas):
+    """Troca nomes de campo (lula → cadu, flavio → allyson) em todo o JSON do RN, para o texto não confundir."""
+    if isinstance(x, dict):
+        out = {}
+        for k, v in x.items():
+            for velho, novo in trocas:
+                k = k.replace(velho, novo)
+            out[k] = _renomear(v, trocas)
+        return out
+    if isinstance(x, list):
+        return [_renomear(v, trocas) for v in x]
+    return x
+
+
+TROCAS_RN = [("lula", "cadu"), ("flavio", "allyson")]
+
+
+def dados_rn():
+    """Pesquisas e 1º turno do RN no formato da conta nacional (a → lula, b → flavio, município → unidade)."""
+    P = json.loads((RAIZ / "dados" / "rn" / "pesquisas.json").read_text(encoding="utf-8"))
+    base = json.loads((RAIZ / "dados" / "rn" / "primeiro-turno-mun.json").read_text(encoding="utf-8"))
+    conv = lambda p: {**p, "lula": p["a"], "flavio": p["b"]}
+    P = {**P, "primeiro_turno_ultima_por_instituto": [conv(p) for p in P["primeiro_turno_ultima_por_instituto"]],
+         "segundo_turno": [conv(p) for p in P["segundo_turno"]], "segundo_turno_a_divulgar": []}
+    est = base["estado"]
+    t1 = {cd: conv(m) for cd, m in base["municipios"].items()}
+    return P, conv(est), t1
+
+
+def pesquisas_rn() -> dict:
+    P, br, _ = dados_rn()
+    return pesquisas(P, br)
+
+
+def calcular(rn: bool = False, estado: dict | None = None) -> dict:
+    """Tudo que o boletim precisa, já com os nomes certos (Cadu/Allyson no RN)."""
+    if rn:
+        P, br, t1 = dados_rn()
+        pesq = pesquisas(P, br)
+        saida = {"pesquisas": pesq}
+        if estado:
+            saida["apuracao"] = apuracao(estado, pesq, t1)
+        return _renomear(saida, TROCAS_RN)
+    pesq = pesquisas()
+    saida = {"pesquisas": pesq}
+    if estado:
+        saida["apuracao"] = apuracao(estado, pesq)
+    return saida
+
+
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--estado", help="caminho do estado.json (ramo ao-vivo)")
+    ap.add_argument("--estado", help="caminho do estado.json (ramo ao-vivo ou ao-vivo-rn)")
+    ap.add_argument("--rn", action="store_true", help="governador do RN em vez de presidente")
     a = ap.parse_args()
-    saida = {"pesquisas": pesquisas()}
-    if a.estado:
-        saida["apuracao"] = apuracao(json.loads(Path(a.estado).read_text(encoding="utf-8")), saida["pesquisas"])
-    print(json.dumps(saida, ensure_ascii=False, indent=1))
+    estado = json.loads(Path(a.estado).read_text(encoding="utf-8")) if a.estado else None
+    print(json.dumps(calcular(a.rn, estado), ensure_ascii=False, indent=1))

@@ -1,0 +1,85 @@
+# Analista pela API do Claude (Claude Opus 5.5, raciocínio adaptativo em esforço alto).
+#  - todo dia às 9h de Brasília (12h UTC), de 20 a 25/10: resumo das pesquisas das duas disputas;
+#  - domingo, 25/10, das 17h30 às 0h30 de Brasília, a cada 30 min: boletim da apuração (só se ela estiver rodando);
+#  - segunda, 26/10, às 8h: balanço final;
+#  - botão manual (Run workflow) para testes.
+# Boletins de pesquisa nova saem pelo robô das pesquisas (pesquisas.yml), na mesma rodada em que a pesquisa entra.
+name: analista
+
+on:
+  schedule:
+    - cron: "0 12 20-25 10 *"
+    - cron: "30 20 25 10 *"
+    - cron: "0,30 21-23 25 10 *"
+    - cron: "0,30 0-3 26 10 *"
+    - cron: "0 11 26 10 *"
+  workflow_dispatch:
+    inputs:
+      corrida:
+        description: "Disputa"
+        type: choice
+        options: [ambas, presidente, rn]
+        default: ambas
+      tipo:
+        description: "Tipo de boletim"
+        type: choice
+        options: [auto, pesquisas, apuracao, balanco]
+        default: auto
+      simulacao:
+        description: "Aceitar apuração simulada (teste)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: analista
+  cancel-in-progress: false
+
+jobs:
+  boletim:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q anthropic
+      - run: echo "ANTES=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+      - name: Escrever boletim(ns)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          EXTRA=""
+          CORRIDAS="presidente rn"
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            [ "${{ inputs.corrida }}" != "ambas" ] && CORRIDAS="${{ inputs.corrida }}"
+            EXTRA="--tipo ${{ inputs.tipo }}"
+            [ "${{ inputs.simulacao }}" = "true" ] && EXTRA="$EXTRA --simulacao"
+          else
+            HORA=$(date -u +%H); DIA=$(date -u +%d)
+            # Noite da apuração e manhã seguinte: só escreve se a apuração estiver rodando ou concluída.
+            if [ "$DIA" = "25" ] && [ "$HORA" -ge 20 ] || [ "$DIA" = "26" ]; then EXTRA="--so-apuracao"; fi
+          fi
+          for c in $CORRIDAS; do python scripts/analista_api.py --corrida $c $EXTRA || true; done
+      - name: Publica
+        run: |
+          if git diff --quiet; then echo "nenhum boletim novo"; exit 0; fi
+          git config user.name "monitor-eleicao"
+          git config user.email "monitor@users.noreply.github.com"
+          git add -A dados painel
+          git commit -m "Boletim do analista (API)"
+          git pull --rebase origin main
+          git push
+      - name: Alerta por e-mail
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python scripts/alerta.py "$ANTES" HEAD > alerta.md
+          if [ -s alerta.md ]; then gh issue comment 1 --body-file alerta.md; else echo "nada novo para avisar"; fi

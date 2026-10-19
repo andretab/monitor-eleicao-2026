@@ -90,8 +90,6 @@ s = s[:ini] + """  // ------------------------------------------------ mapa do 1
 """ + s[fim:]
 s = troca(s, 'el("legMapa1t").innerHTML = G.legendaMapa();', 'el("legMapa1t").innerHTML = G.legendaMapa("Cadu", "Allyson");')
 
-# Rodapé: o RN não tem boletins do analista
-s = troca(s, "pesquisas conferidas a cada 3 h · boletins às 9h e às 20h ·", "pesquisas conferidas de hora em hora ·")
 
 # Nomes dos candidatos em todos os textos visíveis
 s = s.replace("Lula (PT)", "Cadu (PT)").replace("Flávio Bolsonaro (PL)", "Allyson (União)")

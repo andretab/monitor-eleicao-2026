@@ -86,7 +86,7 @@
 
   <section class="cartao" id="secBoletins" style="display:none">
     <h2>Boletim do analista</h2>
-    <p class="sub">Escrito por um agente na nuvem às 9h e às 20h.</p>
+    <p class="sub">Escrito pelo Claude (Anthropic) a cada pesquisa nova e todo dia às 9h, com os números do site.</p>
     <div id="boletins"></div>
   </section>
 
@@ -358,7 +358,7 @@
   // Rodapé: quando o robô conferiu as pesquisas pela última vez e o ritmo de cada atualização.
   const conf = P.conferido_em || P.atualizado_em;
   const quando = conf.length > 10 ? `${dataBR(conf)} às ${conf.slice(11, 16)}` : dataBR(conf);
-  el("rodape").innerHTML = `Última atualização: <b class="num">${quando}</b> · pesquisas conferidas de hora em hora · esta página se recarrega sozinha a cada 15 min`;
+  el("rodape").innerHTML = `Última atualização: <b class="num">${quando}</b> · pesquisas conferidas de hora em hora · boletim a cada pesquisa nova · esta página se recarrega sozinha a cada 15 min`;
 
   desenhaResumo();
   // O robô atualiza as pesquisas a cada 3 h; a página se recarrega a cada 15 min para pegar a versão nova.

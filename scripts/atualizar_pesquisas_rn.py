@@ -131,13 +131,22 @@ def main() -> int:
     caminho.write_text(json.dumps(saida, ensure_ascii=False, indent=1), encoding="utf-8")
     print(f"RN: {len(segundo)} pesquisas de 2º turno, {len(primeiro)} institutos no 1º turno")
 
+    gerar_js()
+    return 0
+
+
+def gerar_js() -> None:
+    """painel/dados-rn.js a partir dos arquivos em dados/rn, sem acessar a rede: pesquisas, 1º turno e boletins."""
+    saida = json.loads((RAIZ / "dados" / "rn" / "pesquisas.json").read_text(encoding="utf-8"))
     base = json.loads((RAIZ / "dados" / "rn" / "primeiro-turno-mun.json").read_text(encoding="utf-8"))
     boletins_rn = RAIZ / "dados" / "rn" / "boletins.json"
     dados = {"pesquisas": saida, "primeiro_turno": base,
              "boletins": json.loads(boletins_rn.read_text(encoding="utf-8"))["boletins"] if boletins_rn.exists() else []}
     (RAIZ / "painel" / "dados-rn.js").write_text("window.DADOS_RN = " + json.dumps(dados, ensure_ascii=False) + ";\n", encoding="utf-8")
-    return 0
 
 
 if __name__ == "__main__":
+    if "--so-js" in sys.argv:  # usado pelo analista ao gravar um boletim do RN
+        gerar_js()
+        sys.exit(0)
     sys.exit(main())

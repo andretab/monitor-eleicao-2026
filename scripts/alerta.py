@@ -53,7 +53,11 @@ def main() -> int:
     vistas_rn = {chave(p) for p in ra.get("segundo_turno", [])}
     novas_rn = [p for p in rd.get("segundo_turno", []) if chave(p) not in vistas_rn]
 
-    if not (novas or registradas or boletins or novas_rn):
+    bra, brd = ler(antes, "dados/rn/boletins.json"), ler(depois, "dados/rn/boletins.json")
+    tit_rn = {(b.get("quando"), b.get("titulo")) for b in bra.get("boletins", [])}
+    boletins_rn = [b for b in brd.get("boletins", []) if (b.get("quando"), b.get("titulo")) not in tit_rn]
+
+    if not (novas or registradas or boletins or novas_rn or boletins_rn):
         return 0
 
     linhas = ["@andretab novidade no Monitor Eleição 2026:", ""]
@@ -87,6 +91,11 @@ def main() -> int:
         linhas.append("")
     for b in boletins:
         linhas.append(f"**Boletim do analista ({b.get('quando', '').replace('T', ' ')}):** {b.get('titulo', '')}")
+        if b.get("paragrafos"):
+            linhas.append(f"> {b['paragrafos'][0]}")
+        linhas.append("")
+    for b in boletins_rn:
+        linhas.append(f"**Boletim do RN ({b.get('quando', '').replace('T', ' ')}):** {b.get('titulo', '')}")
         if b.get("paragrafos"):
             linhas.append(f"> {b['paragrafos'][0]}")
         linhas.append("")
