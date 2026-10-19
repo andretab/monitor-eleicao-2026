@@ -1,63 +1,80 @@
 {
-  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
-  "boletins": [
-    {
-      "quando": "2026-10-19T20:04",
-      "tipo": "pesquisas",
-      "titulo": "Sem pesquisas novas, média corrigida segue com Flávio à frente e tendência de queda é pequena",
-      "paragrafos": [
-        "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior. As mais recentes na base são PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Nexus/BTG (16–18/10: 45,9% x 46,5%, 7,6% de indecisos) e AtlasIntel (13–18/10: 47,7% x 49,8%, 2,6% de indecisos).",
-        "A média bruta é Lula 49,02% x Flávio 50,98% (vantagem de 1,97 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,51% x Flávio 52,49% (4,98 p.p.), chance estimada de 93%; com a correção pelo erro médio, 5,76 p.p. e 96%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
-        "A tendência é de -0,32 p.p. por dia na vantagem de Flávio (IC95% de ±0,60, com 21 pesquisas), ou seja, não distinguível de estabilidade. A vantagem de Flávio hoje é estimada em 4,0 p.p.; a extrapolação mecânica até 25/10 daria 2,1 p.p., mas é frágil e não é previsão.",
-        "Entre as últimas pesquisas de cada instituto, Vox (15–17/10) é a que mais destoa, com Lula à frente (46,4% x 44,6%, 51,0% dos válidos para Lula); Gerp (14–16/10: 45% x 50%) está no extremo oposto. Seguem registradas e ainda sem divulgação, entre outras, Datafolha, Quaest, Nexus/BTG, Palver, Futura, CNT/MDA, AtlasIntel, Veritá e Real Time Big Data. Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos)."
-      ],
-      "fontes": [
-        "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
-      ]
-    },
-    {
-      "quando": "2026-10-19T09:06",
-      "tipo": "pesquisas",
-      "titulo": "Sem pesquisas novas, média ainda favorece Flávio e tendência não se distingue de estabilidade",
-      "paragrafos": [
-        "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior. As mais recentes na base são PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Vox (15–17/10: 46,4% x 44,6%, com 8,9% de indecisos) e Gerp (14–16/10: 45% x 50%).",
-        "A média bruta é Lula 48,81% x Flávio 51,19% (vantagem de 2,38 p.p. para Flávio), com chance estimada de 76% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,53% x Flávio 52,47% (4,93 p.p.), chance estimada de 93%; com a correção pelo erro médio, 6,17 p.p. e 97%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
-        "A tendência é de -0,53 p.p. por dia na vantagem de Flávio (IC95% de ±0,73), ou seja, não distinguível de estabilidade. A vantagem de Flávio hoje é estimada em 2,7 p.p.; a extrapolação mecânica até 25/10 daria Lula à frente por 0,5 p.p., mas é frágil e não é previsão.",
-        "Seguem registradas e ainda sem divulgação, entre outras, IFP, Meio/Ideia, Veritá, Alfa Inteligência, Real Time Big Data, AtlasIntel, Nexus/BTG, Futura e DataTrends. Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos)."
-      ],
-      "fontes": [
-        "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
-      ]
-    },
-    {
-      "quando": "2026-10-18T20:04",
-      "tipo": "pesquisas",
-      "titulo": "Sem pesquisas novas, médias seguem com Flávio à frente e vantagem em queda",
-      "paragrafos": [
-        "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior; as mais recentes na base continuam sendo Vox (15–17/10: Lula 46,4% x Flávio 44,6%), Gerp (14–16/10: 45% x 50%) e Veritá (12–16/10: 48,9% x 51,1% nos válidos).",
-        "A média bruta é Lula 49,02% x Flávio 50,98% (vantagem de 1,96 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,75% x Flávio 52,25% (4,49 p.p.), chance estimada de 91%; com a correção pelo erro médio, 5,75 p.p. e 96%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
-        "A tendência é de -0,72 p.p. por dia na vantagem de Flávio (IC95% de ±0,51), distinguível de estabilidade na direção de Lula, com vantagem de Flávio hoje estimada em 2,1 p.p. (19 pesquisas). A extrapolação mecânica até 25/10 indicaria Lula à frente por 2,9 p.p., mas é frágil e não é previsão.",
-        "Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos). Pesquisas registradas e ainda não divulgadas devem entrar na base nas próximas horas."
-      ],
-      "fontes": [
-        "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
-      ]
-    },
-    {
-      "quando": "2026-10-18T18:14",
-      "tipo": "pesquisas",
-      "titulo": "Média ainda favorece Flávio, mas tendência recente é de queda de sua vantagem",
-      "paragrafos": [
-        "Nenhuma pesquisa nacional nova de 2º turno foi localizada nas últimas 36 horas com números publicados; as mais recentes na base são Vox (15–17/10: Lula 46,4% x Flávio 44,6%), Gerp (14–16/10: 45% x 50%) e Veritá (12–16/10: 48,9% x 51,1% nos válidos). Nesta execução a atualização automática pela Wikipédia foi bloqueada pela rede, então a base reflete a última coleta.",
-        "A média bruta dos institutos é Lula 49,02% x Flávio 50,98% (vantagem de 1,96 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, a média vai a Lula 47,75% x Flávio 52,25% (4,49 p.p.), chance estimada de 91%. Com a correção pelo erro médio dos institutos, são 5,75 p.p. e 96%. São estimativas, não certezas.",
-        "A tendência nas pesquisas é de -0,72 p.p. por dia na vantagem de Flávio (IC95% de ±0,51), ou seja, distinguível de estabilidade, na direção de Lula; a vantagem de Flávio hoje seria de 2,1 p.p. Se o ritmo se mantivesse até 25/10, a extrapolação mecânica indicaria Lula à frente por 2,9 p.p., mas essa extrapolação é frágil e não deve ser lida como previsão.",
-        "Divergem da média: Gerp (Flávio +5 p.p.) e Vox (Lula +1,8 p.p.); a PoderData/Aya mostra 50% a 50%. O Datafolha de 15/10 registrou Lula 45% x Flávio 47%, e o Quaest de 13/10, 44% x 46%.",
-        "Ainda constam como registradas e não divulgadas: IFP, Meio/Ideia, Veritá, Alfa Inteligência e Real Time Big Data (todas com fim de campo em 19/10), além de AtlasIntel, Nexus/BTG, PoderData/Aya, DataTrends e Futura (campo até 17–18/10) e Vetor Arrow (22–23/10). Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos), o que sustenta a incerteza sobre qualquer média."
-      ],
-      "fontes": [
-        "https://www.moneytimes.com.br/pesquisa-datafolha-15-de-outubro-gaep/",
-        "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
-      ]
-    }
-  ]
+ "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
+ "boletins": [
+  {
+   "quando": "2026-10-19T20:18",
+   "tipo": "pesquisas",
+   "titulo": "Sem novas pesquisas, números não mudam desde as 20h04; Flávio segue à frente na média",
+   "destaque": "Nada mudou desde o boletim das 20h04: a média bruta segue com Flávio 1,97 p.p. à frente (chance estimada de 72%), e as próximas pesquisas, com campo encerrado em 19/10, ainda não foram divulgadas.",
+   "paragrafos": [
+    "Não há mudança relevante em relação ao boletim das 20h04. Nenhuma pesquisa nacional nova de 2º turno com números publicados entrou na base, e todos os indicadores abaixo são idênticos aos do boletim anterior. As mais recentes seguem sendo PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Nexus/BTG (16–18/10: 45,9% x 46,5%, 7,6% de indecisos) e AtlasIntel (13–18/10: 47,7% x 49,8%).",
+    "A média bruta continua em Lula 49,02% x Flávio 50,98%, vantagem de 1,97 p.p. para Flávio e chance estimada de 72%. Corrigida pelo erro de cada instituto no 1º turno, vai a 47,51% x 52,49% (4,98 p.p.; chance de 93%); pela correção com o erro médio, 5,76 p.p. e 96%. São estimativas: a correção supõe que os erros do 1º turno se repitam, o que não é garantido.",
+    "A tendência segue em -0,32 p.p. por dia na vantagem de Flávio, com margem de ±0,60 p.p. (21 pesquisas). Como o intervalo inclui o zero, não dá para distingui-la de estabilidade. A vantagem estimada hoje é de 4,0 p.p.; mantido o ritmo, chegaria a 2,1 p.p. em 25/10, uma extrapolação frágil, não uma previsão.",
+    "Os extremos entre as últimas pesquisas de cada instituto continuam sendo Vox (15–17/10), com Lula à frente por 46,4% x 44,6% (51,0% dos válidos), e Gerp (14–16/10), com Flávio à frente por 45% x 50%. Os dois tiveram erros pequenos no 1º turno (-0,97 p.p. e 0,22 p.p. na vantagem), mas agora apontam em direções opostas. Como referência, pela conta do site, Lula precisaria de 61,94% dos votos que foram para os demais candidatos no 1º turno para empatar.",
+    "Já terminaram o campo e ainda não divulgaram Ranking (14–16/10), Phoenix (13–16/10) e DataTrends (16–18/10); Meio/Ideia, Veritá, Alfa Inteligência e Real Time Big Data encerram o campo hoje (19/10). As últimas rodadas registradas, de Datafolha, Quaest e Nexus/BTG, vão a campo em 23–24/10. Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,8 p.p. na vantagem, com desvio de 3,3 p.p. entre eles, de 0,13 p.p. (Veritá) a -9,73 p.p. (Alfa Inteligência)."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
+   "quando": "2026-10-19T20:04",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas, média corrigida segue com Flávio à frente e tendência de queda é pequena",
+   "paragrafos": [
+    "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior. As mais recentes na base são PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Nexus/BTG (16–18/10: 45,9% x 46,5%, 7,6% de indecisos) e AtlasIntel (13–18/10: 47,7% x 49,8%, 2,6% de indecisos).",
+    "A média bruta é Lula 49,02% x Flávio 50,98% (vantagem de 1,97 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,51% x Flávio 52,49% (4,98 p.p.), chance estimada de 93%; com a correção pelo erro médio, 5,76 p.p. e 96%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
+    "A tendência é de -0,32 p.p. por dia na vantagem de Flávio (IC95% de ±0,60, com 21 pesquisas), ou seja, não distinguível de estabilidade. A vantagem de Flávio hoje é estimada em 4,0 p.p.; a extrapolação mecânica até 25/10 daria 2,1 p.p., mas é frágil e não é previsão.",
+    "Entre as últimas pesquisas de cada instituto, Vox (15–17/10) é a que mais destoa, com Lula à frente (46,4% x 44,6%, 51,0% dos válidos para Lula); Gerp (14–16/10: 45% x 50%) está no extremo oposto. Seguem registradas e ainda sem divulgação, entre outras, Datafolha, Quaest, Nexus/BTG, Palver, Futura, CNT/MDA, AtlasIntel, Veritá e Real Time Big Data. Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos)."
+   ],
+   "fontes": [
+    "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+   ]
+  },
+  {
+   "quando": "2026-10-19T09:06",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas, média ainda favorece Flávio e tendência não se distingue de estabilidade",
+   "paragrafos": [
+    "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior. As mais recentes na base são PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Vox (15–17/10: 46,4% x 44,6%, com 8,9% de indecisos) e Gerp (14–16/10: 45% x 50%).",
+    "A média bruta é Lula 48,81% x Flávio 51,19% (vantagem de 2,38 p.p. para Flávio), com chance estimada de 76% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,53% x Flávio 52,47% (4,93 p.p.), chance estimada de 93%; com a correção pelo erro médio, 6,17 p.p. e 97%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
+    "A tendência é de -0,53 p.p. por dia na vantagem de Flávio (IC95% de ±0,73), ou seja, não distinguível de estabilidade. A vantagem de Flávio hoje é estimada em 2,7 p.p.; a extrapolação mecânica até 25/10 daria Lula à frente por 0,5 p.p., mas é frágil e não é previsão.",
+    "Seguem registradas e ainda sem divulgação, entre outras, IFP, Meio/Ideia, Veritá, Alfa Inteligência, Real Time Big Data, AtlasIntel, Nexus/BTG, Futura e DataTrends. Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos)."
+   ],
+   "fontes": [
+    "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+   ]
+  },
+  {
+   "quando": "2026-10-18T20:04",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas, médias seguem com Flávio à frente e vantagem em queda",
+   "paragrafos": [
+    "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior; as mais recentes na base continuam sendo Vox (15–17/10: Lula 46,4% x Flávio 44,6%), Gerp (14–16/10: 45% x 50%) e Veritá (12–16/10: 48,9% x 51,1% nos válidos).",
+    "A média bruta é Lula 49,02% x Flávio 50,98% (vantagem de 1,96 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,75% x Flávio 52,25% (4,49 p.p.), chance estimada de 91%; com a correção pelo erro médio, 5,75 p.p. e 96%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
+    "A tendência é de -0,72 p.p. por dia na vantagem de Flávio (IC95% de ±0,51), distinguível de estabilidade na direção de Lula, com vantagem de Flávio hoje estimada em 2,1 p.p. (19 pesquisas). A extrapolação mecânica até 25/10 indicaria Lula à frente por 2,9 p.p., mas é frágil e não é previsão.",
+    "Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos). Pesquisas registradas e ainda não divulgadas devem entrar na base nas próximas horas."
+   ],
+   "fontes": [
+    "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+   ]
+  },
+  {
+   "quando": "2026-10-18T18:14",
+   "tipo": "pesquisas",
+   "titulo": "Média ainda favorece Flávio, mas tendência recente é de queda de sua vantagem",
+   "paragrafos": [
+    "Nenhuma pesquisa nacional nova de 2º turno foi localizada nas últimas 36 horas com números publicados; as mais recentes na base são Vox (15–17/10: Lula 46,4% x Flávio 44,6%), Gerp (14–16/10: 45% x 50%) e Veritá (12–16/10: 48,9% x 51,1% nos válidos). Nesta execução a atualização automática pela Wikipédia foi bloqueada pela rede, então a base reflete a última coleta.",
+    "A média bruta dos institutos é Lula 49,02% x Flávio 50,98% (vantagem de 1,96 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, a média vai a Lula 47,75% x Flávio 52,25% (4,49 p.p.), chance estimada de 91%. Com a correção pelo erro médio dos institutos, são 5,75 p.p. e 96%. São estimativas, não certezas.",
+    "A tendência nas pesquisas é de -0,72 p.p. por dia na vantagem de Flávio (IC95% de ±0,51), ou seja, distinguível de estabilidade, na direção de Lula; a vantagem de Flávio hoje seria de 2,1 p.p. Se o ritmo se mantivesse até 25/10, a extrapolação mecânica indicaria Lula à frente por 2,9 p.p., mas essa extrapolação é frágil e não deve ser lida como previsão.",
+    "Divergem da média: Gerp (Flávio +5 p.p.) e Vox (Lula +1,8 p.p.); a PoderData/Aya mostra 50% a 50%. O Datafolha de 15/10 registrou Lula 45% x Flávio 47%, e o Quaest de 13/10, 44% x 46%.",
+    "Ainda constam como registradas e não divulgadas: IFP, Meio/Ideia, Veritá, Alfa Inteligência e Real Time Big Data (todas com fim de campo em 19/10), além de AtlasIntel, Nexus/BTG, PoderData/Aya, DataTrends e Futura (campo até 17–18/10) e Vetor Arrow (22–23/10). Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos), o que sustenta a incerteza sobre qualquer média."
+   ],
+   "fontes": [
+    "https://www.moneytimes.com.br/pesquisa-datafolha-15-de-outubro-gaep/",
+    "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+   ]
+  }
+ ]
 }

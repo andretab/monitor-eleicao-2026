@@ -1,0 +1,23 @@
+{
+ "boletins": [
+  {
+   "quando": "2026-10-19T20:18",
+   "tipo": "pesquisas",
+   "titulo": "Governo do RN: média dá leve vantagem a Allyson, mas erro do 1º turno pesa",
+   "destaque": "Na média das pesquisas como divulgadas, Allyson tem 51,75% dos votos válidos contra 48,25% de Cadu e chance estimada de 62,4%. Corrigida pelo erro do 1º turno, a vantagem passa para Cadu, o que mostra a grande incerteza da disputa.",
+   "paragrafos": [
+    "Este é o primeiro boletim do 2º turno para governador do Rio Grande do Norte. Na média das pesquisas como foram divulgadas, Allyson (União) tem 51,75% dos votos válidos e Cadu (PT) tem 48,25%, uma diferença de 3,51 pontos. Com esses números, o site estima em 62,4% a chance de vitória de Allyson. É uma vantagem pequena, baseada em poucas pesquisas.",
+    "O principal fator de incerteza é o 1º turno. Na média, as pesquisas do RN superestimaram Allyson em 15,56 pontos na diferença entre os dois. No resultado oficial, Allyson teve 36,94% e Cadu 36,16%. Se a média de agora tiver um erro parecido, o quadro se inverte: Cadu ficaria com 56,03% e a chance de Allyson cairia para 13,8%. Corrigindo pelo erro de cada instituto, Cadu chegaria a 57,78% e a chance de Allyson a 8%. Essas correções tendem a exagerar a vantagem de Cadu, e o erro variou muito entre institutos (desvio de 11,06 pontos). Por isso o site mostra por padrão a média como divulgada.",
+    "As três pesquisas mais recentes divergem bastante. A Affare (9 a 12/10, 1.350 entrevistas) mostra Cadu à frente, com 49,1% contra 44,2%, o que equivale a 52,63% dos válidos. A Quaest (9 a 12/10, 1.098 entrevistas) mostra Allyson com 45,0% e Cadu com 42,0%, ou 48,28% dos válidos para Cadu. A Seta (7 a 10/10, 1.500 entrevistas) tem a maior vantagem de Allyson: 43,5% contra 32,4%, ou 42,69% dos válidos para Cadu.",
+    "Vale lembrar que, no 1º turno, Quaest e Seta estiveram entre os institutos que mais superestimaram Allyson, com erros de 22,0 e 20,15 pontos na diferença. Não há registro de erro da Affare no 1º turno. Os índices de indecisos também variam, de 6,7% na Affare a 13,0% na Quaest.",
+    "Ainda não há como medir tendência: com poucas pesquisas, não dá para distinguir movimento de estabilidade. As últimas foram concluídas em 12/10, e não há novas pesquisas registradas como a divulgar.",
+    "Quem decide a eleição são os eleitores de Álvaro Dias (PL), que teve 26,71% no 1º turno. Pelas contas do site, Cadu empata se ficar com cerca de 51,45% dos votos que não foram para nenhum dos dois finalistas no 1º turno. Na prática, a disputa depende de uma divisão quase meio a meio desse eleitorado."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  }
+ ],
+ "_leia": "Boletins de análise, mais novo primeiro (escritos pelo Claude via API)."
+}
