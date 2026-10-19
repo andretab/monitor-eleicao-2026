@@ -2,6 +2,20 @@
   "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
   "boletins": [
     {
+      "quando": "2026-10-19T20:04",
+      "tipo": "pesquisas",
+      "titulo": "Sem pesquisas novas, média corrigida segue com Flávio à frente e tendência de queda é pequena",
+      "paragrafos": [
+        "Nenhuma pesquisa nacional nova de 2º turno com números publicados foi localizada desde o boletim anterior. As mais recentes na base são PoderData/Aya (16–18/10: Lula 48% x Flávio 52%), Nexus/BTG (16–18/10: 45,9% x 46,5%, 7,6% de indecisos) e AtlasIntel (13–18/10: 47,7% x 49,8%, 2,6% de indecisos).",
+        "A média bruta é Lula 49,02% x Flávio 50,98% (vantagem de 1,97 p.p. para Flávio), com chance estimada de 72% para Flávio. Corrigida pelo erro de cada instituto no 1º turno, vai a Lula 47,51% x Flávio 52,49% (4,98 p.p.), chance estimada de 93%; com a correção pelo erro médio, 5,76 p.p. e 96%. São estimativas, não certezas, e a distância entre os métodos mostra o peso da incerteza.",
+        "A tendência é de -0,32 p.p. por dia na vantagem de Flávio (IC95% de ±0,60, com 21 pesquisas), ou seja, não distinguível de estabilidade. A vantagem de Flávio hoje é estimada em 4,0 p.p.; a extrapolação mecânica até 25/10 daria 2,1 p.p., mas é frágil e não é previsão.",
+        "Entre as últimas pesquisas de cada instituto, Vox (15–17/10) é a que mais destoa, com Lula à frente (46,4% x 44,6%, 51,0% dos válidos para Lula); Gerp (14–16/10: 45% x 50%) está no extremo oposto. Seguem registradas e ainda sem divulgação, entre outras, Datafolha, Quaest, Nexus/BTG, Palver, Futura, CNT/MDA, AtlasIntel, Veritá e Real Time Big Data. Lembrete: no 1º turno os institutos subestimaram Flávio em média 3,8 p.p. na vantagem (desvio de 3,3 p.p. entre institutos)."
+      ],
+      "fontes": [
+        "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026"
+      ]
+    },
+    {
       "quando": "2026-10-19T09:06",
       "tipo": "pesquisas",
       "titulo": "Sem pesquisas novas, média ainda favorece Flávio e tendência não se distingue de estabilidade",
