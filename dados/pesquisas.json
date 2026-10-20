@@ -261,9 +261,9 @@
    "fim": "2026-10-17",
    "amostra": 2000,
    "margem": 2.19,
-   "lula": 48.5,
-   "flavio": 51.5,
-   "indecisos": null
+   "lula": 46.0,
+   "flavio": 49.0,
+   "indecisos": 5.0
   },
   {
    "instituto": "Vox",
@@ -693,5 +693,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-20 10:35"
+ "conferido_em": "2026-10-20 15:29"
 }
