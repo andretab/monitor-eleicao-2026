@@ -176,6 +176,46 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "IFP",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-20",
+   "amostra": 3000,
+   "margem": 1.8,
+   "lula": 39.65,
+   "flavio": 40.95,
+   "indecisos": 19.4
+  },
+  {
+   "instituto": "Alfa Inteligência",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 2700,
+   "margem": 1.9,
+   "lula": 45.9,
+   "flavio": 48.8,
+   "indecisos": 5.3
+  },
+  {
+   "instituto": "Gerp",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 2400,
+   "margem": 2.0,
+   "lula": 45.0,
+   "flavio": 50.0,
+   "indecisos": 5.0
+  },
+  {
+   "instituto": "Real Time Big Data",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 2000,
+   "margem": 2.0,
+   "lula": 44.0,
+   "flavio": 47.0,
+   "indecisos": 9.0
+  },
+  {
    "instituto": "PoderData/Aya",
    "inicio": "2026-10-16",
    "fim": "2026-10-18",
@@ -234,6 +274,16 @@
    "lula": 46.4,
    "flavio": 44.6,
    "indecisos": 8.9
+  },
+  {
+   "instituto": "Ranking",
+   "inicio": "2026-10-14",
+   "fim": "2026-10-16",
+   "amostra": 2100,
+   "margem": 2.15,
+   "lula": 50.4,
+   "flavio": 49.6,
+   "indecisos": null
   },
   {
    "instituto": "Gerp",
@@ -613,13 +663,6 @@
    "margem": 3.0
   },
   {
-   "instituto": "IFP",
-   "inicio": "2026-10-16",
-   "fim": "2026-10-20",
-   "amostra": 3000,
-   "margem": 1.8
-  },
-  {
    "instituto": "Meio/Ideia",
    "inicio": "2026-10-15",
    "fim": "2026-10-19",
@@ -634,32 +677,11 @@
    "margem": 1.0
   },
   {
-   "instituto": "Alfa Inteligência",
-   "inicio": "2026-10-15",
-   "fim": "2026-10-19",
-   "amostra": 2700,
-   "margem": 1.9
-  },
-  {
-   "instituto": "Real Time Big Data",
-   "inicio": "2026-10-15",
-   "fim": "2026-10-19",
-   "amostra": 2000,
-   "margem": 2.0
-  },
-  {
    "instituto": "DataTrends",
    "inicio": "2026-10-16",
    "fim": "2026-10-18",
    "amostra": 1200,
    "margem": 2.83
-  },
-  {
-   "instituto": "Ranking",
-   "inicio": "2026-10-14",
-   "fim": "2026-10-16",
-   "amostra": 2100,
-   "margem": 2.15
   },
   {
    "instituto": "Phoenix",
@@ -671,5 +693,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-20 04:38"
+ "conferido_em": "2026-10-20 10:35"
 }
