@@ -1,6 +1,23 @@
 {
  "boletins": [
   {
+   "quando": "2026-10-20T13:02",
+   "tipo": "pesquisas",
+   "titulo": "Governo do RN: sem pesquisas novas, média segue com leve vantagem de Allyson",
+   "destaque": "Nada mudou desde o boletim de ontem: a média divulgada segue com Allyson em 51,75% dos válidos e 62,4% de chance, mas o erro do 1º turno mantém a disputa incerta.",
+   "paragrafos": [
+    "Não houve mudança relevante desde o boletim de 19/10. Nenhuma pesquisa nova de 2º turno para governador do RN entrou na base, e os números seguem iguais. Na média como divulgada, Allyson (União) tem 51,75% dos votos válidos e Cadu (PT) tem 48,25%, uma diferença de 3,51 pontos. A chance estimada de vitória de Allyson continua em 62,4%.",
+    "O erro do 1º turno segue como o maior fator de incerteza. Na média, as pesquisas do RN superestimaram Allyson em 15,56 pontos na diferença. O resultado oficial foi de 36,94% para Allyson e 36,16% para Cadu. Se a média atual errar na mesma medida, Cadu ficaria com 56,03% e a chance de Allyson cairia para 13,8%. Com a correção pelo erro de cada instituto, Cadu iria a 57,78% e a chance de Allyson a 8%. Essas correções tendem a exagerar a vantagem de Cadu, e o erro variou muito entre os institutos (desvio de 11,06 pontos). Por isso o site mantém a média como divulgada como padrão.",
+    "As três pesquisas mais recentes continuam divergindo. A Affare (9 a 12/10) dá 52,63% dos válidos a Cadu. A Quaest (9 a 12/10) dá 48,28% a Cadu. A Seta (7 a 10/10) dá 42,69% a Cadu. No 1º turno, Quaest e Seta superestimaram Allyson em 22,0 e 20,15 pontos na diferença. Não há registro de erro da Affare no 1º turno.",
+    "Ainda não é possível medir tendência, porque há poucas pesquisas para distinguir movimento de estabilidade. As mais recentes terminaram em 12/10, e não há pesquisas registradas como a divulgar.",
+    "A decisão continua nas mãos dos eleitores de Álvaro Dias (PL), que teve 26,71% no 1º turno. Pelas contas do site, Cadu empata se ficar com cerca de 51,45% dos votos que não foram para nenhum dos dois finalistas. Isso indica uma divisão quase meio a meio desse eleitorado."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-19T20:18",
    "tipo": "pesquisas",
    "titulo": "Governo do RN: média dá leve vantagem a Allyson, mas erro do 1º turno pesa",
