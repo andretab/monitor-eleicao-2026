@@ -1,7 +1,7 @@
 {
  "_leia": "Percentuais como divulgados (votos totais). 'indecisos' = indecisos + brancos/nulos/abstenção declarados; null quando o instituto já divulga só votos válidos. Base de votos válidos = 100 - indecisos. Fonte da compilação: Wikipédia 'Pesquisas de opinião para a eleição presidencial no Brasil em 2026', conferida em 18/10/2026. Antes de usar número fino, conferir no PesqEle/TSE.",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_de_opini%C3%A3o_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026",
- "atualizado_em": "2026-10-19",
+ "atualizado_em": "2026-10-20",
  "primeiro_turno_ultima_por_instituto": [
   {
    "instituto": "Datafolha",
@@ -201,7 +201,7 @@
    "fim": "2026-10-18",
    "amostra": 4998,
    "margem": 1.0,
-   "lula": 47.7,
+   "lula": 47.6,
    "flavio": 49.8,
    "indecisos": 2.6
   },
@@ -438,6 +438,13 @@
  ],
  "segundo_turno_a_divulgar": [
   {
+   "instituto": "PoderData/Aya",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 4000,
+   "margem": 1.6
+  },
+  {
    "instituto": "Datafolha",
    "inicio": "2026-10-23",
    "fim": "2026-10-24",
@@ -664,5 +671,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-19 22:52"
+ "conferido_em": "2026-10-20 04:38"
 }
