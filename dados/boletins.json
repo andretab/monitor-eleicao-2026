@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-21T04:43",
+   "tipo": "pesquisas",
+   "titulo": "Pesquisa Phoenix põe Lula à frente e reduz um pouco a vantagem de Flávio nas médias",
+   "destaque": "Com a Phoenix, a vantagem de Flávio cai para 1,82 p.p. na média bruta e para 5,7 p.p. na corrigida, e a tendência segue indistinguível de estabilidade.",
+   "paragrafos": [
+    "Desde o boletim das 13h02 de ontem, entrou uma pesquisa na base: Phoenix (13–16/10, 3.999 entrevistas). Ela registra Lula 47,59% x Flávio 45,21%, com 7,2% de indecisos, o que equivale a 51,28% dos válidos para Lula. É o resultado mais favorável a Lula entre as pesquisas mais recentes de cada instituto.",
+    "A média bruta passou para Lula 49,09% x Flávio 50,91%. A vantagem de Flávio caiu de 2,08 para 1,82 p.p., e a chance estimada dele foi de 73% para 70,7%. Corrigida pelo erro de cada instituto no 1º turno, a média fica em 47,15% x 52,85%, com vantagem de 5,7 p.p. (era 5,96 p.p.) e chance de 95,6%. Com a correção pelo erro médio, a vantagem é de 5,61 p.p. (era 5,87 p.p.), com chance de 95,4%. São estimativas, não resultados garantidos.",
+    "A tendência ficou mais fraca: +0,133 p.p. por dia a favor de Flávio (era +0,196 p.p.), com margem de ±0,636 p.p. em 25 pesquisas. Como o intervalo inclui o zero, ela continua indistinguível de estabilidade. O modelo estima a vantagem de Flávio hoje em 6,21 p.p. (era 6,45 p.p.). Mantido o ritmo, ela chegaria a 6,74 p.p. em 25/10. É uma extrapolação frágil, não uma previsão.",
+    "Agora são três institutos com Lula à frente nos válidos: Phoenix (51,28%), Vox (50,99%) e Ranking (50,4%). No outro extremo continua Gerp (15–19/10), com 47,37% para Lula. Como referência, pela conta do site, Lula precisaria de 61,94% dos votos que foram para os demais candidatos no 1º turno para empatar.",
+    "Ainda não divulgaram resultados Meio/Ideia e Veritá (ambas 15–19/10), além de Futura, Quaest, Gerp e Palver, que encerraram o campo ontem (20/10). Indexa, DataTrends e PoderData/Aya terminam o campo hoje (21/10). Uma nova rodada da Phoenix (19–22/10) vem em seguida, e as últimas registradas, de Datafolha, Quaest, PoderData/Aya e Nexus/BTG, vão a campo em 23–24/10.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,8 p.p. na vantagem, com desvio de 3,3 p.p. entre eles. É isso que separa a média bruta (1,82 p.p.) das corrigidas (cerca de 5,6 a 5,7 p.p.). A correção supõe que os erros se repitam, o que não é garantido."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-20T13:02",
    "tipo": "pesquisas",
    "titulo": "Sem pesquisas novas desde as 10h35; Flávio segue à frente nas médias",
