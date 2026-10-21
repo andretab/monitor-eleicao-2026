@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-21T13:19",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas desde as 10h51; Flávio segue à frente nas três médias",
+   "destaque": "Nenhuma pesquisa entrou na base desde o último boletim, e médias, chances e tendência continuam iguais. Flávio tem 1,94 p.p. de vantagem na média bruta e de 5,31 a 5,73 p.p. nas médias corrigidas.",
+   "paragrafos": [
+    "Nada mudou desde o boletim das 10h51. Nenhuma pesquisa nova entrou na base, e todos os números se mantêm. A média bruta segue em Lula 49,03% x Flávio 50,97% dos válidos. A vantagem de Flávio é de 1,94 p.p., e a chance estimada dele é de 71,9%.",
+    "Corrigida pelo erro de cada instituto no 1º turno, a média continua em Lula 47,35% x Flávio 52,65%. A vantagem é de 5,31 p.p., e a chance de Flávio é de 94,4%. Com a correção pelo erro médio, a vantagem é de 5,73 p.p., com chance de 95,7%. São estimativas, não resultados garantidos.",
+    "A tendência segue em 0,106 p.p. por dia a favor de Lula, com margem de ±0,56 p.p. em 28 pesquisas. Como o intervalo inclui o zero, ela continua indistinguível de estabilidade. O modelo estima a vantagem de Flávio hoje em 4,67 p.p. Mantido o ritmo, ela chegaria a 4,25 p.p. em 25/10. É uma extrapolação frágil, não uma previsão.",
+    "As divergências entre institutos são as mesmas. Phoenix (51,28%), Vox (50,99%) e Ranking (50,4%) dão Lula à frente nos válidos. No outro extremo está Gerp (15–19/10), com 47,37% para Lula. Pela conta do site, Lula precisaria de 61,94% dos votos que foram para os demais candidatos no 1º turno para empatar.",
+    "Ainda não divulgaram Veritá (15–19/10), Quaest e Gerp (ambas 17–20/10). Indexa, DataTrends e PoderData/Aya encerram o campo hoje (21/10). Em 22/10 terminam Phoenix, Vox, Datafolha, Ipespe, Real Time Big Data, Alfa Inteligência e Veritá. Em 23/10 terminam CNT/MDA, Vetor Arrow, AtlasIntel e outra rodada da Veritá. As últimas rodadas registradas vão até 24/10: PoderData/Aya, Datafolha, Quaest, Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,94 p.p.) das corrigidas (5,31 a 5,73 p.p.). A correção supõe que os erros se repitam, o que não é garantido."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-21T10:51",
    "tipo": "pesquisas",
    "titulo": "Futura, Palver e Meio/Ideia mantêm Flávio à frente; tendência muda de sinal",
