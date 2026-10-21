@@ -196,6 +196,16 @@
    "indecisos": 2.0
   },
   {
+   "instituto": "Quaest",
+   "inicio": "2026-10-17",
+   "fim": "2026-10-20",
+   "amostra": 2154,
+   "margem": 2.0,
+   "lula": 44.0,
+   "flavio": 45.0,
+   "indecisos": 9.0
+  },
+  {
    "instituto": "IFP",
    "inicio": "2026-10-16",
    "fim": "2026-10-20",
@@ -214,6 +224,16 @@
    "lula": 46.0,
    "flavio": 48.0,
    "indecisos": 6.0
+  },
+  {
+   "instituto": "Veritá",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 15554,
+   "margem": 1.0,
+   "lula": 49.3,
+   "flavio": 50.7,
+   "indecisos": null
   },
   {
    "instituto": "Alfa Inteligência",
@@ -675,28 +695,14 @@
    "margem": 1.6
   },
   {
-   "instituto": "Quaest",
-   "inicio": "2026-10-17",
-   "fim": "2026-10-20",
-   "amostra": 2154,
-   "margem": 2.0
-  },
-  {
    "instituto": "Gerp",
    "inicio": "2026-10-17",
    "fim": "2026-10-20",
    "amostra": 2400,
    "margem": 2.04
-  },
-  {
-   "instituto": "Veritá",
-   "inicio": "2026-10-15",
-   "fim": "2026-10-19",
-   "amostra": 15554,
-   "margem": 1.0
   }
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-21 10:51"
+ "conferido_em": "2026-10-21 15:41"
 }
