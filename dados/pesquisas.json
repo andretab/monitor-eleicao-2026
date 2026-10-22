@@ -1,7 +1,7 @@
 {
  "_leia": "Percentuais como divulgados (votos totais). 'indecisos' = indecisos + brancos/nulos/abstenção declarados; null quando o instituto já divulga só votos válidos. Base de votos válidos = 100 - indecisos. Fonte da compilação: Wikipédia 'Pesquisas de opinião para a eleição presidencial no Brasil em 2026', conferida em 18/10/2026. Antes de usar número fino, conferir no PesqEle/TSE.",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_de_opini%C3%A3o_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026",
- "atualizado_em": "2026-10-21",
+ "atualizado_em": "2026-10-22",
  "primeiro_turno_ultima_por_instituto": [
   {
    "instituto": "Datafolha",
@@ -707,5 +707,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-21 22:33"
+ "conferido_em": "2026-10-22 04:38"
 }
