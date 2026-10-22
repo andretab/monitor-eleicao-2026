@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-22T13:18",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas desde as 10h50; Flávio segue 1,72 p.p. à frente na média bruta",
+   "destaque": "Nenhuma pesquisa entrou desde o último boletim, e todos os números seguem iguais. Sete institutos encerram o campo hoje, e ainda falta a DataTrends, com campo encerrado ontem.",
+   "paragrafos": [
+    "Desde o boletim das 10h50, nenhuma pesquisa nova entrou na base. Por isso, médias, chances e tendência estão exatamente iguais. A última pesquisa incluída segue sendo a Indexa (20–21/10), ao lado da PoderData/Aya (19–21/10).",
+    "A média bruta continua em Lula 49,14% x Flávio 50,86% dos válidos, com vantagem de 1,72 p.p. para Flávio e chance estimada de 69,7% para ele. A incerteza nessa conta segue relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar segue Lula 47,42% x Flávio 52,58%, com vantagem de 5,15 p.p. e chance de 93,9% para Flávio. Na correção pelo erro médio, a vantagem é de 5,51 p.p. e a chance, de 95,1%. São estimativas, não resultados garantidos.",
+    "A tendência segue em 0,049 p.p. por dia a favor de Lula, com margem de ±0,452 p.p. em 33 pesquisas. Como a margem inclui o zero, a tendência é indistinguível de estabilidade. O modelo estima a vantagem de Flávio hoje em 4,91 p.p. e em 4,76 p.p. em 25/10 se o ritmo seguir, uma extrapolação frágil. As divergências também não mudaram: Phoenix (51,28%), Vox (50,99%) e Ranking (50,4%) dão Lula à frente nos válidos, e a Gerp (47,37%) está no outro extremo.",
+    "Ainda falta a DataTrends, com campo encerrado ontem (21/10). Hoje (22/10) encerram o campo Ipespe, Vox, Datafolha, Phoenix, Real Time Big Data, Veritá e Alfa Inteligência. Em 23/10 encerram CNT/MDA, Vetor Arrow, AtlasIntel e outra rodada da Veritá. Em 24/10 encerram PoderData/Aya, Datafolha, Quaest, Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,72 p.p.) das corrigidas (5,15 a 5,51 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-22T10:50",
    "tipo": "pesquisas",
    "titulo": "Indexa e PoderData/Aya entram; vantagem de Flávio na média bruta cai para 1,72 p.p.",
