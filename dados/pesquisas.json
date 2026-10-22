@@ -176,6 +176,26 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "Indexa",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-21",
+   "amostra": 2000,
+   "margem": 2.19,
+   "lula": 44.1,
+   "flavio": 45.2,
+   "indecisos": 10.7
+  },
+  {
+   "instituto": "PoderData/Aya",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-21",
+   "amostra": 4000,
+   "margem": 1.6,
+   "lula": 49.0,
+   "flavio": 51.0,
+   "indecisos": null
+  },
+  {
    "instituto": "Futura",
    "inicio": "2026-10-19",
    "fim": "2026-10-20",
@@ -684,28 +704,14 @@
    "margem": 1.9
   },
   {
-   "instituto": "Indexa",
-   "inicio": "2026-10-20",
-   "fim": "2026-10-21",
-   "amostra": 2000,
-   "margem": 2.19
-  },
-  {
    "instituto": "DataTrends",
    "inicio": "2026-10-19",
    "fim": "2026-10-21",
    "amostra": 2000,
    "margem": 2.19
-  },
-  {
-   "instituto": "PoderData/Aya",
-   "inicio": "2026-10-19",
-   "fim": "2026-10-21",
-   "amostra": 4000,
-   "margem": 1.6
   }
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-22 04:38"
+ "conferido_em": "2026-10-22 10:50"
 }

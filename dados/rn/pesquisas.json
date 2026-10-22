@@ -2,7 +2,7 @@
  "_leia": "a = Cadu (PT), b = Allyson (União), terceiro = Álvaro Dias (PL). Percentuais como divulgados; 'indecisos' = indecisos + brancos/nulos. segundo_turno_extras: achadas fora da Wikipédia (com 'url').",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_eleição_estadual_de_2026_no_Rio_Grande_do_Norte",
  "atualizado_em": "2026-10-22",
- "conferido_em": "2026-10-22 04:38",
+ "conferido_em": "2026-10-22 10:50",
  "primeiro_turno_ultima_por_instituto": [
   {
    "instituto": "Exatus",
@@ -105,6 +105,56 @@
   }
  ],
  "segundo_turno": [
+  {
+   "instituto": "Quallitá",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-20",
+   "amostra": 1200,
+   "margem": 2.8,
+   "a": 41.5,
+   "b": 50.5,
+   "indecisos": 8.0
+  },
+  {
+   "instituto": "Mensury",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-19",
+   "amostra": 1500,
+   "margem": 2.53,
+   "a": 44.27,
+   "b": 41.67,
+   "indecisos": 14.07
+  },
+  {
+   "instituto": "Real Time Big Data",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 1600,
+   "margem": 2.0,
+   "a": 42.0,
+   "b": 45.0,
+   "indecisos": 13.0
+  },
+  {
+   "instituto": "DataTrends",
+   "inicio": "2026-10-16",
+   "fim": "2026-10-18",
+   "amostra": 1200,
+   "margem": 2.83,
+   "a": 46.0,
+   "b": 49.0,
+   "indecisos": 5.0
+  },
+  {
+   "instituto": "Datavero",
+   "inicio": "2026-10-13",
+   "fim": "2026-10-15",
+   "amostra": 1500,
+   "margem": 2.53,
+   "a": 46.71,
+   "b": 45.73,
+   "indecisos": 7.56
+  },
   {
    "instituto": "Item",
    "inicio": "2026-10-13",
