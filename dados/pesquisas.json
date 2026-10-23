@@ -176,6 +176,16 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "Vetor Arrow",
+   "inicio": "2026-10-22",
+   "fim": "2026-10-23",
+   "amostra": 6867,
+   "margem": 1.2,
+   "lula": 44.9,
+   "flavio": 50.0,
+   "indecisos": 5.1
+  },
+  {
    "instituto": "Ipespe",
    "inicio": "2026-10-20",
    "fim": "2026-10-22",
@@ -234,6 +244,16 @@
    "lula": 44.1,
    "flavio": 45.2,
    "indecisos": 10.7
+  },
+  {
+   "instituto": "DataTrends",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-21",
+   "amostra": 2000,
+   "margem": 2.19,
+   "lula": 46.0,
+   "flavio": 50.0,
+   "indecisos": 5.0
   },
   {
    "instituto": "PoderData/Aya",
@@ -628,6 +648,13 @@
  ],
  "segundo_turno_a_divulgar": [
   {
+   "instituto": "Vetor Arrow",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 2000,
+   "margem": 2.19
+  },
+  {
    "instituto": "PoderData/Aya",
    "inicio": "2026-10-23",
    "fim": "2026-10-24",
@@ -684,13 +711,6 @@
    "margem": 2.2
   },
   {
-   "instituto": "Vetor Arrow",
-   "inicio": "2026-10-22",
-   "fim": "2026-10-23",
-   "amostra": 3000,
-   "margem": null
-  },
-  {
    "instituto": "Veritá",
    "inicio": "2026-10-19",
    "fim": "2026-10-23",
@@ -717,16 +737,9 @@
    "fim": "2026-10-22",
    "amostra": 15554,
    "margem": 1.0
-  },
-  {
-   "instituto": "DataTrends",
-   "inicio": "2026-10-19",
-   "fim": "2026-10-21",
-   "amostra": 2000,
-   "margem": 2.19
   }
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-23 10:30"
+ "conferido_em": "2026-10-23 15:24"
 }
