@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-23T19:14",
+   "tipo": "pesquisas",
+   "titulo": "Veritá entra e média bruta vai a 2,26 p.p. para Flávio; chance estimada em 75,1%",
+   "destaque": "Uma pesquisa nova da Veritá mexeu pouco nos números: a vantagem bruta de Flávio subiu de 2,17 para 2,26 p.p., e a tendência segue indistinguível de estabilidade.",
+   "paragrafos": [
+    "Desde o boletim das 15h24, entrou uma pesquisa: a Veritá, com 15.554 entrevistas e campo de 18 a 22/10. Ela registra Flávio 50,2% x Lula 47,5%, com 2,3% de indecisos, o que dá 48,62% para Lula nos válidos.",
+    "Com ela, a média bruta foi para Lula 48,87% x Flávio 51,13% dos válidos (antes, 48,92% x 51,08%). A vantagem de Flávio passou de 2,17 para 2,26 p.p., e a chance estimada dele subiu de 74,2% para 75,1%. É uma mudança pequena, e a estimativa tem incerteza relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar ficou praticamente igual: Lula 47,11% x Flávio 52,89%, com vantagem de 5,78 p.p. (era 5,8) e chance de 95,9% para Flávio, sem mudança. No 1º turno, a Veritá superestimou Flávio em apenas 0,13 p.p., por isso a correção quase não altera o resultado dela. Na correção pelo erro médio, a vantagem foi de 5,96 para 6,05 p.p., com chance de 96,5% (era 96,3%). São estimativas, não resultados garantidos.",
+    "A tendência recuou de 0,354 para 0,305 p.p. por dia a favor de Flávio, com margem de ±0,417 p.p. em 38 pesquisas. Como o intervalo inclui o zero, ela continua indistinguível de estabilidade. O modelo agora estima a vantagem dele hoje em 6,68 p.p. (era 7,01 p.p.). Mantido o ritmo, chegaria a 7,29 p.p. em 25/10, uma extrapolação frágil.",
+    "As divergências não mudaram. Phoenix (51,28%), Vox (50,61%) e Ranking (50,4%) dão Lula à frente nos válidos. No outro extremo estão Vetor Arrow (47,31%), Gerp (47,37%), Real Time Big Data (47,87%) e DataTrends (47,92%). A Veritá (48,62%) fica entre os dois grupos. Ainda falta a Phoenix, com campo encerrado em 22/10 (4.001 entrevistas). Hoje (23/10) terminam CNT/MDA, AtlasIntel e outra rodada da Veritá. Em 24/10 terminam Vetor Arrow (2.000), PoderData/Aya (4.000), Datafolha (4.050), Quaest (3.702), Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (2,26 p.p.) das corrigidas (5,78 a 6,05 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-23T15:24",
    "tipo": "pesquisas",
    "titulo": "Vetor Arrow e DataTrends entram; média bruta vai a 2,17 p.p. para Flávio",
