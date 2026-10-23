@@ -2,10 +2,21 @@
  "_leia": "a = Cadu (PT), b = Allyson (União), terceiro = Álvaro Dias (PL). Percentuais como divulgados; 'indecisos' = indecisos + brancos/nulos. segundo_turno_extras: achadas fora da Wikipédia (com 'url').",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_eleição_estadual_de_2026_no_Rio_Grande_do_Norte",
  "atualizado_em": "2026-10-23",
- "conferido_em": "2026-10-23 15:24",
+ "conferido_em": "2026-10-23 19:14",
  "primeiro_turno_ultima_por_instituto": [
   {
-   "instituto": "Exatus",
+   "instituto": "Quaest",
+   "inicio": "2026-10-02",
+   "fim": "2026-10-03",
+   "amostra": 1800,
+   "a": 32.0,
+   "b": 37.0,
+   "terceiro": 29.0,
+   "outros": 1.0,
+   "indecisos": null
+  },
+  {
+   "instituto": "Exatus/AgoraRN",
    "inicio": "2026-09-28",
    "fim": "2026-09-30",
    "amostra": 1500,
@@ -49,28 +60,6 @@
    "indecisos": 14.0
   },
   {
-   "instituto": "Quaest",
-   "inicio": "2026-09-21",
-   "fim": "2026-09-24",
-   "amostra": 804,
-   "a": 21.0,
-   "b": 39.0,
-   "terceiro": 18.0,
-   "outros": 1.0,
-   "indecisos": 21.0
-  },
-  {
-   "instituto": "Exatus/Agora RN",
-   "inicio": "2026-09-21",
-   "fim": "2026-09-23",
-   "amostra": 1500,
-   "a": 22.52,
-   "b": 44.11,
-   "terceiro": 20.6,
-   "outros": null,
-   "indecisos": 12.13
-  },
-  {
    "instituto": "Metadata/Grupo Dial",
    "inicio": "2026-09-21",
    "fim": "2026-09-23",
@@ -82,7 +71,7 @@
    "indecisos": 15.5
   },
   {
-   "instituto": "Média/O Potengi",
+   "instituto": "Media/O Potengi",
    "inicio": "2026-09-12",
    "fim": "2026-09-17",
    "amostra": 2000,
@@ -106,17 +95,7 @@
  ],
  "segundo_turno": [
   {
-   "instituto": "DataTrends",
-   "inicio": "2026-10-19",
-   "fim": "2026-10-21",
-   "amostra": 1200,
-   "margem": 2.83,
-   "a": 45.0,
-   "b": 48.0,
-   "indecisos": 7.0
-  },
-  {
-   "instituto": "Exatus",
+   "instituto": "Exatus/Agora RN",
    "inicio": "2026-10-19",
    "fim": "2026-10-21",
    "amostra": 1500,
@@ -144,6 +123,16 @@
    "a": 44.27,
    "b": 41.67,
    "indecisos": 14.07
+  },
+  {
+   "instituto": "DataCapital",
+   "inicio": "2026-10-15",
+   "fim": "2026-10-19",
+   "amostra": 2000,
+   "margem": null,
+   "a": 42.8,
+   "b": 49.1,
+   "indecisos": 8.1
   },
   {
    "instituto": "Real Time Big Data",
@@ -214,6 +203,16 @@
    "a": 32.4,
    "b": 43.5,
    "indecisos": 9.9
+  },
+  {
+   "instituto": "DataCapital",
+   "inicio": "2026-10-07",
+   "fim": "2026-10-10",
+   "amostra": 1500,
+   "margem": 2.53,
+   "a": 41.67,
+   "b": 49.53,
+   "indecisos": 8.8
   }
  ],
  "segundo_turno_extras": []
