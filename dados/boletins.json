@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-23T15:24",
+   "tipo": "pesquisas",
+   "titulo": "Vetor Arrow e DataTrends entram; média bruta vai a 2,17 p.p. para Flávio",
+   "destaque": "Duas pesquisas novas com Flávio à frente ampliam a vantagem dele em todas as médias, mas a tendência ainda não se distingue de estabilidade.",
+   "paragrafos": [
+    "Desde o boletim das 13h07, entraram duas pesquisas. A Vetor Arrow (6.867 entrevistas, campo de 22 a 23/10) registra Flávio 50% x Lula 44,9%, ou 47,31% para Lula nos válidos. A DataTrends (2.000 entrevistas, campo de 19 a 21/10) marca Flávio 50% x Lula 46%, com 47,92% para Lula.",
+    "Com elas, a média bruta foi para Lula 48,92% x Flávio 51,08% dos válidos (antes, 49,13% x 50,87%). A vantagem de Flávio subiu de 1,74 para 2,17 p.p., e a chance estimada dele passou de 70% para 74,2%. É uma estimativa com incerteza relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar ficou em Lula 47,1% x Flávio 52,9%. A vantagem subiu de 5,35 para 5,8 p.p., e a chance de Flávio, de 94,6% para 95,9%. A DataTrends subestimou Flávio em 4,04 p.p. no 1º turno, valor devolvido a ele na correção. A Vetor Arrow não tem erro de 1º turno registrado na base. Na correção pelo erro médio, a vantagem foi de 5,54 para 5,96 p.p., com chance de 96,3% (era 95,2%). São estimativas, não resultados garantidos.",
+    "A tendência passou de 0,29 para 0,354 p.p. por dia a favor de Flávio, com margem de ±0,426 p.p. em 37 pesquisas. Como o intervalo ainda inclui o zero, ela continua indistinguível de estabilidade. O modelo estima a vantagem dele hoje em 7,01 p.p. (era 6,58 p.p.). Mantido o ritmo, ela chegaria a 7,72 p.p. em 25/10, uma extrapolação frágil.",
+    "Phoenix (51,28%), Vox (50,61%) e Ranking (50,4%) seguem dando Lula à frente nos válidos. No outro extremo, a Vetor Arrow (47,31%) passa a ser a mais baixa para Lula, ao lado de Gerp (47,37%), Real Time Big Data (47,87%) e DataTrends (47,92%). Ainda faltam pesquisas com campo encerrado: Phoenix e Veritá (22/10). Hoje (23/10) terminam CNT/MDA, AtlasIntel e outra rodada da Veritá. Em 24/10 terminam nova rodada da Vetor Arrow (2.000 entrevistas), PoderData/Aya, Datafolha (4.050), Quaest (3.702), Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (2,17 p.p.) das corrigidas (5,8 a 5,96 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-23T13:07",
    "tipo": "pesquisas",
    "titulo": "Sem pesquisas novas desde as 10h30; média bruta segue com Flávio 1,74 p.p. à frente",
