@@ -1,6 +1,24 @@
 {
  "boletins": [
   {
+   "quando": "2026-10-22T22:34",
+   "tipo": "pesquisas",
+   "titulo": "Governo do RN: nova Exatus mantém Allyson levemente à frente na média",
+   "destaque": "A pesquisa Exatus, com Cadu em 48,49% dos válidos, quase não altera a média: Allyson segue com 51,64% e chance estimada de 61,7%, num quadro ainda incerto.",
+   "paragrafos": [
+    "Desde o boletim das 13h18, entrou na base uma pesquisa nova de 2º turno para governador do RN: a Exatus, feita de 19 a 21/10 com 1.500 entrevistas. Ela registra Allyson (União) com 46,08%, Cadu (PT) com 43,37% e 10,56% de indecisos. Em votos válidos, Cadu tem 48,49%. A base passa a reunir dez institutos, e não há pesquisas registradas como a divulgar.",
+    "Na média como divulgada, Allyson tem 51,64% dos votos válidos e Cadu tem 48,36%. A diferença passou de 3,34 para 3,28 pontos, e a chance estimada de vitória de Allyson foi de 61,9% para 61,7%. Na prática, o quadro não mudou: a vantagem continua pequena e não permite tratar o resultado como definido.",
+    "Os institutos seguem divergindo. Em votos válidos, Cadu vai de 42,69% na Seta (7 a 10/10) a 52,63% na Affare (9 a 12/10). Entre as mais recentes, a Mensury dá 51,51% a Cadu, a Exatus, 48,49%, e a Quallitá, 45,11%. A Mensury, a Real Time Big Data e a Quaest continuam com parcelas altas de indecisos, de 14,07%, 13,0% e 13,0%.",
+    "A tendência, agora calculada com nove pesquisas, aponta 0,64 ponto por dia a favor de Allyson, abaixo dos 0,99 do boletim anterior, com margem de 1,02 ponto para mais ou para menos. Como a margem segue maior que o próprio movimento, ainda não dá para distinguir esse sinal de estabilidade.",
+    "O erro do 1º turno continua sendo a principal fonte de incerteza. Na média, as pesquisas do RN superestimaram Allyson em 15,56 pontos na diferença, com desvio de 11,06 pontos entre institutos; no caso da Exatus, o erro foi de 19,97 pontos. Se a média atual errar na mesma medida, Cadu ficaria com 56,14% e a chance de Allyson cairia para 13,3%. Com a correção pelo erro de cada instituto, Cadu teria 56,78% e a chance de Allyson, 11,0%. Essas correções tendem a exagerar a vantagem de Cadu, por isso o site mantém a média divulgada como padrão.",
+    "A decisão segue com os eleitores de Álvaro Dias (PL), que teve 26,71% no 1º turno. Pelas contas do site, Cadu empata se ficar com cerca de 51,45% dos votos que não foram para nenhum dos dois finalistas, uma divisão quase meio a meio desse eleitorado."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-22T13:18",
    "tipo": "pesquisas",
    "titulo": "Governo do RN: sem pesquisas novas desde a manhã, Allyson segue à frente na média",
