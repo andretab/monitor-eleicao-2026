@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-23T13:07",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas desde as 10h30; média bruta segue com Flávio 1,74 p.p. à frente",
+   "destaque": "Nenhuma pesquisa entrou desde o último boletim. Flávio segue à frente por 1,74 p.p. na média bruta e por 5,35 a 5,54 p.p. nas corrigidas, enquanto 14 levantamentos ainda estão por vir.",
+   "paragrafos": [
+    "Desde o boletim das 10h30, nenhuma pesquisa nova entrou na base, e todos os números do site continuam iguais. A média bruta segue em Lula 49,13% x Flávio 50,87% dos válidos. A vantagem de Flávio é de 1,74 p.p., e a chance estimada dele é de 70%, uma conta com incerteza relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar continua em Lula 47,33% x Flávio 52,67%, com vantagem de 5,35 p.p. e chance de 94,6% para Flávio. Na correção pelo erro médio, a vantagem é de 5,54 p.p. e a chance, de 95,2%. São estimativas, não resultados garantidos.",
+    "A tendência continua em 0,29 p.p. por dia a favor de Flávio, com margem de ±0,461 p.p. em 35 pesquisas. Como o intervalo inclui o zero, ela ainda não se distingue de estabilidade. O modelo estima a vantagem dele hoje em 6,58 p.p. Mantido o ritmo, ela chegaria a 7,16 p.p. em 25/10, mas essa extrapolação é frágil.",
+    "As divergências entre institutos também não mudaram. Phoenix (51,28%), Vox (50,61%) e Ranking (50,4%) dão Lula à frente nos válidos. Gerp (47,37%) e Real Time Big Data (47,87%) estão no outro extremo.",
+    "Seguem pendentes pesquisas com campo já encerrado: DataTrends (21/10), Phoenix e Veritá (22/10). Hoje (23/10) terminam o campo CNT/MDA, Vetor Arrow, AtlasIntel e outra rodada da Veritá. Em 24/10 terminam PoderData/Aya, Datafolha (4.050 entrevistas), Quaest (3.702), Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,74 p.p.) das corrigidas, e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-23T10:30",
    "tipo": "pesquisas",
    "titulo": "Quatro pesquisas entram; média bruta vai a 1,74 p.p. e tendência vira para Flávio",
