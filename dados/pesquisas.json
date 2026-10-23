@@ -176,6 +176,26 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "Ipespe",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-22",
+   "amostra": 1500,
+   "margem": 2.6,
+   "lula": 47.0,
+   "flavio": 48.0,
+   "indecisos": 5.0
+  },
+  {
+   "instituto": "Vox",
+   "inicio": "2026-10-20",
+   "fim": "2026-10-22",
+   "amostra": 2100,
+   "margem": 2.15,
+   "lula": 45.4,
+   "flavio": 44.3,
+   "indecisos": 10.3
+  },
+  {
    "instituto": "Datafolha",
    "inicio": "2026-10-20",
    "fim": "2026-10-22",
@@ -184,6 +204,26 @@
    "lula": 46.0,
    "flavio": 47.0,
    "indecisos": 7.0
+  },
+  {
+   "instituto": "Real Time Big Data",
+   "inicio": "2026-10-19",
+   "fim": "2026-10-22",
+   "amostra": 2000,
+   "margem": 2.0,
+   "lula": 45.0,
+   "flavio": 49.0,
+   "indecisos": 6.0
+  },
+  {
+   "instituto": "Alfa Inteligência",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-22",
+   "amostra": 2700,
+   "margem": 1.9,
+   "lula": 48.0,
+   "flavio": 52.0,
+   "indecisos": null
   },
   {
    "instituto": "Indexa",
@@ -665,20 +705,6 @@
    "margem": 1.0
   },
   {
-   "instituto": "Ipespe",
-   "inicio": "2026-10-20",
-   "fim": "2026-10-22",
-   "amostra": 1500,
-   "margem": 2.6
-  },
-  {
-   "instituto": "Vox",
-   "inicio": "2026-10-20",
-   "fim": "2026-10-22",
-   "amostra": 2100,
-   "margem": 2.15
-  },
-  {
    "instituto": "Phoenix",
    "inicio": "2026-10-19",
    "fim": "2026-10-22",
@@ -686,25 +712,11 @@
    "margem": 1.0
   },
   {
-   "instituto": "Real Time Big Data",
-   "inicio": "2026-10-19",
-   "fim": "2026-10-22",
-   "amostra": 2000,
-   "margem": 2.0
-  },
-  {
    "instituto": "Veritá",
    "inicio": "2026-10-18",
    "fim": "2026-10-22",
    "amostra": 15554,
    "margem": 1.0
-  },
-  {
-   "instituto": "Alfa Inteligência",
-   "inicio": "2026-10-18",
-   "fim": "2026-10-22",
-   "amostra": 1200,
-   "margem": 1.9
   },
   {
    "instituto": "DataTrends",
@@ -716,5 +728,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-23 04:36"
+ "conferido_em": "2026-10-23 10:30"
 }
