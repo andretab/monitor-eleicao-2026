@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-23T10:30",
+   "tipo": "pesquisas",
+   "titulo": "Quatro pesquisas entram; média bruta vai a 1,74 p.p. e tendência vira para Flávio",
+   "destaque": "Com Ipespe, Vox, Real Time Big Data e Alfa Inteligência, a vantagem de Flávio subiu pouco nas médias, e a tendência passou a apontar para ele, ainda sem se distinguir de estabilidade.",
+   "paragrafos": [
+    "Desde o boletim das 19h22 de ontem, entraram quatro pesquisas, todas com campo encerrado em 22/10. O Ipespe (1.500 entrevistas) registra Flávio 48% x Lula 47%, ou 49,47% para Lula nos válidos. A Vox (2.100) tem Lula 45,4% x Flávio 44,3%, com 50,61% para Lula. A Real Time Big Data (2.000) marca Flávio 49% x Lula 45%, com 47,87% para Lula. A Alfa Inteligência (2.700) traz Flávio 52% x Lula 48%.",
+    "A média bruta ficou em Lula 49,13% x Flávio 50,87% dos válidos. A vantagem de Flávio foi de 1,66 para 1,74 p.p., e a chance estimada dele passou de 69,1% para 70%. A mudança é pequena, e a incerteza nessa conta continua relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar foi para Lula 47,33% x Flávio 52,67%. A vantagem subiu de 5,12 para 5,35 p.p., e a chance de Flávio, de 93,8% para 94,6%. Pesa nisso a Alfa Inteligência, que subestimou Flávio em 9,73 p.p. no 1º turno, e a Real Time Big Data, em 6,12 p.p. Esses valores são devolvidos a ele na correção. Com a correção pelo erro médio, a vantagem foi de 5,45 para 5,54 p.p., com chance de 95,2% (era 94,9%). São estimativas, não resultados garantidos.",
+    "A principal mudança foi na tendência. Ela passou de 0,046 p.p. por dia a favor de Lula para 0,29 p.p. por dia a favor de Flávio, com margem de ±0,461 p.p. em 35 pesquisas. Como o intervalo ainda inclui o zero, continua indistinguível de estabilidade. O modelo estima a vantagem de Flávio hoje em 6,58 p.p. (era 4,93 p.p.). Mantido o ritmo, ela chegaria a 7,16 p.p. em 25/10, uma extrapolação frágil. Phoenix (51,28%), Vox (50,61%, antes 50,99%) e Ranking (50,4%) seguem dando Lula à frente nos válidos. Gerp (47,37%) e agora Real Time Big Data (47,87%) estão no outro extremo.",
+    "Ainda faltam pesquisas com campo já encerrado: DataTrends (21/10), Phoenix e Veritá (22/10). Hoje (23/10) terminam o campo CNT/MDA, Vetor Arrow, AtlasIntel e outra rodada da Veritá. Em 24/10 terminam PoderData/Aya, Datafolha (4.050 entrevistas), Quaest (3.702), Nexus/BTG, Palver, Futura e Gerp.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,74 p.p.) das corrigidas (5,35 a 5,54 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-22T19:22",
    "tipo": "pesquisas",
    "titulo": "Datafolha entra; vantagem de Flávio na média bruta cai para 1,66 p.p.",
