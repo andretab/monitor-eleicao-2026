@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-24T20:18",
+   "tipo": "pesquisas",
+   "titulo": "Seis pesquisas novas; vantagem bruta de Flávio cai para 1,86 p.p.",
+   "destaque": "Com Datafolha, Quaest, Palver, Gerp, Veritá e AtlasIntel, Flávio segue à frente em todas as médias, mas a vantagem e a chance estimada recuaram, e a tendência ficou mais perto de zero.",
+   "paragrafos": [
+    "Desde o boletim das 17h56, entraram seis pesquisas. Datafolha (4.050 entrevistas), Quaest (3.702) e Palver (5.000) têm campo até hoje (24/10) e dão a Lula 49,47%, 49,45% e 49,49% dos válidos. Isso fica muito perto da Nexus/BTG (49,46%). Também chegaram a Gerp, com Lula 48,42% (antes 47,37%), a Veritá, com 48,62% em 15.554 entrevistas, e a AtlasIntel, com 49,24%.",
+    "A média bruta passou para Lula 49,07% x Flávio 50,93% dos válidos. A vantagem de Flávio caiu de 2,08 para 1,86 p.p., e a chance estimada dele, de 73,4% para 71,1%. A diferença é pequena e a estimativa tem incerteza relevante. Uma chance de 71,1% ainda deixa espaço real para o outro resultado.",
+    "As médias corrigidas recuaram mais. Na correção pelo erro de cada instituto no 1º turno, o placar ficou em Lula 47,33% x Flávio 52,67%. A vantagem de Flávio foi de 5,83 para 5,33 p.p., e a chance dele, de 96% para 94,5%. AtlasIntel, Quaest e Datafolha recebem de volta 4,77, 4,16 e 4,02 p.p. a favor de Flávio. A Palver, que superestimou Flávio em 2,13 p.p., recebe o ajuste no sentido oposto. Veritá (0,13 p.p.) e Gerp (0,22 p.p.) quase não mudam. Na correção pelo erro médio, a vantagem caiu de 5,87 para 5,65 p.p., com chance de 95,5% (era 96,1%). São estimativas, não resultados garantidos.",
+    "A tendência caiu de 0,266 para 0,081 p.p. por dia a favor de Flávio, com margem de ±0,336 p.p. em 46 pesquisas. O intervalo inclui o zero, então segue indistinguível de estabilidade. O modelo estima a vantagem dele hoje em 5,59 p.p. (era 6,8 p.p.). Se o ritmo seguir, seriam 5,67 p.p. em 25/10, uma extrapolação frágil.",
+    "Quatro institutos seguem dando Lula à frente nos válidos: Phoenix (51,28%), Vox (50,61%), Ranking (50,4%) e Colectta (50,27%). No outro extremo estão Vetor Arrow (47,31%), Real Time Big Data (47,87%), DataTrends (47,92%) e Alfa Inteligência (48%). Ainda faltam quatro pesquisas. Vetor Arrow (2.000 entrevistas), PoderData/Aya (4.000) e Futura (2.000) têm campo até hoje, e a Phoenix (4.001) teve campo até 22/10. No 1º turno, a PoderData/Aya subestimou Flávio em 2,93 p.p., e a Futura errou só 0,33 p.p.",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,86 p.p.) das corrigidas (5,33 a 5,65 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-24T17:56",
    "tipo": "pesquisas",
    "titulo": "Nexus/BTG e Colectta entram; vantagem bruta de Flávio cai para 2,08 p.p.",
