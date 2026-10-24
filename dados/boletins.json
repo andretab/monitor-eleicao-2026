@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-24T11:36",
+   "tipo": "pesquisas",
+   "titulo": "CNT/MDA e França entram; média bruta vai a 2,29 p.p. e chance de Flávio a 75,4%",
+   "destaque": "Duas novas pesquisas deixam o quadro quase igual: Flávio segue à frente na média bruta (2,29 p.p.) e nas corrigidas (5,9 a 6,08 p.p.), com tendência ainda indistinguível de estabilidade.",
+   "paragrafos": [
+    "Desde o boletim das 19h14 de ontem, entraram três pesquisas: CNT/MDA e França, ambas com campo de 21 a 23/10, e uma rodada anterior da França, de 20/10. A CNT/MDA (2.002 entrevistas) registra Flávio 46,3% x Lula 45%, com 8,7% de indecisos, o que dá 49,29% para Lula nos válidos. A França (1.537 entrevistas) marca Flávio 45,6% x Lula 43,1%, com 11,3% de indecisos, ou 48,59% para Lula.",
+    "Com elas, a média bruta ficou em Lula 48,85% x Flávio 51,15% dos válidos (antes, 48,87% x 51,13%). A vantagem de Flávio passou de 2,26 para 2,29 p.p., e a chance estimada dele subiu de 75,1% para 75,4%. A mudança é pequena, e a estimativa tem incerteza relevante.",
+    "Na média corrigida pelo erro de cada instituto no 1º turno, o placar foi para Lula 47,05% x Flávio 52,95%. A vantagem subiu de 5,78 para 5,9 p.p., e a chance de Flávio, de 95,9% para 96,2%. O maior efeito vem da CNT/MDA, que no 1º turno subestimou Flávio em 7,51 p.p., valor devolvido a ele na correção. A França não tem erro de 1º turno registrado na base. Na correção pelo erro médio, a vantagem foi de 6,05 para 6,08 p.p., com chance de 96,6% (era 96,5%). São estimativas, não resultados garantidos.",
+    "A tendência recuou de 0,305 para 0,289 p.p. por dia a favor de Flávio, com margem de ±0,423 p.p. em 38 pesquisas. Como o intervalo inclui o zero, ela segue indistinguível de estabilidade. O modelo estima a vantagem dele hoje em 6,97 p.p. (era 6,68 p.p.). Mantido o ritmo, chegaria a 7,26 p.p. em 25/10, uma extrapolação frágil.",
+    "As divergências continuam as mesmas. Phoenix (51,28%), Vox (50,61%) e Ranking (50,4%) dão Lula à frente nos válidos. No outro extremo estão Vetor Arrow (47,31%), Gerp (47,37%), Real Time Big Data (47,87%) e DataTrends (47,92%). CNT/MDA (49,29%) e França (48,59%) ficam entre os dois grupos. Ainda faltam Phoenix (campo até 22/10, 4.001 entrevistas), AtlasIntel (5.000) e nova rodada da Veritá (15.554), com campo até 23/10. Hoje (24/10) terminam Vetor Arrow (2.000), PoderData/Aya (4.000), Datafolha (4.050), Quaest (3.702), Nexus/BTG (2.000), Palver (5.000), Futura (2.000) e Gerp (2.400).",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (2,29 p.p.) das corrigidas (5,9 a 6,08 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-23T19:14",
    "tipo": "pesquisas",
    "titulo": "Veritá entra e média bruta vai a 2,26 p.p. para Flávio; chance estimada em 75,1%",
