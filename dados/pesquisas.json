@@ -176,6 +176,26 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "CNT/MDA",
+   "inicio": "2026-10-21",
+   "fim": "2026-10-23",
+   "amostra": 2002,
+   "margem": 2.2,
+   "lula": 45.0,
+   "flavio": 46.3,
+   "indecisos": 8.7
+  },
+  {
+   "instituto": "França",
+   "inicio": "2026-10-21",
+   "fim": "2026-10-23",
+   "amostra": 1537,
+   "margem": 2.5,
+   "lula": 43.1,
+   "flavio": 45.6,
+   "indecisos": 11.3
+  },
+  {
    "instituto": "Vetor Arrow",
    "inicio": "2026-10-22",
    "fim": "2026-10-23",
@@ -316,7 +336,7 @@
    "indecisos": 4.0
   },
   {
-   "instituto": "IFP",
+   "instituto": "França",
    "inicio": "2026-10-16",
    "fim": "2026-10-20",
    "amostra": 3000,
@@ -714,13 +734,6 @@
    "margem": 2.04
   },
   {
-   "instituto": "CNT/MDA",
-   "inicio": "2026-10-21",
-   "fim": "2026-10-23",
-   "amostra": 2002,
-   "margem": 2.2
-  },
-  {
    "instituto": "Veritá",
    "inicio": "2026-10-19",
    "fim": "2026-10-23",
@@ -744,5 +757,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-24 08:08"
+ "conferido_em": "2026-10-24 11:35"
 }
