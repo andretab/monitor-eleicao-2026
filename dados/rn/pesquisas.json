@@ -2,7 +2,7 @@
  "_leia": "a = Cadu (PT), b = Allyson (União), terceiro = Álvaro Dias (PL). Percentuais como divulgados; 'indecisos' = indecisos + brancos/nulos. segundo_turno_extras: achadas fora da Wikipédia (com 'url').",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_eleição_estadual_de_2026_no_Rio_Grande_do_Norte",
  "atualizado_em": "2026-10-24",
- "conferido_em": "2026-10-24 17:56",
+ "conferido_em": "2026-10-24 20:18",
  "primeiro_turno_ultima_por_instituto": [
   {
    "instituto": "Quaest",
@@ -94,6 +94,26 @@
   }
  ],
  "segundo_turno": [
+  {
+   "instituto": "Quaest",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 2154,
+   "margem": 2.0,
+   "a": 44.0,
+   "b": 45.0,
+   "indecisos": 11.0
+  },
+  {
+   "instituto": "AtlasIntel",
+   "inicio": "2026-10-18",
+   "fim": "2026-10-23",
+   "amostra": 1780,
+   "margem": 2.0,
+   "a": 49.0,
+   "b": 47.0,
+   "indecisos": 4.0
+  },
   {
    "instituto": "Item",
    "inicio": "2026-10-19",
