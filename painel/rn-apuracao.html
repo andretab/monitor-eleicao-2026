@@ -22,10 +22,11 @@
 
 <main>
   <div class="faixa" id="faixaSim" style="background:var(--alerta)">SIMULAÇÃO: estes números são de uma noite fictícia para teste, não da eleição.</div>
+  <div class="faixa" id="faixaPausa" style="background:var(--texto-2)">A votação foi prorrogada até as 19h (horário de Brasília) por decisão do STF. O TSE interrompeu a totalização e a retoma depois desse horário; até lá, os números ficam parados.</div>
   <div class="titulo">
     <div>
       <h1>RN · Governador ao vivo</h1>
-      <p class="sub" style="margin:0"><a href="rn.html">← Pesquisas do RN</a></p>
+      <p class="sub" style="margin:0 0 4px"><a href="rn.html">Pesquisas do RN</a> · <b>Apuração do RN</b> · <a href="rn-balanco.html">Balanço do RN</a></p>
       <p class="sub" id="gerado">Atualiza sozinha a cada 75 segundos.</p>
     </div>
     <div class="contagem"><div class="mini">seções totalizadas</div><div class="val num" id="secoes">—</div><div class="progresso"><span id="barraSecoes"></span></div></div>
@@ -38,18 +39,10 @@
 
   <div id="conteudo" style="display:none">
     <section class="cartao principal">
-      <div class="grade" style="margin-bottom:8px">
-        <div>
-          <h2>Projeção do resultado final</h2>
-          <p class="sub">Soma, município por município, do que já foi apurado com os votos que faltam</p>
-          <div id="dueloProj"></div>
-        </div>
-        <div>
-          <h2>Placar do TSE agora</h2>
-          <p class="sub">Só os votos válidos já apurados</p>
-          <div id="dueloPlacar"></div>
-        </div>
-      </div>
+      <!-- O placar oficial é o destaque; a projeção aparece só na chance e no painel de virada. -->
+      <h2>Placar do TSE agora</h2>
+      <p class="sub">Votos válidos já apurados</p>
+      <div id="dueloPlacar" style="margin-bottom:16px"></div>
       <div class="kpis" id="kpis"></div>
     </section>
 
@@ -136,6 +129,8 @@
   const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
   const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins", zz: "Exterior" };
   const esc = G.esc;
+  // Chance e virada só com votos suficientes: antes disso refletiriam a suposição inicial (1º turno), não a apuração.
+  const MINIMO_PARA_CHANCE = 0.10;
   const nomeUnid = (A, u) => A.unidades?.[u]?.nome ?? NOMES_UF[u] ?? u.toUpperCase();
   const chaveMapa = (A, u) => A.unidades?.[u]?.mapa ?? u;
   const curto = (A, u) => A.unidades ? nomeUnid(A, u) : u.toUpperCase();
@@ -173,7 +168,14 @@
     if (!P) return;
     const quemLidera = P.lider_placar > 0 ? "Cadu" : "Allyson", quemVira = P.lider_placar > 0 ? "Allyson" : "Cadu";
     const corVira = quemVira === "Cadu" ? "var(--lula)" : "var(--flavio)";
-    if (A.fracao_secoes >= 1 || !P.n) {
+    if (A.fracao_secoes < MINIMO_PARA_CHANCE) {
+      // Com poucas urnas, a chance refletiria a suposição inicial (1º turno), não os votos de hoje.
+      el("probTitulo").textContent = "Vai virar?";
+      el("probSub").textContent = "";
+      el("probValor").innerHTML = '<span style="color:var(--texto-3)">—</span>';
+      el("probDet").textContent = `A chance de virada aparece quando houver pelo menos ${fmt(100 * MINIMO_PARA_CHANCE, 0)}% das seções apuradas. Antes disso ela dependeria mais de suposições do que dos votos de hoje.`;
+      el("probKpis").innerHTML = ""; el("grafHorarios").innerHTML = ""; el("probFaixasTit").textContent = "";
+    } else if (A.fracao_secoes >= 1 || !P.n) {
       el("probTitulo").textContent = "Apuração concluída";
       el("probSub").textContent = "";
       el("probValor").innerHTML = `<span class="${A.lula > A.flavio ? "lula" : "flavio"}">${A.lula > A.flavio ? "Cadu" : "Allyson"} venceu</span>`;
@@ -201,7 +203,7 @@
         });
       } else el("grafHorarios").innerHTML = "";
     }
-    const h = A.historico.filter(x => x.fracao_secoes >= 0.02 && x.prob_troca != null);
+    const h = A.historico.filter(x => x.fracao_secoes >= MINIMO_PARA_CHANCE && x.prob_troca != null);
     if (h.length > 1) G.linhas(el("grafProbHist"), {
       altura: 200, rotulo: "Chance de virada ao longo da apuração",
       x: { tipo: "num", min: 0, max: 1, passo: .1, fmt: v => Math.round(100 * v) + "%" },
@@ -222,19 +224,20 @@
     if (vazio) return;
 
     el("faixaSim").style.display = A.modo === "simulacao" ? "block" : "none";
+    // Prorrogação da votação até 19h (STF, 25/10): aviso enquanto a totalização não passa de 1%.
+    el("faixaPausa").style.display = A.modo !== "simulacao" && A.fracao_secoes < 0.01 ? "block" : "none";
     el("gerado").textContent = `Dados do TSE às ${A.hora_apuracao} · atualizado ${A.gerado_em} · atualiza sozinha a cada 75 s`;
     el("secoes").textContent = fmt(100 * A.fracao_secoes, 2) + "%";
     el("barraSecoes").style.width = (100 * A.fracao_secoes) + "%";
 
     const tot = A.proj_lula + A.proj_flavio;
-    const meia = 1.96 * A.desvio_margem / tot * 50; // ± na % de Cadu
-    const pl = pct(A.proj_lula, A.proj_flavio);
-    G.duelo(el("dueloProj"), A.proj_lula, A.proj_flavio, "Cadu (PT)", "Allyson (União)", `Cadu entre ${fmt(pl - meia)}% e ${fmt(pl + meia)}% (95%)`);
-    G.duelo(el("dueloPlacar"), A.lula, A.flavio, "Cadu", "Allyson", `${mi(A.lula + A.flavio)} de votos válidos apurados`);
+    G.duelo(el("dueloPlacar"), A.lula, A.flavio, "Cadu (PT)", "Allyson (União)", `${mi(A.lula + A.flavio)} de votos válidos apurados`);
     const faltam = A.ufs.reduce((a, u) => a + u.votos_rest, 0);
     el("kpis").innerHTML =
-      kpi("Chance de Cadu", fmt(100 * A.chance_lula, 0) + "%", "pela projeção", "lula") +
-      kpi("Chance de Allyson", fmt(100 * (1 - A.chance_lula), 0) + "%", "pela projeção", "flavio") +
+      (A.fracao_secoes >= MINIMO_PARA_CHANCE
+        ? kpi("Chance de Cadu", fmt(100 * A.chance_lula, 0) + "%", "pelos votos apurados", "lula") +
+          kpi("Chance de Allyson", fmt(100 * (1 - A.chance_lula), 0) + "%", "pelos votos apurados", "flavio")
+        : kpi("Chance de vitória", "—", `aparece com ${fmt(100 * MINIMO_PARA_CHANCE, 0)}% das seções apuradas`)) +
       kpi("Votos que faltam", mi(faltam), "estimativa") +
       (A.comparecimento != null ? kpi("Comparecimento", fmt(100 * A.comparecimento) + "%",
         "nas seções apuradas" + (A.comparecimento_1t != null ? ` · 1º turno ${fmt(100 * A.comparecimento_1t)}%` : "")) : "") +

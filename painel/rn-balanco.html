@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>RN · Balanço</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="estilo.css?v=13">
+</head>
+<body>
+<nav class="barra-topo"><div class="dentro">
+  <a class="marca" href="index.html">Eleição 2026<span> · monitor do 2º turno</span></a>
+  <div class="abas"><a href="index.html">Pesquisas</a><a href="apuracao.html">Apuração<span class="longo"> ao vivo</span></a><a href="balanco.html">Balanço</a><a href="rn.html" aria-current="page">RN</a></div>
+</div></nav>
+
+<main>
+  <div class="faixa" id="faixa"></div>
+  <div class="titulo">
+    <div>
+      <h1>RN · Balanço do governador</h1>
+      <p class="sub" style="margin:0 0 4px"><a href="rn.html">Pesquisas do RN</a> · <a href="rn-apuracao.html">Apuração do RN</a> · <b>Balanço do RN</b></p>
+      <p class="sub" id="gerado">Pesquisas contra urnas, e a virada em números.</p>
+    </div>
+  </div>
+
+  <section class="cartao" id="vazio" style="display:none">
+    <h2>O balanço aparece com a apuração</h2>
+    <p class="sub" style="margin:0">Esta página compara as pesquisas com o resultado real do TSE e mede a virada. Ela começa a se preencher domingo, 25/10, a partir das 17h, e fica completa quando o TSE chegar a 100%.</p>
+  </section>
+
+  <div id="conteudo" style="display:none">
+    <section class="cartao principal">
+      <h2>Resultado</h2>
+      <p class="sub" id="resSub"></p>
+      <div id="dueloFinal"></div>
+      <div class="kpis" id="kpisRes" style="margin-top:16px"></div>
+    </section>
+
+    <section class="cartao principal">
+      <h2>2º turno por município</h2>
+      <p class="sub">Vantagem entre Cadu e Allyson nos votos válidos. Passe o mouse ou toque num município para comparar com o 1º turno.</p>
+      <div class="grafico" id="mapa2t"></div>
+      <div id="legMapa2t"></div>
+    </section>
+
+    <section class="cartao principal">
+      <h2>A virada em números</h2>
+      <p class="sub">Medida no placar oficial e na nossa projeção, minuto a minuto</p>
+      <div class="kpis" id="kpisVirada"></div>
+      <h2 style="margin-top:20px">Quanto a nossa projeção errou ao longo da noite</h2>
+      <p class="sub">% de Cadu projetado menos o % final, conforme as seções foram totalizadas. Quanto mais perto de zero, e mais cedo, melhor.</p>
+      <div class="grafico" id="grafErroProj"></div>
+    </section>
+
+    <div class="grade">
+      <section class="cartao">
+        <h2>Quem acertou o 2º turno</h2>
+        <p class="sub">Erro na vantagem da última pesquisa de cada instituto. Barra à direita = puxou para Cadu. Em preto, as nossas médias.</p>
+        <div class="grafico" id="grafAcertos"></div>
+        <p class="mini" id="resumoAcertos"></p>
+        <details class="tabela"><summary>Ver tabela</summary><div class="tabela-rola"><table id="acertos2t"></table></div></details>
+      </section>
+      <section class="cartao">
+        <h2>Ranking nos dois turnos</h2>
+        <p class="sub">Erro médio na vantagem (p.p.) somando 1º e 2º turnos. Menor é melhor.</p>
+        <div class="grafico" id="grafRanking"></div>
+      </section>
+    </div>
+
+    <div class="grade">
+      <section class="cartao">
+        <h2>Onde cada um cresceu, por município</h2>
+        <p class="sub">Variação de Cadu nos votos válidos, do 1º para o 2º turno (p.p.): os 10 municípios em que mais cresceu e os 10 em que menos cresceu.</p>
+        <div class="grafico" id="grafUFs"></div>
+        <details class="tabela"><summary>Ver tabela por município</summary><div class="tabela-rola"><table id="ufs"></table></div></details>
+      </section>
+      <section class="cartao">
+        <h2>2º turno por região do RN</h2>
+        <p class="sub">Votos válidos; à direita, a variação de Cadu em relação ao 1º turno.</p>
+        <div class="grafico" id="grafRegioes"></div>
+        <div class="legenda"><span><i style="background:var(--lula)"></i>Cadu</span><span><i style="background:var(--flavio)"></i>Allyson</span></div>
+      </section>
+    </div>
+  </div>
+</main>
+<footer class="rodape" id="rodape"></footer>
+
+<script src="graficos.js?v=13"></script>
+<script src="mapa-rn.js?v=1"></script>
+<script>document.write('<script src="dados-rn.js?t=' + Date.now() + '"><\/script>'); /* sempre a versão mais nova dos dados, sem esperar o cache */</script>
+<script>
+// Adaptador: o motor desta página usa os campos lula/flavio; no RN, lula = Cadu (a) e flavio = Allyson (b).
+(() => {
+  const R = window.DADOS_RN, conv = p => ({ ...p, lula: p.a, flavio: p.b });
+  const est = R.primeiro_turno.estado;
+  window.DADOS = {
+    pesquisas: { ...R.pesquisas, segundo_turno_a_divulgar: [],
+      primeiro_turno_ultima_por_instituto: R.pesquisas.primeiro_turno_ultima_por_instituto.map(conv),
+      segundo_turno: R.pesquisas.segundo_turno.map(conv) },
+    primeiro_turno: { br: { ...est, lula: est.a, flavio: est.b, totalizado_em: "" },
+      ...Object.fromEntries(Object.entries(R.primeiro_turno.municipios).map(([cd, m]) => [cd, { ...m, lula: m.a, flavio: m.b }])) },
+    boletins: R.boletins || [],
+  };
+})();
+</script>
+<script>
+(() => {
+  const D = window.DADOS, P = D.pesquisas, T1 = D.primeiro_turno;
+  const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
+  const sinal = (n, c = 1) => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n), c);
+  const mi = n => fmt(n / 1e6, 2) + " mi";
+  const votosCurto = (A, n) => A.unidades ? fmt(n / 1e3, 1) + " mil" : mi(n);
+  const el = id => document.getElementById(id);
+  const esc = G.esc;
+  const dataBR = s => s.slice(8, 10) + "/" + s.slice(5, 7);
+  const dias = (a, b) => (new Date(b + "T12:00:00") - new Date(a + "T12:00:00")) / 864e5;
+  const pct = (a, b) => (a + b) ? 100 * a / (a + b) : 0;
+  const nomeReg = { N: "Norte", NE: "Nordeste", CO: "Centro-Oeste", SE: "Sudeste", S: "Sul", EX: "Exterior" };
+  const kpi = (rot, val, det = "", cls = "") => `<div class="kpi"><div class="rot">${rot}</div><div class="val num ${cls}">${val}</div><div class="det">${det}</div></div>`;
+
+  // 1º turno real e erro de cada instituto (mesmo critério da página de pesquisas).
+  const BR1 = T1.br, l1 = 100 * BR1.lula / BR1.validos, f1 = 100 * BR1.flavio / BR1.validos, m1 = f1 - l1;
+  const erro1 = {};
+  for (const p of P.primeiro_turno_ultima_por_instituto) {
+    const base = p.indecisos == null ? 100 : 100 - p.indecisos;
+    erro1[p.instituto] = (100 * p.flavio / base - 100 * p.lula / base) - m1;
+  }
+  const erroMedio1 = Object.values(erro1).reduce((a, v) => a + v, 0) / Object.values(erro1).length;
+  const p2 = P.segundo_turno.map(p => { const L = 100 * p.lula / (p.lula + p.flavio); return { ...p, L, margem: 100 - 2 * L }; })
+    .sort((a, b) => b.fim.localeCompare(a.fim));
+
+  function desenha(A) {
+    const mi = n => votosCurto(A, n); // milhares de votos por município (RN), milhões no presidente
+    el("rodape").innerHTML = A ? `Última leitura do TSE: <b class="num">${A.hora_apuracao}</b> (atualizado ${A.gerado_em}) · o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min`
+      : "Na noite da apuração, o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min.";
+    const vazio = !A || !(A.fracao_secoes > 0);
+    el("vazio").style.display = vazio ? "block" : "none";
+    el("conteudo").style.display = vazio ? "none" : "block";
+    if (vazio) return;
+    const final = A.fracao_secoes >= 1;
+    const faixa = el("faixa");
+    faixa.style.display = (A.modo === "simulacao" || !final) ? "block" : "none";
+    faixa.style.background = A.modo === "simulacao" ? "var(--alerta)" : "var(--texto-2)";
+    faixa.textContent = A.modo === "simulacao" ? "SIMULAÇÃO: números de uma noite fictícia para teste." :
+      `PARCIAL: ${fmt(100 * A.fracao_secoes, 2)}% das seções. O balanço fecha quando o TSE chegar a 100%.`;
+    el("gerado").textContent = `Dados do TSE às ${A.hora_apuracao} · atualizado ${A.gerado_em}`;
+
+    // ------------------------------------------------ resultado
+    const L = pct(A.lula, A.flavio), F = 100 - L, mReal = F - L;
+    const venc = L > F ? "lula" : "flavio", nomeV = venc === "lula" ? "Cadu" : "Allyson";
+    el("resSub").textContent = final ? `${nomeV} venceu por ${fmt(Math.abs(L - F), 2)} p.p. (${mi(Math.abs(A.lula - A.flavio))} de votos).` : "Resultado parcial.";
+    G.duelo(el("dueloFinal"), A.lula, A.flavio, "Cadu (PT)", "Allyson (União)", `1º turno: Cadu ${fmt(l1)}% × Allyson ${fmt(f1)}% dos válidos`);
+    const novosL = A.lula - BR1.lula, novosF = A.flavio - BR1.flavio;
+    el("kpisRes").innerHTML =
+      kpi("Votos novos de Cadu", "+" + mi(novosL), "do 1º para o 2º turno", "lula") +
+      kpi("Votos novos de Allyson", "+" + mi(novosF), "do 1º para o 2º turno", "flavio") +
+      kpi("Parcela dos novos votos para Cadu", fmt(100 * novosL / (novosL + novosF)) + "%",
+        `empate exigia ${fmt(100 * (BR1.flavio - BR1.lula + BR1.outros) / (2 * BR1.outros))}%`) +
+      kpi("Diferença final", mi(Math.abs(A.lula - A.flavio)), `a favor de ${nomeV}`, venc);
+
+    // ------------------------------------------------ virada
+    const h = A.historico.filter(x => x.fracao_secoes >= 0.02); // antes de 2% das seções é ruído das primeiras urnas
+    const trocas = []; for (let i = 1; i < h.length; i++) if ((h[i].margem_placar > 0) !== (h[i - 1].margem_placar > 0)) trocas.push(h[i]);
+    const ult = trocas.at(-1), sinalV = venc === "lula" ? 1 : -1;
+    const pior = h.reduce((a, x) => (x.margem_placar * sinalV < a.margem_placar * sinalV ? x : a), h[0]);
+    const desde = ok => { let k = h.length; while (k > 0 && ok(h[k - 1])) k--; return h[k]; };
+    const desdeProj = desde(x => x.margem_proj * sinalV > 0);
+    const desde95 = desde(x => (venc === "lula" ? x.chance_lula : 1 - x.chance_lula) >= 0.95);
+    const totalFinal = A.lula + A.flavio;
+    const errEm = f => { const x = h.find(y => y.fracao_secoes >= f); return x ? (50 + 50 * x.margem_proj / totalFinal) - L : null; };
+    el("kpisVirada").innerHTML =
+      kpi("Virada definitiva do placar", ult ? ult.hora : "—", ult ? `com ${fmt(100 * ult.fracao_secoes)}% das seções` + (A.referencia_2022 ? " · 2022: ~67,8%" : "") : "o vencedor liderou do início ao fim") +
+      kpi(`Maior desvantagem de ${nomeV}`, pior && pior.margem_placar * sinalV < 0 ? mi(Math.abs(pior.margem_placar)) : "nenhuma",
+        pior && pior.margem_placar * sinalV < 0 ? `${pior.hora}, ${fmt(100 * pior.fracao_secoes)}% das seções` : "") +
+      kpi("Projeção cravou o vencedor", desdeProj ? desdeProj.hora : "—", desdeProj ? `de vez, com ${fmt(100 * desdeProj.fracao_secoes)}% das seções` : "") +
+      kpi("Projeção passou de 95%", desde95 ? desde95.hora : "—", desde95 ? `de vez, com ${fmt(100 * desde95.fracao_secoes)}% das seções` : "") +
+      kpi("Erro da projeção com 50% das seções", errEm(.5) == null ? "—" : sinal(errEm(.5), 2), "p.p. de Cadu") +
+      kpi("Trocas de liderança no placar", String(trocas.length), trocas.map(t => t.hora).join(" · ") || "nenhuma");
+
+    const erros = h.map(x => [x.fracao_secoes, (50 + 50 * x.margem_proj / totalFinal) - L]);
+    const limE = Math.max(1, Math.ceil(Math.max(...erros.map(e => Math.abs(e[1])))));
+    G.linhas(el("grafErroProj"), {
+      altura: 220, rotulo: "Erro da projeção ao longo da apuração",
+      x: { tipo: "num", min: 0, max: 1, passo: .1, fmt: v => Math.round(100 * v) + "%" },
+      y: { min: -limE, max: limE, passo: limE > 3 ? 2 : 1, fmt: v => (v > 0 ? "+" : "") + v, fmtValor: v => sinal(v, 2) },
+      series: [{ nome: "erro", cor: "var(--alerta)", pontos: erros }],
+      refY: [{ y: 0 }],
+      alvosDica: erros.map(e => e[0]),
+      dicaX: f => { const x = h.find(q => q.fracao_secoes === f); const e = erros.find(q => q[0] === f);
+        return x ? `<b>${x.hora}</b> · ${fmt(100 * f)}% das seções<br>Projeção de Cadu: ${fmt(50 + 50 * x.margem_proj / totalFinal, 2)}%<br>Erro: ${sinal(e[1], 2)} p.p.` : ""; },
+    });
+
+    // ------------------------------------------------ quem acertou
+    const ultimas = {}; for (const p of p2) if (!ultimas[p.instituto]) ultimas[p.instituto] = p;
+    const linhas = Object.values(ultimas).map(p => ({ ...p, eM: p.margem - mReal, certo: (p.margem > 0) === (mReal > 0) }));
+    const media = modo => { let s = 0, w = 0; const ref = Object.values(ultimas).reduce((a, p) => p.fim > a ? p.fim : a, "");
+      for (const p of Object.values(ultimas)) { const peso = Math.sqrt(Math.min(p.amostra, 5000)) * Math.exp(-dias(p.fim, ref) / 7);
+        const c = modo === "bruta" ? 0 : -(erro1[p.instituto] ?? erroMedio1); s += peso * (p.margem + c); w += peso; } return s / w; };
+    const itens = [
+      ...linhas.map(p => ({ nome: p.instituto, eM: p.eM, dica: `<b>${esc(p.instituto)}</b> · ${dataBR(p.fim)}<br>Pesquisa: Cadu ${fmt(p.L)}%<br>Urna: Cadu ${fmt(L)}%<br>Vencedor certo? ${p.certo ? "sim" : "não"}`, nosso: false })),
+      { nome: "Nossa média (divulgada)", eM: media("bruta") - mReal, nosso: true },
+      { nome: "Nossa média (corrigida)", eM: media("instituto") - mReal, nosso: true },
+    ].sort((a, b) => Math.abs(a.eM) - Math.abs(b.eM));
+    const maxA = Math.ceil(Math.max(...itens.map(i => Math.abs(i.eM))));
+    G.barras(el("grafAcertos"), {
+      divergente: true, max: maxA, rotuloNeg: "← puxou p/ Allyson", rotuloPos: "puxou p/ Cadu →",
+      itens: itens.map(i => ({ rotulo: i.nome.replace("Nossa média ", "Média "), valor: -i.eM, texto: fmt(Math.abs(i.eM)),
+        cor: i.nosso ? "var(--texto)" : i.eM < 0 ? "var(--lula)" : "var(--flavio)", dica: i.dica || `<b>${i.nome}</b><br>Erro: ${fmt(Math.abs(i.eM))} p.p.` })),
+    });
+    el("resumoAcertos").textContent = `Acertaram o vencedor: ${linhas.filter(p => p.certo).length} de ${linhas.length} institutos.`;
+    el("acertos2t").innerHTML = `<tr><th>Instituto</th><th>Data</th><th>Cadu</th><th>Erro vantagem</th><th>Vencedor certo?</th></tr>` +
+      `<tr class="destaque"><td>Resultado TSE</td><td></td><td class="num">${fmt(L)}</td><td></td><td></td></tr>` +
+      [...linhas].sort((a, b) => Math.abs(a.eM) - Math.abs(b.eM)).map(p => `<tr><td>${esc(p.instituto)}</td><td class="num">${dataBR(p.fim)}</td><td class="num">${fmt(p.L)}</td><td class="num">${sinal(p.eM)}</td><td>${p.certo ? "sim" : "não"}</td></tr>`).join("");
+
+    // ------------------------------------------------ ranking nos dois turnos
+    const dois = linhas.filter(p => erro1[p.instituto] != null).map(p => ({ nome: p.instituto, e1: erro1[p.instituto], e2: p.eM, m: (Math.abs(erro1[p.instituto]) + Math.abs(p.eM)) / 2 }))
+      .sort((a, b) => a.m - b.m);
+    G.barras(el("grafRanking"), {
+      itens: dois.map((d, i) => ({ rotulo: `${i + 1}. ${d.nome}`, valor: d.m, cor: i < 3 ? "var(--texto)" : "var(--neutro)", texto: fmt(d.m),
+        dica: `<b>${esc(d.nome)}</b><br>1º turno: erro ${sinal(d.e1)}<br>2º turno: erro ${sinal(d.e2)}` })),
+    });
+
+    // ------------------------------------------------ UFs e regiões
+    const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins" };
+    const nomeUnid = u => A.unidades?.[u]?.nome ?? NOMES_UF[u] ?? u.toUpperCase();
+    const curto = u => A.unidades ? nomeUnid(u) : u.toUpperCase();
+    const chaveMapa = u => A.unidades?.[u]?.mapa ?? u;
+    const porUF = A.ufs.filter(u => u.uf !== "zz" && T1[u.uf]).map(u => { const b = T1[u.uf]; const a1 = 100 * b.lula / b.validos, a2 = pct(u.lula, u.flavio);
+      return { ...u, a1, a2, d: a2 - a1, gL: u.lula - b.lula, gF: u.flavio - b.flavio }; }).sort((a, b) => b.d - a.d);
+    const valores = {};
+    for (const u of porUF) valores[chaveMapa(u.uf)] = { cor: G.corMargem(2 * u.a2 - 100),
+      dica: `<b>${G.esc(nomeUnid(u.uf))}</b>${u.fracao < 1 ? ` · ${fmt(100 * u.fracao, 0)}% apurado` : ""}<br>2º turno: Cadu ${fmt(u.a2)}% × Allyson ${fmt(100 - u.a2)}%<br>Cadu no 1º turno: ${fmt(u.a1)}% (${sinal(u.d)} p.p.)` };
+    G.mapa(el("mapa2t"), { base: window.MAPA_RN || window.MAPA_BR, valores, rotulos: A.unidades ? {} : undefined,
+      alturaMax: A.unidades ? 460 : 520, rotulo: "Resultado do 2º turno por " + (A.rotulo_unidade || "estado") });
+    el("legMapa2t").innerHTML = G.legendaMapa(A.candidatos?.a || "Cadu", A.candidatos?.b || "Allyson");
+    const pontas = porUF.length > 30 ? [...porUF.slice(0, 10), ...porUF.slice(-10)] : porUF;
+    const maxD = Math.ceil(Math.max(...pontas.map(u => Math.abs(u.d))));
+    G.barras(el("grafUFs"), {
+      divergente: porUF.some(u => u.d < 0), max: maxD, alturaLinha: 22, larguraRotulo: A.unidades ? 150 : 34,
+      itens: pontas.map(u => ({ rotulo: curto(u.uf), valor: u.d, cor: u.d >= 0 ? "var(--lula)" : "var(--flavio)", texto: sinal(u.d),
+        dica: `<b>${G.esc(nomeUnid(u.uf))}</b><br>Cadu: ${fmt(u.a1)}% → ${fmt(u.a2)}%<br>Votos novos: Cadu +${votosCurto(A, u.gL)} · Allyson +${votosCurto(A, u.gF)}` })),
+    });
+    el("ufs").innerHTML = `<tr><th>UF</th><th>Cadu 1º turno</th><th>Cadu 2º turno</th><th>Variação</th><th>Novos Cadu</th><th>Novos Allyson</th></tr>` +
+      porUF.map(u => `<tr><td>${G.esc(curto(u.uf))}</td><td class="num">${fmt(u.a1)}</td><td class="num">${fmt(u.a2)}</td><td class="num">${sinal(u.d)}</td><td class="num">${votosCurto(A, u.gL)}</td><td class="num">${votosCurto(A, u.gF)}</td></tr>`).join("");
+    const reg = {}; for (const u of A.ufs) { if (!T1[u.uf]) continue; const r = reg[u.regiao] ??= { lula: 0, flavio: 0, l1: 0, v1: 0 }; const b = T1[u.uf];
+      r.lula += u.lula; r.flavio += u.flavio; r.l1 += b.lula; r.v1 += b.validos; }
+    G.empilhadas(el("grafRegioes"), {
+      direita: true,
+      itens: Object.entries(reg).filter(([k]) => k !== "EX").sort((a, b) => (b[1].lula + b[1].flavio) - (a[1].lula + a[1].flavio)).map(([k, r]) => {
+        const a1 = 100 * r.l1 / r.v1, a2 = pct(r.lula, r.flavio);
+        return { rotulo: nomeReg[k] || k, direita: "Cadu " + sinal(a2 - a1),
+          partes: [{ valor: r.lula, cor: "var(--lula)", texto: fmt(a2, 0) + "%" }, { valor: r.flavio, cor: "var(--flavio)", texto: fmt(100 - a2, 0) + "%" }],
+          dica: `<b>${nomeReg[k] || k}</b><br>Cadu ${fmt(a1)}% → ${fmt(a2)}%<br>Saldo: ${r.lula > r.flavio ? "Cadu" : "Allyson"} +${mi(Math.abs(r.lula - r.flavio))}` };
+      }),
+    });
+  }
+
+  // Mesma origem de dados da página de apuração.
+  const FONTE = { arquivo: "estado.json", ramo: "ao-vivo-rn", js: "apuracao-rn-dados.js", variavel: "APURACAO_RN" };
+  const REPO = "andretab/monitor-eleicao-2026";
+  const LOCAL = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
+  const API = `https://api.github.com/repos/${REPO}/contents/${FONTE.arquivo}?ref=${FONTE.ramo}`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/${FONTE.ramo}/${FONTE.arquivo}`;
+  function recarrega() {
+    if (LOCAL) {
+      const tag = document.createElement("script");
+      tag.src = FONTE.js + "?t=" + Date.now();
+      tag.onload = tag.onerror = () => { desenha(window[FONTE.variavel]); tag.remove(); };
+      document.body.appendChild(tag);
+      return;
+    }
+    fetch(API, { headers: { Accept: "application/vnd.github.raw" }, cache: "no-store" })
+      .then(r => (!r.ok && r.status !== 404) ? fetch(RAW + "?t=" + Date.now(), { cache: "no-store" }) : r)
+      .then(r => r.ok ? r.json() : null).then(desenha).catch(() => {});
+  }
+  recarrega();
+  setInterval(recarrega, LOCAL ? 10000 : 120000);
+})();
+</script>
+</body>
+</html>

@@ -121,6 +121,19 @@ ORIGEM = "github" if os.environ.get("GITHUB_ACTIONS") else "pc"
 LIMITE_SILENCIO_S = 240  # 4 min sem atualização do GitHub = ele parou; o PC assume
 
 
+def estado_publicado(ramo: str) -> dict | None:
+    ref = f"refs/remotes/origin/{ramo}"
+    r = subprocess.run(["git", "fetch", "-q", "--no-write-fetch-head", "origin", f"+refs/heads/{ramo}:{ref}"],
+                       cwd=RAIZ, capture_output=True)
+    if r.returncode != 0:
+        return None
+    txt = subprocess.run(["git", "show", f"{ref}:estado.json"], cwd=RAIZ, capture_output=True).stdout.decode("utf-8", "replace")
+    try:
+        return json.loads(txt)
+    except json.JSONDecodeError:
+        return None
+
+
 def github_em_dia(ramo: str) -> tuple[bool, str]:
     """O estado publicado no ramo veio do GitHub e tem menos de 4 minutos?"""
     # Cada coletor lê o seu próprio ramo numa referência própria: os dois rodam juntos no PC e o FETCH_HEAD,
@@ -197,6 +210,13 @@ def main() -> None:
         modo, minuto = "tse", minuto_agora()
 
     historico, minutos, saida_hist = [], [], []
+    if a.publicar and not a.simular:
+        # O robô do GitHub roda no máximo 6 h por vez; ao religar (ou ao trocar para o reserva do PC), retoma a
+        # linha do tempo da noite já publicada, para a virada e o balanço não perderem o começo da apuração.
+        anterior = estado_publicado(cfg["ramo"])
+        if anterior and anterior.get("modo") == "tse" and anterior.get("corrida") == cfg["titulo"]:
+            saida_hist = list(anterior.get("historico", []))
+            print(f"retomando {len(saida_hist)} pontos da noite já publicados")
     while True:
         leituras = fonte.ler(minuto)
         if leituras:

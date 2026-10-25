@@ -132,7 +132,8 @@ def main() -> int:
     estado = estado_ao_vivo(cfg["ramo"])
     if estado and estado.get("modo") == "simulacao" and not a.simulacao:
         estado = None  # ensaio não vira boletim de verdade
-    if a.so_apuracao and not (estado and estado.get("fracao_secoes")):
+    # Menos de 1% apurado (ex.: totalização parada pela prorrogação da votação até 19h): nada a analisar ainda.
+    if a.so_apuracao and not (estado and estado.get("fracao_secoes", 0) >= 0.01):
         print(f"{a.corrida}: sem apuração em andamento, nenhum boletim")
         return 0
     tipo = a.tipo
@@ -149,6 +150,9 @@ def main() -> int:
     pedido = (f"Disputa: {cfg['titulo']}\nAgora (Brasília): {agora:%d/%m/%Y %H:%M}\nTipo de boletim: {tipo}\n"
               + (f"Motivo: {motivo}\n" if motivo else "")
               + (f"Atenção: a apuração abaixo é SIMULADA (teste); diga isso no título.\n" if estado and estado.get("modo") == "simulacao" else "")
+              + ("Atenção: há menos de 10% das seções apuradas. Não cite chance, projeção nem probabilidade de virada: "
+                 "fale só do placar real, do comparecimento e de quanto falta apurar.\n"
+                 if tipo == "apuracao" and estado and estado.get("fracao_secoes", 0) < 0.10 else "")
               + f"\nCONTEXTO\n{cfg['contexto']}\n\nBOLETINS ANTERIORES\n{json.dumps(anteriores, ensure_ascii=False)}\n\n"
               f"DADOS\n{json.dumps(dados, ensure_ascii=False)}\n\nEscreva o boletim.")
 

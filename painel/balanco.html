@@ -95,6 +95,7 @@
   const fmt = (n, c = 1) => n.toLocaleString("pt-BR", { minimumFractionDigits: c, maximumFractionDigits: c });
   const sinal = (n, c = 1) => (n > 0 ? "+" : n < 0 ? "−" : "") + fmt(Math.abs(n), c);
   const mi = n => fmt(n / 1e6, 2) + " mi";
+  const votosCurto = (A, n) => A.unidades ? fmt(n / 1e3, 1) + " mil" : mi(n);
   const el = id => document.getElementById(id);
   const esc = G.esc;
   const dataBR = s => s.slice(8, 10) + "/" + s.slice(5, 7);
@@ -115,6 +116,7 @@
     .sort((a, b) => b.fim.localeCompare(a.fim));
 
   function desenha(A) {
+    const mi = n => votosCurto(A, n); // milhares de votos por município (RN), milhões no presidente
     el("rodape").innerHTML = A ? `Última leitura do TSE: <b class="num">${A.hora_apuracao}</b> (atualizado ${A.gerado_em}) · o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min`
       : "Na noite da apuração, o robô lê o TSE a cada minuto · esta página busca dados novos a cada 2 min.";
     const vazio = !A || !(A.fracao_secoes > 0);
@@ -153,7 +155,7 @@
     const totalFinal = A.lula + A.flavio;
     const errEm = f => { const x = h.find(y => y.fracao_secoes >= f); return x ? (50 + 50 * x.margem_proj / totalFinal) - L : null; };
     el("kpisVirada").innerHTML =
-      kpi("Virada definitiva do placar", ult ? ult.hora : "—", ult ? `com ${fmt(100 * ult.fracao_secoes)}% das seções · 2022: ~67,8%` : "o vencedor liderou do início ao fim") +
+      kpi("Virada definitiva do placar", ult ? ult.hora : "—", ult ? `com ${fmt(100 * ult.fracao_secoes)}% das seções` + (A.referencia_2022 ? " · 2022: ~67,8%" : "") : "o vencedor liderou do início ao fim") +
       kpi(`Maior desvantagem de ${nomeV}`, pior && pior.margem_placar * sinalV < 0 ? mi(Math.abs(pior.margem_placar)) : "nenhuma",
         pior && pior.margem_placar * sinalV < 0 ? `${pior.hora}, ${fmt(100 * pior.fracao_secoes)}% das seções` : "") +
       kpi("Projeção cravou o vencedor", desdeProj ? desdeProj.hora : "—", desdeProj ? `de vez, com ${fmt(100 * desdeProj.fracao_secoes)}% das seções` : "") +
@@ -205,45 +207,51 @@
     });
 
     // ------------------------------------------------ UFs e regiões
-    const porUF = A.ufs.filter(u => u.uf !== "zz").map(u => { const b = T1[u.uf]; const a1 = 100 * b.lula / b.validos, a2 = pct(u.lula, u.flavio);
-      return { ...u, a1, a2, d: a2 - a1, gL: u.lula - b.lula, gF: u.flavio - b.flavio }; }).sort((a, b) => b.d - a.d);
     const NOMES_UF = { ac: "Acre", al: "Alagoas", am: "Amazonas", ap: "Amapá", ba: "Bahia", ce: "Ceará", df: "Distrito Federal", es: "Espírito Santo", go: "Goiás", ma: "Maranhão", mg: "Minas Gerais", ms: "Mato Grosso do Sul", mt: "Mato Grosso", pa: "Pará", pb: "Paraíba", pe: "Pernambuco", pi: "Piauí", pr: "Paraná", rj: "Rio de Janeiro", rn: "Rio Grande do Norte", ro: "Rondônia", rr: "Roraima", rs: "Rio Grande do Sul", sc: "Santa Catarina", se: "Sergipe", sp: "São Paulo", to: "Tocantins" };
+    const nomeUnid = u => A.unidades?.[u]?.nome ?? NOMES_UF[u] ?? u.toUpperCase();
+    const curto = u => A.unidades ? nomeUnid(u) : u.toUpperCase();
+    const chaveMapa = u => A.unidades?.[u]?.mapa ?? u;
+    const porUF = A.ufs.filter(u => u.uf !== "zz" && T1[u.uf]).map(u => { const b = T1[u.uf]; const a1 = 100 * b.lula / b.validos, a2 = pct(u.lula, u.flavio);
+      return { ...u, a1, a2, d: a2 - a1, gL: u.lula - b.lula, gF: u.flavio - b.flavio }; }).sort((a, b) => b.d - a.d);
     const valores = {};
-    for (const u of porUF) valores[u.uf] = { cor: G.corMargem(2 * u.a2 - 100),
-      dica: `<b>${NOMES_UF[u.uf]}</b>${u.fracao < 1 ? ` · ${fmt(100 * u.fracao, 0)}% apurado` : ""}<br>2º turno: Lula ${fmt(u.a2)}% × Flávio ${fmt(100 - u.a2)}%<br>Lula no 1º turno: ${fmt(u.a1)}% (${sinal(u.d)} p.p.)` };
-    G.mapa(el("mapa2t"), { valores, rotulo: "Resultado do 2º turno por estado" });
-    el("legMapa2t").innerHTML = G.legendaMapa();
-    const maxD = Math.ceil(Math.max(...porUF.map(u => Math.abs(u.d))));
+    for (const u of porUF) valores[chaveMapa(u.uf)] = { cor: G.corMargem(2 * u.a2 - 100),
+      dica: `<b>${G.esc(nomeUnid(u.uf))}</b>${u.fracao < 1 ? ` · ${fmt(100 * u.fracao, 0)}% apurado` : ""}<br>2º turno: Lula ${fmt(u.a2)}% × Flávio ${fmt(100 - u.a2)}%<br>Lula no 1º turno: ${fmt(u.a1)}% (${sinal(u.d)} p.p.)` };
+    G.mapa(el("mapa2t"), { base: window.MAPA_RN || window.MAPA_BR, valores, rotulos: A.unidades ? {} : undefined,
+      alturaMax: A.unidades ? 460 : 520, rotulo: "Resultado do 2º turno por " + (A.rotulo_unidade || "estado") });
+    el("legMapa2t").innerHTML = G.legendaMapa(A.candidatos?.a || "Lula", A.candidatos?.b || "Flávio");
+    const pontas = porUF.length > 30 ? [...porUF.slice(0, 10), ...porUF.slice(-10)] : porUF;
+    const maxD = Math.ceil(Math.max(...pontas.map(u => Math.abs(u.d))));
     G.barras(el("grafUFs"), {
-      divergente: porUF.some(u => u.d < 0), max: maxD, alturaLinha: 22, larguraRotulo: 34,
-      itens: porUF.map(u => ({ rotulo: u.uf.toUpperCase(), valor: u.d, cor: u.d >= 0 ? "var(--lula)" : "var(--flavio)", texto: sinal(u.d),
-        dica: `<b>${u.uf.toUpperCase()}</b><br>Lula: ${fmt(u.a1)}% → ${fmt(u.a2)}%<br>Votos novos: Lula +${mi(u.gL)} · Flávio +${mi(u.gF)}` })),
+      divergente: porUF.some(u => u.d < 0), max: maxD, alturaLinha: 22, larguraRotulo: A.unidades ? 150 : 34,
+      itens: pontas.map(u => ({ rotulo: curto(u.uf), valor: u.d, cor: u.d >= 0 ? "var(--lula)" : "var(--flavio)", texto: sinal(u.d),
+        dica: `<b>${G.esc(nomeUnid(u.uf))}</b><br>Lula: ${fmt(u.a1)}% → ${fmt(u.a2)}%<br>Votos novos: Lula +${votosCurto(A, u.gL)} · Flávio +${votosCurto(A, u.gF)}` })),
     });
     el("ufs").innerHTML = `<tr><th>UF</th><th>Lula 1º turno</th><th>Lula 2º turno</th><th>Variação</th><th>Novos Lula</th><th>Novos Flávio</th></tr>` +
-      porUF.map(u => `<tr><td>${u.uf.toUpperCase()}</td><td class="num">${fmt(u.a1)}</td><td class="num">${fmt(u.a2)}</td><td class="num">${sinal(u.d)}</td><td class="num">${mi(u.gL)}</td><td class="num">${mi(u.gF)}</td></tr>`).join("");
-    const reg = {}; for (const u of A.ufs) { const r = reg[u.regiao] ??= { lula: 0, flavio: 0, l1: 0, v1: 0 }; const b = T1[u.uf];
+      porUF.map(u => `<tr><td>${G.esc(curto(u.uf))}</td><td class="num">${fmt(u.a1)}</td><td class="num">${fmt(u.a2)}</td><td class="num">${sinal(u.d)}</td><td class="num">${votosCurto(A, u.gL)}</td><td class="num">${votosCurto(A, u.gF)}</td></tr>`).join("");
+    const reg = {}; for (const u of A.ufs) { if (!T1[u.uf]) continue; const r = reg[u.regiao] ??= { lula: 0, flavio: 0, l1: 0, v1: 0 }; const b = T1[u.uf];
       r.lula += u.lula; r.flavio += u.flavio; r.l1 += b.lula; r.v1 += b.validos; }
     G.empilhadas(el("grafRegioes"), {
       direita: true,
       itens: Object.entries(reg).filter(([k]) => k !== "EX").sort((a, b) => (b[1].lula + b[1].flavio) - (a[1].lula + a[1].flavio)).map(([k, r]) => {
         const a1 = 100 * r.l1 / r.v1, a2 = pct(r.lula, r.flavio);
-        return { rotulo: nomeReg[k], direita: "Lula " + sinal(a2 - a1),
+        return { rotulo: nomeReg[k] || k, direita: "Lula " + sinal(a2 - a1),
           partes: [{ valor: r.lula, cor: "var(--lula)", texto: fmt(a2, 0) + "%" }, { valor: r.flavio, cor: "var(--flavio)", texto: fmt(100 - a2, 0) + "%" }],
-          dica: `<b>${nomeReg[k]}</b><br>Lula ${fmt(a1)}% → ${fmt(a2)}%<br>Saldo: ${r.lula > r.flavio ? "Lula" : "Flávio"} +${mi(Math.abs(r.lula - r.flavio))}` };
+          dica: `<b>${nomeReg[k] || k}</b><br>Lula ${fmt(a1)}% → ${fmt(a2)}%<br>Saldo: ${r.lula > r.flavio ? "Lula" : "Flávio"} +${mi(Math.abs(r.lula - r.flavio))}` };
       }),
     });
   }
 
   // Mesma origem de dados da página de apuração.
+  const FONTE = { arquivo: "estado.json", ramo: "ao-vivo", js: "apuracao-dados.js", variavel: "APURACAO" };
   const REPO = "andretab/monitor-eleicao-2026";
   const LOCAL = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
-  const API = `https://api.github.com/repos/${REPO}/contents/estado.json?ref=ao-vivo`;
-  const RAW = `https://raw.githubusercontent.com/${REPO}/ao-vivo/estado.json`;
+  const API = `https://api.github.com/repos/${REPO}/contents/${FONTE.arquivo}?ref=${FONTE.ramo}`;
+  const RAW = `https://raw.githubusercontent.com/${REPO}/${FONTE.ramo}/${FONTE.arquivo}`;
   function recarrega() {
     if (LOCAL) {
       const tag = document.createElement("script");
-      tag.src = "apuracao-dados.js?t=" + Date.now();
-      tag.onload = tag.onerror = () => { desenha(window.APURACAO); tag.remove(); };
+      tag.src = FONTE.js + "?t=" + Date.now();
+      tag.onload = tag.onerror = () => { desenha(window[FONTE.variavel]); tag.remove(); };
       document.body.appendChild(tag);
       return;
     }

@@ -17,6 +17,33 @@ def troca(s: str, velho: str, novo: str, vezes: int = 1) -> str:
     return s.replace(velho, novo, vezes)
 
 
+# Navegação própria do RN, igual nas três páginas (a aba ativa fica em negrito).
+def subnav(ativa: str) -> str:
+    itens = [("rn.html", "Pesquisas do RN"), ("rn-apuracao.html", "Apuração do RN"), ("rn-balanco.html", "Balanço do RN")]
+    return ('<p class="sub" style="margin:0 0 4px">'
+            + " · ".join(f"<b>{t}</b>" if h == ativa else f'<a href="{h}">{t}</a>' for h, t in itens) + "</p>")
+
+
+# Adaptador: o motor das páginas nacionais usa os campos lula/flavio; no RN, lula = Cadu (a) e flavio = Allyson (b).
+ADAPTADOR = """<script>
+// Adaptador: o motor desta página usa os campos lula/flavio; no RN, lula = Cadu (a) e flavio = Allyson (b).
+(() => {
+  const R = window.DADOS_RN, conv = p => ({ ...p, lula: p.a, flavio: p.b });
+  const est = R.primeiro_turno.estado;
+  window.DADOS = {
+    pesquisas: { ...R.pesquisas, segundo_turno_a_divulgar: [],
+      primeiro_turno_ultima_por_instituto: R.pesquisas.primeiro_turno_ultima_por_instituto.map(conv),
+      segundo_turno: R.pesquisas.segundo_turno.map(conv) },
+    primeiro_turno: { br: { ...est, lula: est.a, flavio: est.b, totalizado_em: "" },
+      ...Object.fromEntries(Object.entries(R.primeiro_turno.municipios).map(([cd, m]) => [cd, { ...m, lula: m.a, flavio: m.b }])) },
+    boletins: R.boletins || [],
+  };
+})();
+</script>
+<script>
+(() => {
+  const D = window.DADOS"""
+
 s = (P / "index.html").read_text(encoding="utf-8")
 
 # Cabeçalho, título e navegação
@@ -24,7 +51,7 @@ s = troca(s, "<title>Monitor Eleição 2026</title>", "<title>RN · Cadu × Ally
 s = troca(s, '<a href="index.html" aria-current="page">Pesquisas</a>', '<a href="index.html">Pesquisas</a>')
 s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
 s = troca(s, "<h1>Lula × Flávio nas pesquisas</h1>",
-          '<h1>RN · Governador: Cadu × Allyson</h1>\n      <p class="sub" style="margin:0 0 4px"><a href="rn-apuracao.html">Apuração ao vivo do RN →</a></p>')
+          '<h1>RN · Governador: Cadu × Allyson</h1>\n      ' + subnav("rn.html"))
 
 # Mapa e textos de seção
 s = troca(s, "<h2>1º turno por estado</h2>", "<h2>1º turno por município</h2>")
@@ -46,25 +73,7 @@ s = troca(s, '    <p class="aviso" id="explicaModo"></p>',
 s = troca(s, '<script src="mapa-br.js?v=1"></script>', '<script src="mapa-rn.js?v=1"></script>')
 s = troca(s, "document.write('<script src=\"dados.js?t=' + Date.now() + '\"><\\/script>');",
           "document.write('<script src=\"dados-rn.js?t=' + Date.now() + '\"><\\/script>');")
-s = troca(s, "<script>\n(() => {\n  const D = window.DADOS",
-          """<script>
-// Adaptador: o motor desta página usa os campos lula/flavio; no RN, lula = Cadu (a) e flavio = Allyson (b).
-(() => {
-  const R = window.DADOS_RN, conv = p => ({ ...p, lula: p.a, flavio: p.b });
-  const est = R.primeiro_turno.estado;
-  window.DADOS = {
-    pesquisas: { ...R.pesquisas, segundo_turno_a_divulgar: [],
-      primeiro_turno_ultima_por_instituto: R.pesquisas.primeiro_turno_ultima_por_instituto.map(conv),
-      segundo_turno: R.pesquisas.segundo_turno.map(conv) },
-    primeiro_turno: { br: { ...est, lula: est.a, flavio: est.b, totalizado_em: "" },
-      ...Object.fromEntries(Object.entries(R.primeiro_turno.municipios).map(([cd, m]) => [cd, { ...m, lula: m.a, flavio: m.b }])) },
-    boletins: R.boletins || [],
-  };
-})();
-</script>
-<script>
-(() => {
-  const D = window.DADOS""")
+s = troca(s, "<script>\n(() => {\n  const D = window.DADOS", ADAPTADOR)
 
 # Abre "como divulgado"
 s = troca(s, 'let modo = "instituto";', 'let modo = "bruta";')
@@ -104,8 +113,7 @@ s = (P / "apuracao.html").read_text(encoding="utf-8")
 s = troca(s, "<title>Apuração ao Vivo</title>", "<title>RN · Apuração ao vivo</title>")
 s = troca(s, '<a href="apuracao.html" aria-current="page">', '<a href="apuracao.html">')
 s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
-s = troca(s, "<h1>Apuração ao vivo</h1>", '<h1>RN · Governador ao vivo</h1>\n      <p class="sub" style="margin:0"><a href="rn.html">← Pesquisas do RN</a></p>')
-s = troca(s, "Soma, UF por UF, do que já foi apurado com os votos que faltam", "Soma, município por município, do que já foi apurado com os votos que faltam")
+s = troca(s, "<h1>Apuração ao vivo</h1>", '<h1>RN · Governador ao vivo</h1>\n      ' + subnav("rn-apuracao.html"))
 s = troca(s, "Em cada um variam o voto que ainda falta em cada estado (dentro da incerteza da projeção) e o atraso de cada estado,",
           "Em cada um variam o voto que ainda falta em cada município (dentro da incerteza da projeção) e o atraso de cada município,")
 s = troca(s, "No começo da noite, sem ritmo medido, vale o padrão conhecido: Norte e Nordeste totalizam por último.",
@@ -127,3 +135,28 @@ s = s.replace("Lula (PT)", "Cadu (PT)").replace("Flávio Bolsonaro (PL)", "Allys
 s = s.replace("Lula", "Cadu").replace("Flávio", "Allyson")
 (P / "rn-apuracao.html").write_text(s, encoding="utf-8")
 print("painel/rn-apuracao.html gerado")
+
+
+# ---------------------------------------------------------------- painel/rn-balanco.html
+s = (P / "balanco.html").read_text(encoding="utf-8")
+s = troca(s, "<title>Balanço da Eleição</title>", "<title>RN · Balanço</title>")
+s = troca(s, '<a href="balanco.html" aria-current="page">', '<a href="balanco.html">')
+s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
+s = troca(s, "<h1>Balanço da eleição</h1>", '<h1>RN · Balanço do governador</h1>\n      ' + subnav("rn-balanco.html"))
+s = troca(s, "<h2>2º turno por estado</h2>", "<h2>2º turno por município</h2>")
+s = troca(s, "Passe o mouse ou toque num estado para comparar com o 1º turno.", "Passe o mouse ou toque num município para comparar com o 1º turno.")
+s = troca(s, "<h2>Onde cada um cresceu, por UF</h2>", "<h2>Onde cada um cresceu, por município</h2>")
+s = troca(s, "Variação de Lula nos votos válidos, do 1º para o 2º turno (p.p.).",
+          "Variação de Lula nos votos válidos, do 1º para o 2º turno (p.p.): os 10 municípios em que mais cresceu e os 10 em que menos cresceu.")
+s = troca(s, "Ver tabela por UF", "Ver tabela por município")
+s = troca(s, "<h2>2º turno por região</h2>", "<h2>2º turno por região do RN</h2>")
+s = troca(s, '<script src="mapa-br.js?v=1"></script>', '<script src="mapa-rn.js?v=1"></script>')
+s = troca(s, "document.write('<script src=\"dados.js?t=' + Date.now() + '\"><\/script>');",
+          "document.write('<script src=\"dados-rn.js?t=' + Date.now() + '\"><\/script>');")
+s = troca(s, "<script>\n(() => {\n  const D = window.DADOS", ADAPTADOR)
+s = troca(s, 'const FONTE = { arquivo: "estado.json", ramo: "ao-vivo", js: "apuracao-dados.js", variavel: "APURACAO" };',
+          'const FONTE = { arquivo: "estado.json", ramo: "ao-vivo-rn", js: "apuracao-rn-dados.js", variavel: "APURACAO_RN" };')
+s = s.replace("Lula (PT)", "Cadu (PT)").replace("Flávio Bolsonaro (PL)", "Allyson (União)")
+s = s.replace("Lula", "Cadu").replace("Flávio", "Allyson")
+(P / "rn-balanco.html").write_text(s, encoding="utf-8")
+print("painel/rn-balanco.html gerado")
