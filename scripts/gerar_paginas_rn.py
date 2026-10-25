@@ -49,7 +49,7 @@ s = (P / "index.html").read_text(encoding="utf-8")
 # Cabeçalho, título e navegação
 s = troca(s, "<title>Monitor Eleição 2026</title>", "<title>RN · Cadu × Allyson</title>")
 s = troca(s, '<a href="index.html" aria-current="page">Pesquisas</a>', '<a href="index.html">Pesquisas</a>')
-s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
+s = troca(s, '<a href="rn-apuracao.html">RN</a>', '<a href="rn-apuracao.html" aria-current="page">RN</a>')
 s = troca(s, "<h1>Lula × Flávio nas pesquisas</h1>",
           '<h1>RN · Governador: Cadu × Allyson</h1>\n      ' + subnav("rn.html"))
 
@@ -112,8 +112,10 @@ print("painel/rn.html gerado")
 s = (P / "apuracao.html").read_text(encoding="utf-8")
 s = troca(s, "<title>Apuração ao Vivo</title>", "<title>RN · Apuração ao vivo</title>")
 s = troca(s, '<a href="apuracao.html" aria-current="page">', '<a href="apuracao.html">')
-s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
+s = troca(s, '<a href="rn-apuracao.html">RN</a>', '<a href="rn-apuracao.html" aria-current="page">RN</a>')
 s = troca(s, "<h1>Apuração ao vivo</h1>", '<h1>RN · Governador ao vivo</h1>\n      ' + subnav("rn-apuracao.html"))
+# O atalho "Governador do RN ao vivo" da página nacional não faz sentido na própria página do RN.
+s = troca(s, '\n      <p class="sub" style="margin:0 0 4px"><a href="rn-apuracao.html"><b>Governador do RN ao vivo →</b></a></p>', "")
 s = troca(s, "Em cada um variam o voto que ainda falta em cada estado (dentro da incerteza da projeção) e o atraso de cada estado,",
           "Em cada um variam o voto que ainda falta em cada município (dentro da incerteza da projeção) e o atraso de cada município,")
 s = troca(s, "No começo da noite, sem ritmo medido, vale o padrão conhecido: Norte e Nordeste totalizam por último.",
@@ -141,7 +143,7 @@ print("painel/rn-apuracao.html gerado")
 s = (P / "balanco.html").read_text(encoding="utf-8")
 s = troca(s, "<title>Balanço da Eleição</title>", "<title>RN · Balanço</title>")
 s = troca(s, '<a href="balanco.html" aria-current="page">', '<a href="balanco.html">')
-s = troca(s, '<a href="rn.html">RN</a>', '<a href="rn.html" aria-current="page">RN</a>')
+s = troca(s, '<a href="rn-apuracao.html">RN</a>', '<a href="rn-apuracao.html" aria-current="page">RN</a>')
 s = troca(s, "<h1>Balanço da eleição</h1>", '<h1>RN · Balanço do governador</h1>\n      ' + subnav("rn-balanco.html"))
 s = troca(s, "<h2>2º turno por estado</h2>", "<h2>2º turno por município</h2>")
 s = troca(s, "Passe o mouse ou toque num estado para comparar com o 1º turno.", "Passe o mouse ou toque num município para comparar com o 1º turno.")
