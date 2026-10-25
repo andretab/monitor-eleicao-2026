@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-25T20:04",
+   "tipo": "apuracao",
+   "titulo": "Com 24,43% apurado, Flávio lidera o placar; projeção ainda indica Lula com 51,11%",
+   "destaque": "Flávio passou à frente na contagem às 19h46, mas o modelo do site ainda projeta Lula à frente no final, com chance um pouco menor que no boletim anterior.",
+   "paragrafos": [
+    "Às 20h03 (horário do TSE), 24,43% das seções estavam apuradas. Lula tem 49,48% dos votos válidos e Flávio está à frente no placar. No boletim das 19h46, com 13,45% apurado, Lula tinha 50,01%.",
+    "A troca de liderança que o modelo apontava como possível aconteceu às 19h46, com 14,1% das seções apuradas. O boletim anterior estimava 14,7% de chance desse cruzamento e indicava como horário mais provável a faixa entre 19h45 e 20h, por volta das 19h48.",
+    "A projeção do site para o resultado final caiu de 51,57% para 51,11% para Lula, e a chance estimada de vitória dele passou de 71,6% para 68,8%. Cerca de 31% de chance para Flávio indica que o resultado ainda está em aberto.",
+    "O modelo estima 72,7% de chance de Lula voltar à frente no placar. Se isso ocorrer, a faixa mais provável é entre 20h e 20h15, com 18,7%, seguida da faixa entre 20h15 e 20h30, com 17,7%. O horário central estimado é 20h30, com cerca de 40,3% das seções apuradas. A incerteza sobre o horário é grande: há 10% de chance de a virada vir só depois das 23h24.",
+    "Os votos que faltam vêm sobretudo do Sudeste, com cerca de 45,2 milhões ainda a apurar. Lá Flávio lidera por 2.645.548 a 2.232.356, e a projeção é de 27 milhões para ele e 23,1 milhões para Lula. O Nordeste tem cerca de 27,3 milhões de votos restantes. Lula lidera ali por 5.100.450 a 2.429.316, com projeção de 24 milhões para ele e 10,9 milhões para Flávio.",
+    "Flávio está à frente no Sul (4.628.767 a 2.796.582, com cerca de 10,8 milhões a apurar) e no Centro-Oeste (2.530.638 a 1.726.679, com cerca de 5,1 milhões a apurar). No Norte, Lula tem 2.931.509 votos e Flávio tem 2.908.856, com cerca de 4,4 milhões a apurar, e a projeção dá leve vantagem a Flávio. No exterior, Lula lidera por 143.629 a 101.631."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T19:46",
    "tipo": "apuracao",
    "titulo": "Com 13,45% das seções apuradas, Lula tem 50,01%; projeção do site aponta 51,57%",

@@ -1,6 +1,24 @@
 {
  "boletins": [
   {
+   "quando": "2026-10-25T20:04",
+   "tipo": "apuracao",
+   "titulo": "Apuração no RN: com 33,42% das seções, Cadu tem 52,45% e projeção cai para 51,09%",
+   "destaque": "Cadu segue à frente na contagem, mas a projeção e a chance dele recuaram desde as 19h45, e a chance de virada no placar subiu para 15%.",
+   "paragrafos": [
+    "Às 20h04, pelo horário do TSE, 33,42% das seções do RN estavam apuradas. Cadu (PT) tem 52,45% dos votos válidos, e Allyson (União), 47,55%. Até agora não houve troca de liderança na contagem.",
+    "A projeção do site estima que Cadu termine com 51,09% dos votos válidos, abaixo dos 51,96% do boletim das 19h45. A chance estimada de vitória dele caiu de 76,8% para 70,4%. A vantagem projetada ficou menor, e cerca de dois terços das seções ainda faltam, por isso o resultado não está definido.",
+    "Em 300 simulações do restante da apuração, o placar troca de líder em 15% dos casos, acima dos 12,3% anteriores, e Cadu termina à frente em 85%. A faixa de horário mais provável para uma virada passou a ser das 21h às 21h15, com 3,3%, seguida de 20h45 às 21h, com 3,0%. Nas simulações com virada, metade ocorre até 21h07, com cerca de 69% das seções apuradas, e 90% até 23h55. Há casos raros bem mais tarde, até por volta de 3h45.",
+    "A maior reserva de votos continua no Leste, com cerca de 714,9 mil votos a apurar. Ali Allyson lidera o que já foi contado, com 124.686 votos contra 110.959. A novidade é que a projeção da região agora dá leve vantagem a Allyson, com 476,2 mil votos contra 474,4 mil de Cadu; às 19h45, ela apontava Cadu à frente.",
+    "No Agreste, a liderança na contagem mudou: Cadu tem agora 73.940 votos contra 69.992 de Allyson, com 171,8 mil votos restantes e projeção de 160,8 mil a 154,9 mil. No Oeste, Cadu tem 101.256 votos contra 76.577, com 403,7 mil a apurar e projeção apertada, de 294,2 mil a 287,3 mil. No Central, Cadu tem 81.189 contra 61.760, com 120,3 mil restantes e projeção de 149,1 mil a 114,1 mil.",
+    "Em relação às pesquisas, a projeção atual de Cadu, de 51,09%, segue entre a média como divulgada, que dava 48,71% a ele, e a média corrigida por instituto, que dava 52,55%, ainda mais perto da corrigida, mas um pouco mais próxima da divulgada do que às 19h45. Com 33,42% das seções apuradas, ainda é cedo para medir o erro das pesquisas no 2º turno."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T19:46",
    "tipo": "apuracao",
    "titulo": "Apuração no RN: com 16,51% das seções, Cadu tem 52,3% e projeção de 51,96%",
