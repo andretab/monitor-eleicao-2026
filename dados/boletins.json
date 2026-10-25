@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-25T12:16",
+   "tipo": "pesquisas",
+   "titulo": "Sem pesquisas novas desde a madrugada; vantagem bruta de Flávio fica em 1,8 p.p.",
+   "destaque": "Nenhuma pesquisa entrou desde o boletim das 1h48, e os números do site tiveram apenas ajustes mínimos: Flávio segue à frente em todas as médias, com chance estimada entre 70,6% e 95,3%.",
+   "paragrafos": [
+    "Desde o boletim das 1h48, nenhuma pesquisa nova entrou na base. O modelo continua com 47 pesquisas, e as duas que faltavam ainda não foram divulgadas. As mudanças nos números são mínimas, de centésimos, e não alteram o quadro.",
+    "A média bruta, como as pesquisas foram divulgadas, está em Lula 49,1% x Flávio 50,9% dos válidos. A vantagem de Flávio é de 1,8 p.p. (era 1,78 p.p.), e a chance estimada dele é de 70,6% (era 70,3%). É uma estimativa com incerteza relevante: cerca de 29% de chance para Lula deixa espaço real para o outro resultado.",
+    "As médias corrigidas também ficaram praticamente iguais. Na correção pelo erro de cada instituto no 1º turno, o placar é Lula 47,41% x Flávio 52,59%. A vantagem de Flávio é de 5,19 p.p. (era 5,16 p.p.), com chance de 94%. Na correção pelo erro médio, a vantagem é de 5,59 p.p. (era 5,57 p.p.), com chance de 95,3%, igual à anterior.",
+    "A tendência é de 0,099 p.p. por dia a favor de Flávio, com margem de ±0,332 p.p. O intervalo inclui o zero, então o movimento continua indistinguível de estabilidade. O modelo estima a vantagem dele hoje, 25/10, em 5,52 p.p. (era 5,5 p.p.).",
+    "Os institutos que divergem são os mesmos. Quatro dão Lula à frente nos válidos: Phoenix (51,28%), Vox (50,61%), Ranking (50,4%) e Colectta (50,27%). Os da Phoenix e da Ranking são os mais antigos da lista, com campo até 16/10. No outro extremo estão Vetor Arrow (47,31%), Real Time Big Data (47,87%), DataTrends (47,92%) e Alfa Inteligência (48%). Seguem a divulgar a Vetor Arrow (2.000 entrevistas, campo de 23 a 24/10, margem de 2,19 p.p.) e a Phoenix (4.001 entrevistas, campo de 19 a 22/10, margem de 1 p.p.).",
+    "Lembrete: no 1º turno, os institutos subestimaram Flávio em média 3,79 p.p. na vantagem, com desvio de 3,33 p.p. entre eles. É isso que separa a média bruta (1,8 p.p.) das corrigidas (5,19 a 5,59 p.p.), e nada garante que esses erros se repitam. Pela conta do site, Lula precisaria de 61,94% dos votos dados aos demais candidatos no 1º turno para empatar."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T01:48",
    "tipo": "pesquisas",
    "titulo": "PoderData/Aya e Futura entram; vantagem bruta de Flávio vai a 1,78 p.p.",
