@@ -236,6 +236,8 @@
       kpi("Chance de Lula", fmt(100 * A.chance_lula, 0) + "%", "pela projeção", "lula") +
       kpi("Chance de Flávio", fmt(100 * (1 - A.chance_lula), 0) + "%", "pela projeção", "flavio") +
       kpi("Votos que faltam", mi(faltam), "estimativa") +
+      (A.comparecimento != null ? kpi("Comparecimento", fmt(100 * A.comparecimento) + "%",
+        "nas seções apuradas" + (A.comparecimento_1t != null ? ` · 1º turno ${fmt(100 * A.comparecimento_1t)}%` : "")) : "") +
       kpi("Desvio sobre o esperado", (A.swing >= 0 ? "Lula +" : "Flávio +") + fmt(Math.abs(100 * A.swing), 1), "p.p., média das UFs");
 
     desenhaProbabilidade(A);

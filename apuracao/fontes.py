@@ -18,6 +18,8 @@ def ler_arquivo_tse(d: dict, uf: str, num_a: str = "13", num_b: str = "22") -> L
     return LeituraUF(
         uf=uf, secoes_totalizadas=int(d["s"]["st"]), secoes_total=int(d["s"]["ts"]),
         lula=votos.get(num_a, 0), flavio=votos.get(num_b, 0), hora=d.get("hg", ""),
+        eleitores_apurados=int(d["e"].get("est") or 0), eleitores_total=int(d["e"].get("te") or 0),
+        comparecimento=int(d["e"].get("c") or 0),
     )
 
 
@@ -88,7 +90,9 @@ class FonteSimulada:
             vies = self.vies if b["regiao"] in self.lentas else 0.0
             media_ate_f = self.parcela[u] + vies * (1 - f)
             lula = round(validos * min(max(media_ate_f, 0), 1))
-            out[u] = LeituraUF(u, secoes, b["secoes"], lula, round(validos) - lula, hora=f"sim+{minuto:.0f}min")
+            out[u] = LeituraUF(u, secoes, b["secoes"], lula, round(validos) - lula, hora=f"sim+{minuto:.0f}min",
+                               eleitores_apurados=round(b.get("eleitorado", 0) * f), eleitores_total=b.get("eleitorado", 0),
+                               comparecimento=round(b.get("comparecimento", 0) * f))
         return out
 
     def resultado_real(self) -> tuple[float, float]:

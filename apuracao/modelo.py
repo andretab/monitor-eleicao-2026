@@ -33,10 +33,19 @@ class LeituraUF:
     lula: int
     flavio: int
     hora: str = ""
+    eleitores_apurados: int = 0   # eleitorado das seções já totalizadas (TSE: e.est)
+    eleitores_total: int = 0      # eleitorado da unidade (TSE: e.te)
+    comparecimento: int = 0       # eleitores que votaram nas seções totalizadas (TSE: e.c)
 
     @property
     def fracao(self) -> float:
         return self.secoes_totalizadas / self.secoes_total if self.secoes_total else 0.0
+
+    @property
+    def fracao_eleitorado(self) -> float:
+        """Parte do eleitorado já apurada. Melhor que a fração de seções: as seções têm tamanhos muito
+        diferentes (as do exterior, grandes e com pouco comparecimento, costumam chegar primeiro)."""
+        return self.eleitores_apurados / self.eleitores_total if self.eleitores_total else self.fracao
 
     @property
     def validos(self) -> int:
@@ -57,6 +66,7 @@ class ProjecaoUF:
     proj_lula: float
     proj_flavio: float
     desvio_votos: float
+    comparecimento: float | None = None  # nas seções apuradas
 
 
 @dataclass
@@ -71,6 +81,8 @@ class Projecao:
     desvio_margem: float
     chance_lula: float
     virada: dict | None = field(default=None)
+    comparecimento: float | None = None     # nas seções apuradas
+    comparecimento_1t: float | None = None  # no 1º turno, nas mesmas unidades
 
 
 def phi(x: float) -> float:
@@ -88,12 +100,24 @@ def projetar(leituras: dict[str, LeituraUF], base1t: dict, transferencia: float)
     num = den = 0.0
     for u in ufs:
         l = leituras.get(u)
-        if l and l.fracao >= MINIMO_APURADO and l.validos:
+        if l and l.fracao_eleitorado >= MINIMO_APURADO and l.validos:
             num += (l.lula / l.validos - prior_uf(base1t[u], transferencia)) * l.validos
             den += l.validos
     swing = num / den if den else 0.0
 
-    # Comparecimento relativo ao 1º turno, para estimar o total de UFs que contaram pouco.
+    # Votos válidos por eleitor no 2º turno, relativos ao 1º turno (comparecimento × voto válido), medidos
+    # onde já há apuração relevante. Corrige as unidades que contaram pouco: se o país está indo menos às
+    # urnas que no 1º turno, os votos que faltam também serão menos.
+    taxa_1t = lambda b: b["validos"] / b["eleitorado"] if b.get("eleitorado") else None
+    num = den = 0.0
+    for u in ufs:
+        l = leituras.get(u)
+        t1 = taxa_1t(base1t[u])
+        if l and l.fracao_eleitorado >= MINIMO_APURADO and l.eleitores_apurados and t1:
+            num += l.validos
+            den += l.eleitores_apurados * t1
+    razao_taxa = num / den if den else 1.0
+    # Mesma razão no método antigo (por seções), usado só se o TSE não trouxer o eleitorado.
     num = den = 0.0
     for u in ufs:
         l = leituras.get(u)
@@ -107,19 +131,31 @@ def projetar(leituras: dict[str, LeituraUF], base1t: dict, transferencia: float)
         b = base1t[u]
         l = leituras.get(u) or LeituraUF(u, 0, 1, 0, 0)
         f = l.fracao
+        fe = l.fracao_eleitorado
         prior = prior_uf(b, transferencia)
-        total_est = l.validos / f if f >= MINIMO_APURADO else b["validos"] * razao_comparecimento
-        votos_rest = max(total_est - l.validos, 0.0) if f < 1 else 0.0
+        t1 = taxa_1t(b)
+        if l.eleitores_total and t1:
+            # Votos que faltam = eleitorado ainda não apurado × votos válidos por eleitor. A taxa mistura a
+            # observada nesta unidade (peso = fração do eleitorado apurada) com a do 1º turno corrigida pela
+            # variação nacional de comparecimento.
+            observada = l.validos / l.eleitores_apurados if l.eleitores_apurados else None
+            esperada = t1 * razao_taxa
+            taxa = fe * observada + (1 - fe) * esperada if observada is not None else esperada
+            votos_rest = max(l.eleitores_total - l.eleitores_apurados, 0) * taxa if f < 1 else 0.0
+        else:
+            total_est = l.validos / f if f >= MINIMO_APURADO else b["validos"] * razao_comparecimento
+            votos_rest = max(total_est - l.validos, 0.0) if f < 1 else 0.0
         observado = l.lula / l.validos if l.validos else None
         esperado = min(max(prior + swing, 0.0), 1.0)
-        parcela = f * observado + (1 - f) * esperado if observado is not None else esperado
-        # Incerteza da parcela que falta: encolhe conforme a UF apura.
-        desvio = votos_rest * (0.005 + 0.03 * (1 - f))
+        parcela = fe * observado + (1 - fe) * esperado if observado is not None else esperado
+        # Incerteza da parcela que falta: encolhe conforme a unidade apura.
+        desvio = votos_rest * (0.005 + 0.03 * (1 - fe))
         resultado.append(ProjecaoUF(
             uf=u, regiao=b["regiao"], fracao=f, lula=l.lula, flavio=l.flavio, prior=prior,
             observado=observado, parcela_rest=parcela, votos_rest=votos_rest,
             proj_lula=l.lula + votos_rest * parcela, proj_flavio=l.flavio + votos_rest * (1 - parcela),
             desvio_votos=desvio,
+            comparecimento=l.comparecimento / l.eleitores_apurados if l.eleitores_apurados else None,
         ))
 
     secoes = sum((leituras[u].secoes_totalizadas if u in leituras else 0) for u in ufs)
@@ -130,10 +166,16 @@ def projetar(leituras: dict[str, LeituraUF], base1t: dict, transferencia: float)
     desvio_margem = 2 * sum(p.desvio_votos for p in resultado)
     margem = proj_l - proj_f
     chance = 1.0 if desvio_margem == 0 and margem > 0 else 0.0 if desvio_margem == 0 else phi(margem / desvio_margem)
+    apurados = sum(leituras[u].eleitores_apurados for u in ufs if u in leituras)
+    compareceram = sum(leituras[u].comparecimento for u in ufs if u in leituras)
+    elei_1t = sum(base1t[u].get("eleitorado", 0) for u in ufs)
+    comp_1t = sum(base1t[u].get("comparecimento", 0) for u in ufs)
     return Projecao(
         ufs=resultado, swing=swing, fracao_secoes=secoes / secoes_total if secoes_total else 0.0,
         lula=sum(p.lula for p in resultado), flavio=sum(p.flavio for p in resultado),
         proj_lula=proj_l, proj_flavio=proj_f, desvio_margem=desvio_margem, chance_lula=chance,
+        comparecimento=compareceram / apurados if apurados else None,
+        comparecimento_1t=comp_1t / elei_1t if elei_1t else None,
     )
 
 
