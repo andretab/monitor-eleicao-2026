@@ -1,7 +1,7 @@
 {
  "_leia": "Percentuais como divulgados (votos totais). 'indecisos' = indecisos + brancos/nulos/abstenção declarados; null quando o instituto já divulga só votos válidos. Base de votos válidos = 100 - indecisos. Fonte da compilação: Wikipédia 'Pesquisas de opinião para a eleição presidencial no Brasil em 2026', conferida em 18/10/2026. Antes de usar número fino, conferir no PesqEle/TSE.",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_de_opini%C3%A3o_para_a_elei%C3%A7%C3%A3o_presidencial_no_Brasil_em_2026",
- "atualizado_em": "2026-10-24",
+ "atualizado_em": "2026-10-25",
  "primeiro_turno_ultima_por_instituto": [
   {
    "instituto": "Datafolha",
@@ -176,6 +176,16 @@
  ],
  "segundo_turno": [
   {
+   "instituto": "PoderData/Aya",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 4000,
+   "margem": 1.6,
+   "lula": 49.0,
+   "flavio": 51.0,
+   "indecisos": null
+  },
+  {
    "instituto": "Datafolha",
    "inicio": "2026-10-23",
    "fim": "2026-10-24",
@@ -224,6 +234,16 @@
    "lula": 46.0,
    "flavio": 49.0,
    "indecisos": 4.0
+  },
+  {
+   "instituto": "Futura",
+   "inicio": "2026-10-23",
+   "fim": "2026-10-24",
+   "amostra": 2000,
+   "margem": 2.2,
+   "lula": 47.9,
+   "flavio": 48.2,
+   "indecisos": 3.9
   },
   {
    "instituto": "Colectta",
@@ -765,20 +785,6 @@
    "margem": 2.19
   },
   {
-   "instituto": "PoderData/Aya",
-   "inicio": "2026-10-23",
-   "fim": "2026-10-24",
-   "amostra": 4000,
-   "margem": 1.6
-  },
-  {
-   "instituto": "Futura",
-   "inicio": "2026-10-21",
-   "fim": "2026-10-24",
-   "amostra": 2000,
-   "margem": 2.2
-  },
-  {
    "instituto": "Phoenix",
    "inicio": "2026-10-19",
    "fim": "2026-10-22",
@@ -788,5 +794,5 @@
  ],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-10-24 20:18"
+ "conferido_em": "2026-10-25 01:48"
 }
