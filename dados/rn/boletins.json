@@ -1,6 +1,24 @@
 {
  "boletins": [
   {
+   "quando": "2026-10-25T19:46",
+   "tipo": "apuracao",
+   "titulo": "Apuração no RN: com 16,51% das seções, Cadu tem 52,3% e projeção de 51,96%",
+   "destaque": "Na primeira leitura da apuração, Cadu lidera com 52,3% dos votos válidos. A chance estimada de vitória dele é de 76,8%, e há 12,3% de chance de o placar virar.",
+   "paragrafos": [
+    "Às 19h45, pelo horário do TSE, 16,51% das seções do RN estavam apuradas. Cadu (PT) tem 52,3% dos votos válidos, e Allyson (União), 47,7%. Até agora não houve troca de liderança na contagem.",
+    "A projeção do site estima que Cadu termine com 51,96% dos votos válidos. A chance estimada de vitória dele é de 76,8%. A vantagem projetada é pequena e mais de 80% das seções ainda faltam, por isso o resultado não está definido.",
+    "Em 300 simulações do restante da apuração, o placar troca de líder em 12,3% dos casos, e Cadu termina à frente em 87,7%. A faixa de horário mais provável para uma virada é das 19h45 às 20h, com 4,3%, seguida de 20h às 20h15, com 2,7%. Nas simulações com virada, metade ocorre até 20h03, com cerca de 33,3% das seções apuradas. Há casos raros bem mais tarde, até por volta de 2h39.",
+    "A maior reserva de votos está no Leste, com cerca de 841,6 mil votos ainda a apurar. Ali Allyson lidera o que já foi contado, com 54.290 votos contra 50.397. Mesmo assim, a projeção dá vantagem a Cadu na região, com 489,7 mil votos contra 456,5 mil. No Agreste o quadro é parecido: Allyson tem 38.797 votos e Cadu, 36.109, com 240,1 mil votos restantes e projeção quase empatada, de 159,9 mil para Cadu e 155,1 mil para Allyson.",
+    "Cadu lidera nas outras duas regiões. No Oeste, tem 58.107 votos contra 43.723 de Allyson, com 476,6 mil votos a apurar e projeção apertada, de 293,1 mil a 285,3 mil. No Central, Cadu tem 37.156 votos contra 29.001, com 196,4 mil votos restantes e projeção de 149,6 mil a 112,9 mil.",
+    "Em relação ao boletim das 12h16, que tratava só de pesquisas, o quadro mudou. A média como divulgada dava 51,29% a Allyson e chance de 59,0% para ele. A projeção atual de Cadu, de 51,96%, está mais perto da média corrigida por instituto, que dava 52,55% a ele, do que da média divulgada, que dava 48,71%. Com 16,51% das seções apuradas, ainda é cedo para medir o erro das pesquisas no 2º turno."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T12:16",
    "tipo": "pesquisas",
    "titulo": "Governo do RN: sem pesquisas novas, Allyson segue 2,59 pontos à frente na média",
