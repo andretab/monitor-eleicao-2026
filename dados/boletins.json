@@ -2,6 +2,24 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-26T00:49",
+   "tipo": "balanco",
+   "titulo": "Lula vence com 51,79%; 18 de 22 institutos indicavam Flávio à frente",
+   "destaque": "Com 100% das seções apuradas, Lula tem 51,79% dos válidos contra 48,21% de Flávio. A maioria das pesquisas errou o vencedor, e a correção pelo erro do 1º turno piorou a média.",
+   "paragrafos": [
+    "Às 23h24 (horário do TSE), 100% das seções estavam apuradas. Lula tem 51,79% dos votos válidos e Flávio tem 48,21%, uma margem de 3,58 pontos. No boletim das 22h31, com 99,99% apurado, Lula tinha 51,78%, e o placar praticamente não mudou desde então. No 1º turno, Flávio havia ficado à frente, com 47,03% contra 45,16% de Lula. A proclamação oficial cabe ao TSE.",
+    "Considerando a última pesquisa de cada instituto, só 4 de 22 indicaram Lula à frente. Ordenados pelo erro na vantagem, os mais próximos foram Phoenix (erro de 1,01 ponto, com Lula a 51,28%), Vox (2,35), Ranking (2,77) e Colectta (3,03). A pesquisa da Phoenix terminou em 16/10, e a da Ranking também. Os maiores erros foram de Vetor Arrow (8,95 pontos, com Lula a 47,31%), Real Time Big Data (7,83), DataTrends (7,73) e Alfa Inteligência (7,57). Todos os institutos da lista erraram na mesma direção, a favor de Flávio.",
+    "Entre os institutos mais conhecidos, Datafolha (49,47% para Lula), Quaest (49,45%) e AtlasIntel (49,24%) erraram a vantagem em cerca de 4,6 a 5,1 pontos e apontaram Flávio à frente. Alguns dos que mais acertaram no 1º turno ficaram entre os que mais erraram agora: Veritá errou 0,13 ponto no 1º turno e 6,69 no 2º, e Gerp passou de 0,22 para 6,73.",
+    "A média bruta das pesquisas dava 49,1% a Lula e 70,6% de chance de vitória a Flávio, com erro de 5,37 pontos na vantagem. As médias corrigidas pelo erro do 1º turno davam a Lula entre 47,2% e 47,41%, com 94% a 95,3% de chance para Flávio. O erro delas foi de 8,76 pontos. No 1º turno, as pesquisas tinham errado a favor de Lula, e desta vez o erro foi no sentido oposto, por isso a correção afastou a média do resultado.",
+    "Na apuração, a projeção do site indicou Lula à frente o tempo todo, inclusive quando ele estava atrás no placar. A projeção foi de 51,57% às 19h46 e de 51,11% às 20h04, com 68,8% de chance para Lula nesse momento, e terminou igual ao placar final, 51,79%. Houve duas trocas de liderança. Às 19h46, com 14,1% apurado, Flávio passou à frente. Às 20h26, com 47,9% apurado, Lula retomou a liderança e não a perdeu mais.",
+    "Lula cresceu em relação ao 1º turno em todas as unidades da federação listadas. Os maiores ganhos foram em Goiás (9,28 pontos), São Paulo (7,95), Distrito Federal (7,61) e Rio de Janeiro (7,48), e os menores em Rondônia (4,5), Roraima (4,68) e Acre (4,7). Os dados não trazem o crescimento de Flávio por estado. No Norte, a disputa terminou com Lula à frente por pouco mais de mil votos: 5.024.626 a 5.023.547."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T22:31",
    "tipo": "apuracao",
    "titulo": "Com 99,99% apurado, Lula tem 51,78% e modelo não vê mais chance de virada",
