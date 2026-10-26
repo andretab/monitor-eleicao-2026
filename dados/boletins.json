@@ -2,6 +2,23 @@
  "_leia": "Boletins de análise, mais novo primeiro. Campos: quando (ISO, horário de Brasília), tipo (pesquisas|apuracao|balanco), titulo, paragrafos (lista de textos curtos), fontes (lista de URLs).",
  "boletins": [
   {
+   "quando": "2026-10-25T22:31",
+   "tipo": "apuracao",
+   "titulo": "Com 99,99% apurado, Lula tem 51,78% e modelo não vê mais chance de virada",
+   "destaque": "Com quase todas as seções contadas, Lula lidera com 51,78% dos válidos, e a projeção e a chance estimada indicam que o placar não deve mudar.",
+   "paragrafos": [
+    "Às 22h30 (horário do TSE), 99,99% das seções estavam apuradas. Lula tem 51,78% dos votos válidos, e Flávio tem 48,22%. No boletim das 20h04, com 24,43% apurado, Lula tinha 49,48% e estava atrás no placar.",
+    "A projeção do site para o resultado final agora coincide com o placar: 51,78% para Lula. Às 20h04 ela era de 51,11%. A chance estimada de vitória de Lula subiu de 68,8% para 100,0%, e o modelo calcula 0,0% de chance de nova troca de liderança. O resultado oficial cabe ao TSE.",
+    "A segunda troca de liderança da noite ocorreu às 20h26, com 47,9% das seções apuradas, quando Lula voltou à frente. O boletim anterior estimava 72,7% de chance de isso acontecer e apontava 20h30 como horário central, com cerca de 40,3% das seções. A faixa mais provável indicada, entre 20h e 20h15, ficou alguns minutos antes do que de fato ocorreu. A primeira troca, a favor de Flávio, tinha sido às 19h46, com 14,1% apurado.",
+    "Restam poucos votos a contar: cerca de 4,8 mil no Sudeste, 900 no Nordeste e 140 no Norte. Sul, Centro-Oeste e exterior já estão totalmente apurados. Lula vence no Nordeste (24.449.698 a 10.796.496) e no exterior (200.154 a 171.497). Flávio vence no Sudeste (26.842.950 a 24.034.517), no Sul (11.385.893 a 6.809.370) e no Centro-Oeste (5.603.867 a 3.733.919).",
+    "No Norte, onde a projeção das 20h04 dava leve vantagem a Flávio, Lula está à frente por menos de mil votos: 5.024.482 a 5.023.528. Em relação às pesquisas, os 51,78% de Lula ficam acima da média bruta da véspera (49,1%) e das médias corrigidas pelo erro do 1º turno (entre 47,2% e 47,41%). No 1º turno, Lula havia tido 45,16% dos válidos."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T20:04",
    "tipo": "apuracao",
    "titulo": "Com 24,43% apurado, Flávio lidera o placar; projeção ainda indica Lula com 51,11%",

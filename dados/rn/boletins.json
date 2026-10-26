@@ -1,6 +1,24 @@
 {
  "boletins": [
   {
+   "quando": "2026-10-25T22:31",
+   "tipo": "balanco",
+   "titulo": "Balanço no RN: Cadu vence com 50,77%; Datavero e AtlasIntel chegam mais perto",
+   "destaque": "Cadu (PT) venceu Allyson (União) por 50,77% a 49,23% dos votos válidos, liderou toda a contagem e a média das pesquisas como divulgada voltou a favorecer Allyson, desta vez por 4,13 p.p.",
+   "paragrafos": [
+    "Com 100% das seções apuradas, às 21h22 pelo horário do TSE, Cadu (PT) termina com 50,77% dos votos válidos, contra 49,23% de Allyson (União), uma margem de 1,54 ponto percentual. Não houve virada: Cadu liderou a contagem do início ao fim, sem nenhuma troca de liderança registrada.",
+    "Pelo erro na vantagem, as pesquisas que mais se aproximaram foram Datavero (erro de 0,48 p.p.), AtlasIntel (0,54 p.p.) e Mensury (1,48 p.p.). A Affare também apontou o vencedor, mas exagerou a vantagem de Cadu em 3,72 p.p. A Quaest, última a sair, errou o vencedor por 2,66 p.p. a favor de Allyson. Das 12 pesquisas, 8 erraram o vencedor, todas superestimando Allyson. Os maiores erros foram de Seta (16,16 p.p.), Quallitá (11,32 p.p.), DataCapital (8,4 p.p.) e Item (7,76 p.p.).",
+    "A média como divulgada, que dava 51,29% a Allyson e chance de 59,0% para ele, errou a vantagem em 4,13 p.p. a favor de Allyson. A média corrigida por instituto, que dava 52,55% a Cadu, errou 3,56 p.p. no sentido oposto. O resultado ficou entre as duas, um pouco mais perto da corrigida. O desvio a favor de Allyson se repetiu, mas foi menor que no 1º turno em vários institutos: a Seta errou 20,15 p.p. no 1º turno e 16,16 p.p. agora; a Quaest, 4,22 p.p. e 2,66 p.p.; a AtlasIntel, 11,42 p.p. a favor de Cadu antes e 0,54 p.p. agora.",
+    "A projeção do site apontou Cadu à frente durante toda a noite. Às 19h45, com 16,51% das seções, estimava 51,96% para ele; às 20h04, com 33,42%, 51,09%; o resultado final foi de 50,77%. A chance estimada de vitória, de 76,8% e depois 70,4%, refletia a margem apertada. A projeção foi se aproximando do resultado, mas superestimou levemente Cadu ao longo da apuração.",
+    "Cadu venceu em três das quatro regiões: Central (152.164 votos contra 110.487), Oeste (306.205 contra 275.819) e Agreste (166.468 contra 148.258). Allyson venceu no Leste, a maior região, com 505.835 votos contra 448.187. Às 20h04, a projeção do site já indicava leve vantagem de Allyson no Leste.",
+    "Em relação ao 1º turno, os maiores crescimentos de Cadu ocorreram em Rafael Godeiro (44,57 p.p.), Coronel Ezequiel (40,76 p.p.) e Senador Georgino Avelino (38,16 p.p.). Os menores foram em Doutor Severiano (2,43 p.p.) e Felipe Guerra (2,57 p.p.). Os dados disponíveis não trazem o crescimento de Allyson por município."
+   ],
+   "fontes": [
+    "https://eleicao.andrefreitas.eng.br/painel/rn.html"
+   ],
+   "autor": "claude-opus-5-5 (API)"
+  },
+  {
    "quando": "2026-10-25T20:04",
    "tipo": "apuracao",
    "titulo": "Apuração no RN: com 33,42% das seções, Cadu tem 52,45% e projeção cai para 51,09%",
