@@ -176,16 +176,6 @@
  ],
  "segundo_turno": [
   {
-   "instituto": "Vetor Arrow",
-   "inicio": "2026-10-23",
-   "fim": "2026-10-24",
-   "amostra": 2000,
-   "margem": 2.19,
-   "lula": 50.5,
-   "flavio": 49.5,
-   "indecisos": null
-  },
-  {
    "instituto": "PoderData/Aya",
    "inicio": "2026-10-23",
    "fim": "2026-10-24",
@@ -789,5 +779,5 @@
  "segundo_turno_a_divulgar": [],
  "segundo_turno_extras": [],
  "_extras": "segundo_turno_extras: pesquisas achadas fora da Wikipédia (mesmos campos de segundo_turno + 'url' da fonte). O robô as funde em segundo_turno e as remove quando a Wikipédia as listar.",
- "conferido_em": "2026-11-04 04:31"
+ "conferido_em": "2026-11-04 13:22"
 }
