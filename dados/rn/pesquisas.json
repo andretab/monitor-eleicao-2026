@@ -2,21 +2,21 @@
  "_leia": "a = Cadu (PT), b = Allyson (União), terceiro = Álvaro Dias (PL). Percentuais como divulgados; 'indecisos' = indecisos + brancos/nulos. segundo_turno_extras: achadas fora da Wikipédia (com 'url').",
  "fonte": "https://pt.wikipedia.org/wiki/Pesquisas_eleitorais_para_a_eleição_estadual_de_2026_no_Rio_Grande_do_Norte",
  "atualizado_em": "2026-11-05",
- "conferido_em": "2026-11-05 09:26",
+ "conferido_em": "2026-11-05 17:41",
  "primeiro_turno_ultima_por_instituto": [
   {
-   "instituto": "Quaest",
+   "instituto": "InterTV/Quaest",
    "inicio": "2026-10-02",
    "fim": "2026-10-03",
    "amostra": 1800,
-   "a": 32.0,
-   "b": 37.0,
-   "terceiro": 29.0,
+   "a": 27.0,
+   "b": 31.0,
+   "terceiro": 24.0,
    "outros": 1.0,
-   "indecisos": null
+   "indecisos": 16.0
   },
   {
-   "instituto": "Exatus/AgoraRN",
+   "instituto": "AgoraRN/Exatus",
    "inicio": "2026-09-28",
    "fim": "2026-09-30",
    "amostra": 1500,
@@ -60,7 +60,7 @@
    "indecisos": 14.0
   },
   {
-   "instituto": "Metadata/Grupo Dial",
+   "instituto": "Grupo Dial/Metadata",
    "inicio": "2026-09-21",
    "fim": "2026-09-23",
    "amostra": 1536,
@@ -71,7 +71,7 @@
    "indecisos": 15.5
   },
   {
-   "instituto": "Media/O Potengi",
+   "instituto": "O Potengi/Media",
    "inicio": "2026-09-12",
    "fim": "2026-09-17",
    "amostra": 2000,
@@ -95,7 +95,7 @@
  ],
  "segundo_turno": [
   {
-   "instituto": "Quaest",
+   "instituto": "InterTV/Quaest",
    "inicio": "2026-10-23",
    "fim": "2026-10-24",
    "amostra": 2154,
@@ -115,7 +115,7 @@
    "indecisos": 4.0
   },
   {
-   "instituto": "Item",
+   "instituto": "Difusora/Item",
    "inicio": "2026-10-19",
    "fim": "2026-10-22",
    "amostra": 1250,
@@ -135,7 +135,7 @@
    "indecisos": 7.0
   },
   {
-   "instituto": "Exatus/Agora RN",
+   "instituto": "Agora RN/Exatus",
    "inicio": "2026-10-19",
    "fim": "2026-10-21",
    "amostra": 1500,
@@ -205,7 +205,7 @@
    "indecisos": 7.56
   },
   {
-   "instituto": "Item",
+   "instituto": "Difusora/Item",
    "inicio": "2026-10-13",
    "fim": "2026-10-15",
    "amostra": 1250,
@@ -225,7 +225,7 @@
    "indecisos": 6.7
   },
   {
-   "instituto": "Quaest",
+   "instituto": "InterTV/Quaest",
    "inicio": "2026-10-09",
    "fim": "2026-10-12",
    "amostra": 1098,
